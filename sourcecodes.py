@@ -9,4 +9,4 @@ async def search(ctx, lang):
   if lang in ["py","js","rb","java","php","json"]:
     print("a")
 
-bot.run(os.environ.get('ENV_VAR_DISCORD_ID'))
+bot.run("DISCORD_BOT_TOKEN")
