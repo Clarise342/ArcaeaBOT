@@ -7,3 +7,5 @@ bot = commands.Bot(command_prefix="sc/")
 async def search(ctx, lang):
   if lang in ["py","js","rb","java","php","json"]:
     print("a")
+
+bot.run("NzA1NDE0MzA0NzY5NTA3Mzc4.XqrWUg.LTd-N6RKW2QvyMFeo6pFFSU6AgU")
