@@ -217,37 +217,37 @@ async def setting(ctx):
           ns = dc.Embed(title="現在の設定はこちらです",description=f"**◇ 楽曲セレクト ◇**\n・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}\n**◇ パートナーセレクト ◇**\n・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",color=0x74596d)
           es[1], p = ns, 1
         elif m.content in main: p = main[m.content]
-        else: return
+        else: pass
       elif p == 1:
         if m.content in ["back","b"]: p = 0
-        else: return
+        else: pass
       else:
         if p == 2:
           if m.content in dip:
             if dip[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
             else: so["ip"].append(dip[m.content])
-          else: return
+          else: pass
         elif p == 3:
           if m.content in dl:
             if dl[m.content] in so["l"]: del so["l"][so["l"].index(dl[m.content])]
             else: so["l"].append(dl[m.content])      
-          else: return
+          else: pass
         elif p == 4:
           if m.content in dss: so["s"] = dss[m.content]
-          else: return
+          else: pass
         elif p == 5:
           if m.content in dne: po["ne"] = dne[m.content]
-          else: return
+          else: pass
         elif p == 6:
           if m.content in dt:
             if dpt[m.content] in po["t"]: del po["t"][po["t"].index(dpt[m.content])]
             else: po["t"].append(dpt[m.content])              
-          else: return
+          else: pass
         elif p == 7:
           if m.content in dps:
             if dps[m.content] in po["s"]: del po["s"][po["s"].index(dps[m.content])]
             else: po["s"].append(dps[m.content])              
-          else: return     
+          else: pass
         p = 0
     except ao.TimeoutError: return await msg.delete()
  
