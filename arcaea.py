@@ -261,7 +261,7 @@ async def on_ready():
   sn = dc.Embed(title="ArcaeaBOTが起動しました",color=0xBCF946)
   sn.timestamp = dt.utcnow()
   sn.set_author(name="起動通知",icon_url=bot.user.avatar_url)
-  sn.set_footer(name="Powered by Python (3.7)")
+  sn.set_footer(text="Powered by Python (3.7)")
   ch = bot.get_channel(723600070284673036)
   await ch.send(embed=sn)
   print("起動しました")
