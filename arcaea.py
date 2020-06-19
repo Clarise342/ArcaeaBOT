@@ -58,8 +58,9 @@ async def loop():
   await bot.change_presence(activity=dc.Game(name=v))
   pI += 1 if pI != 3 else -3
   
-@bot.command(aliases=["h"])
+@bot.command()
 async def help(ctx):
+  await ctx.message.delete()
   e = dc.Embed(color=0x74596d)
   e.timestamp = dt.utcnow()
   e.add_field(name="help",value="ヘルプを表示します",inline=False)
@@ -72,7 +73,7 @@ async def help(ctx):
   e.set_footer(text=f"送信者 : {ctx.author.name}")
   await ctx.send(embed=e)
   
-@bot.command(aliases=["sl"])
+@bot.command()
 async def song_list(ctx, *args):
   await ctx.message.delete()
   if "/p" in args:
@@ -94,8 +95,9 @@ async def song_list(ctx, *args):
   await ctx.send(embed=e)
   SLs[0], SLs[1], SLs[2] = None, None, None
     
-@bot.command(aliases=["si"])
+@bot.command()
 async def sinfo(ctx, *, name=None):
+  await ctx.message.delete()
   if name == None:
     name = dataset[0] if dataset[0] != None else None 
   sgs = [i for i in dataS if name in i.name]
@@ -132,8 +134,9 @@ async def sinfo(ctx, *, name=None):
   else:
     await ctx.send(embed=e)
   
-@bot.command(aliases=["pi"])
+@bot.command()
 async def pinfo(ctx, *, name=None):
+  await ctx.message.delete()
   if name == None:
     name = dataset[1] if dataset[1] != None else None 
   dataP = dataPN.extend(dataPE)
@@ -151,8 +154,9 @@ async def pinfo(ctx, *, name=None):
   e.set_image(url=partner.image)
   await ctx.send(embed=e)
   
-@bot.command(aliases=["ss"])
+@bot.command()
 async def sselect(ctx, count=1):
+  await ctx.message.delete()
   if count > 10: return await ctx.send("1度に10連続まで可能です", delete_after=5.0)
   enablesP = [i for i in dataS if not i.pack in so["ip"]] if len(so["ip"]) != 0 else dataS
   enablesS = [i for i in enablesP if i.side == so["s"]] if so["s"] != None else enablesP
@@ -169,8 +173,9 @@ async def sselect(ctx, count=1):
     await ctx.send(embed=e)
     dataset[0] = song.name
     
-@bot.command(aliases=["ps"])
+@bot.command()
 async def pselect(ctx):
+  await ctx.message.delete()
   if po["ne"] != None: enablesT = [i for i in po["ne"] if i.type in po["t"]] if len(po["t"]) != 0 else dataPN
   else: enablesT = [i for i in dataPN.extend(dataPE) if i.type in po["t"]] if len(po["t"]) != 0 else dataPE
   enablesS = [i for i in enablesT if i.skill.name in po["s"]] if len(po["s"]) != 0 else enablesT
@@ -183,8 +188,9 @@ async def pselect(ctx):
   await ctx.send(embed=e)
   dataset[1] = result.name 
   
-@bot.command(name="set",aliases=["s"])
+@bot.command(name="set")
 async def setting(ctx):
+  await ctx.message.delete()
   mp = dc.Embed(title="操作を以下から選んで下さい",description="`x`: 終了\n`ns`: 現在の設定を確認\n`s-ip`: 選曲 | 除外パック\n`s-l`: 選曲 | レベル\n`s-s`: 選曲 | サイド\n`p-ne`: パートナー | ノーマル/イベント\n`p-t`: パートナー | タイプ\n`p-s`: パートナー | スキル",color=0x74596d)
   ip = dc.Embed(title="以下から除外、追加するパックを選択してください",description="`Ae`: Archive\n`Aa`: Arcaea\n`WE`: World Extend\n`BF`: Black Fate\n`AP`: Adverse Prelude\n`LS`: Luminous Sky\n`VL`: Vicious Labyrinth\n`EC`: Eternal Core\n`SR`: Sunset Radiance\n`AR`: Absolute Reason\n`BE`: Binary Enfold\n`AV`: Ambivalent Vision\n`CS`: Crimson Solace\n`CM`: CHUNITHM\n`GC`: Groove Coaster\n`TS`: Tone Sphere\n`La`: Lanota\n`Dx`: Dynamix",color=0x74596d)
   l = dc.Embed(title="以下から追加、除外する難易度を選択してください",description="`6`: 6\n`7`: 7\n`8`: 8\n`9`: 9\n`9+`: 9+\n`10`: 10\n`10+`: 10+\n`11`: 11",color=0x74596d)
@@ -215,41 +221,36 @@ async def setting(ctx):
       elif p == 1:
         if m.content in ["back","b"]: p = 0
         else: return
-      elif p == 2:
-        if m.content in dip:
-          if dip[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
-          else: so["ip"].append(dip[m.content])
-        else: return
-      elif p == 3:
-        if m.content in dl:
-          if dl[m.content] in so["l"]: del so["l"][so["l"].index(dl[m.content])]
-          else: so["l"].append(dl[m.content])      
-        else: return
-      elif p == 4:
-        if m.content in dss: so["s"] = dss[m.content]
-        else: return
-      elif p == 5:
-        if m.content in dne: po["ne"] = dne[m.content]
-        else: return
-      elif p == 6:
-        if m.content in dt:
-          if dpt[m.content] in po["t"]: del po["t"][po["t"].index(dpt[m.content])]
-          else: po["t"].append(dpt[m.content])              
-        else: return
-      elif p == 7:
-        if m.content in dps:
-          if dps[m.content] in po["s"]: del po["s"][po["s"].index(dps[m.content])]
-          else: po["s"].append(dps[m.content])              
-        else: return                  
+      else:
+        elif p == 2:
+          if m.content in dip:
+            if dip[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
+            else: so["ip"].append(dip[m.content])
+          else: return
+        elif p == 3:
+          if m.content in dl:
+            if dl[m.content] in so["l"]: del so["l"][so["l"].index(dl[m.content])]
+            else: so["l"].append(dl[m.content])      
+          else: return
+        elif p == 4:
+          if m.content in dss: so["s"] = dss[m.content]
+          else: return
+        elif p == 5:
+          if m.content in dne: po["ne"] = dne[m.content]
+          else: return
+        elif p == 6:
+          if m.content in dt:
+            if dpt[m.content] in po["t"]: del po["t"][po["t"].index(dpt[m.content])]
+            else: po["t"].append(dpt[m.content])              
+          else: return
+        elif p == 7:
+          if m.content in dps:
+            if dps[m.content] in po["s"]: del po["s"][po["s"].index(dps[m.content])]
+            else: po["s"].append(dps[m.content])              
+          else: return     
+        p = 0
     except ao.TimeoutError: return await msg.delete()
-      
-@bot.command(aliases=["e"])
-async def exit(ctx):
-  print("終了しました")
-  await ctx.message.delete()
-  await bot.logout()
-  await sys.exit()
-  
+ 
 @bot.event
 async def on_ready():
   print("起動しました")
