@@ -214,7 +214,10 @@ async def setting(ctx):
           Ps = ' '.join(po["s"]) + "のみ" if len(po["s"]) > 0 else "全て"
           if po["ne"] == None: Pne = "全てが対象"
           else: Pne = "ノーマルのみ" if po["ne"] == dataPN else "イベントのみ"
-          ns = dc.Embed(title="現在の設定はこちらです",description=f"**◇ 楽曲セレクト ◇**\n・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}\n**◇ パートナーセレクト ◇**\n・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",color=0x74596d)
+          ns = dc.Embed(title="現在の設定はこちらです",color=0x74596d)
+          ns.add_field(name="**◇ 楽曲セレクト ◇**",value=f"・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}",inline=False)
+          ns.add_field(name="**◇ パートナーセレクト ◇**",value=f"・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",inline=False)
+          ns.set_author(name="現在の設定",icon_url=bot.user.avatar_url)
           es[1], p = ns, 1
         elif m.content in main: p = main[m.content]
         else: pass
@@ -239,7 +242,7 @@ async def setting(ctx):
           if m.content in dne: po["ne"] = dne[m.content]
           else: pass
         elif p == 6:
-          if m.content in dt:
+          if m.content in dpt:
             if dpt[m.content] in po["t"]: del po["t"][po["t"].index(dpt[m.content])]
             else: po["t"].append(dpt[m.content])              
           else: pass
