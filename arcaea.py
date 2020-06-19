@@ -222,7 +222,7 @@ async def setting(ctx):
         if m.content in ["back","b"]: p = 0
         else: return
       else:
-        elif p == 2:
+        if p == 2:
           if m.content in dip:
             if dip[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
             else: so["ip"].append(dip[m.content])
