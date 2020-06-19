@@ -7,11 +7,8 @@ bot = cmd.Bot(command_prefix="a")
 bot.remove_command("help")
 
 # data settings...
-
 pI = 0 # precence_INDEX
-
 SLs = [None,None,None] # SongList_settings
-
 so = {"ip":[],"l":[],"s":None} # song_option
 po = {"n":None,"t":[],"s":[]} # partner_option
 
@@ -36,6 +33,8 @@ dataPN = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(
 dataPE = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["last"])) # partner_event
 
 dataset = [None,None] # data_add
+
+token = os.environ['TOKEN'] # token_read
 
 # setting_dict
 dip = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","AV":"Ambivalent Vision","CS":"Crimson Solace","CM":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
@@ -224,5 +223,5 @@ async def on_ready():
   print("起動しました")
   loop.start()
   
-bot.run("NzAyNTg3MzI0NzE4MTIwOTkx.XsZY1g.ZDRqveB5TxdBKKtDC3zjED7nywc")
+bot.run(token)
     
