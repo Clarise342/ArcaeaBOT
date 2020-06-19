@@ -55,7 +55,7 @@ async def loop():
   elif pI == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
   elif pI == 2: v = f"This BOT is developed by Clarice#0920"
   elif pI == 3: v = f"New songs such as Black Fate and World Extend added"
-  await bot.change_presence(activity=dc.Game(name=value))
+  await bot.change_presence(activity=dc.Game(name=v))
   pI += 1 if pI != 3 else -3
   
 @bot.command(aliases=["h"])
