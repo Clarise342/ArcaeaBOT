@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from collections import namedtuple as nt
 import discord as dc, json, random, sys, os, asyncio as ao
 
-bot = cmd.Bot(command_prefix="a")
+bot = cmd.Bot(command_prefix="a@")
 bot.remove_command("help")
 
 # data settings...
