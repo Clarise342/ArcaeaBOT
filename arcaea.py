@@ -44,7 +44,6 @@ dss = {"N":None,"L":dataPN,"C":dataPE} # sides
 dne = {"N":"なし","on":"ノーマルのみ","oe":"イベントのみ"} # normal_or_event
 dt = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
 dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
-cne = {None:"なし",dataPN:"光のみ",dataPE:"対立のみ"} # setting_name
 
 # ...settings end
 
@@ -207,7 +206,8 @@ async def setting(ctx):
           Sl = ' '.join(so["l"]) + "のみ" if len(so["l"]) > 0 else "全て"
           Pt = ' '.join(po["t"]) + "のみ" if len(po["t"]) > 0 else "全て"
           Ps = ' '.join(po["s"]) + "のみ" if len(po["s"]) > 0 else "全て"
-          Pne = cne[po["ne"]]
+          if po["ne"] = None: Pne = "全てが対象"
+          else: po["ne"] = "ノーマルのみ" if po["ne"] == dataPN else "イベントのみ"
           ns = dc.Embed(title="現在の設定はこちらです",description=f"**◇ 楽曲セレクト ◇**\n・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}\n**◇ パートナーセレクト ◇**\n・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",color=0x74596d)
           es[1], p = ns, 1
         elif m.content in main: p = main[m.content]
