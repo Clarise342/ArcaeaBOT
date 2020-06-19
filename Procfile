@@ -1,1 +1,1 @@
-discordbot: python sourcecodes.py
+discordbot: python arcaea.py
