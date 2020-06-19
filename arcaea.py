@@ -13,16 +13,16 @@ so = {"ip":[],"l":[],"s":None} # song_option
 po = {"ne":None,"t":[],"s":[]} # partner_option
 
 # song
-artworkNT = namedtuple("Artwork", "normal beyond") # artwork
-level = namedtuple("Level", "PAST PRESENT FUTURE BEYOND") # levels
-notes = namedtuple("Notes", "PAST PRESENT FUTURE BEYOND") # notes
-song = namedtuple("Song", "name side pack artwork bpm composer level notes") # song_info
+artworkNT = nt("Artwork", "normal beyond") # artwork
+level = nt("Level", "PAST PRESENT FUTURE BEYOND") # levels
+notes = nt("Notes", "PAST PRESENT FUTURE BEYOND") # notes
+song = nt("Song", "name side pack artwork bpm composer level notes") # song_info
 
 # partner
-skill = namedtuple("Skill", "name description awaken") # skill
-frag = namedtuple("Frag", "min max awaken") # frag
-step = namedtuple("Step", "min max awaken") # step
-partner = namedtuple("Partner", "name frag step type skill image") # partner_info
+skill = nt("Skill", "name description awaken") # skill
+frag = nt("Frag", "min max awaken") # frag
+step = nt("Step", "min max awaken") # step
+partner = nt("Partner", "name frag step type skill image") # partner_info
 
 with open("arcaea.json", "r", encoding="utf-8") as f: 
   data = json.load(f) # arcaea_data_add
