@@ -206,8 +206,8 @@ async def setting(ctx):
           Sl = ' '.join(so["l"]) + "のみ" if len(so["l"]) > 0 else "全て"
           Pt = ' '.join(po["t"]) + "のみ" if len(po["t"]) > 0 else "全て"
           Ps = ' '.join(po["s"]) + "のみ" if len(po["s"]) > 0 else "全て"
-          if po["ne"] = None: Pne = "全てが対象"
-          else: po["ne"] = "ノーマルのみ" if po["ne"] == dataPN else "イベントのみ"
+          if po["ne"] == None: Pne = "全てが対象"
+          else: Pne = "ノーマルのみ" if po["ne"] == dataPN else "イベントのみ"
           ns = dc.Embed(title="現在の設定はこちらです",description=f"**◇ 楽曲セレクト ◇**\n・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}\n**◇ パートナーセレクト ◇**\n・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",color=0x74596d)
           es[1], p = ns, 1
         elif m.content in main: p = main[m.content]
