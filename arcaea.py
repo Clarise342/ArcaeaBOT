@@ -10,7 +10,7 @@ bot.remove_command("help")
 pI = 0 # precence_INDEX
 SLs = [None,None,None] # SongList_settings
 so = {"ip":[],"l":[],"s":None} # song_option
-po = {"n":None,"t":[],"s":[]} # partner_option
+po = {"ne":None,"t":[],"s":[]} # partner_option
 
 # song
 artworkNT = namedtuple("Artwork", "normal beyond") # artwork
@@ -37,18 +37,19 @@ dataset = [None,None] # data_add
 token = os.environ['TOKEN'] # token_read
 
 # setting_dict
+main = {"s-ip":2,"s-l":3,"s-s":4,"p-ne":5,"p-t":6,"p-s":7}
 dip = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","AV":"Ambivalent Vision","CS":"Crimson Solace","CM":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
-dl = {"6":"6","7":"7","8":"8","9":"9","9+":"9","10":"10","10+":"10+","11":"11"} # levels
+dl = {"7":"7","8":"8","9":"9","9+":"9","10":"10","10+":"10+","11":"11"} # levels
 dss = {"N":None,"L":dataPN,"C":dataPE} # sides
 dne = {"N":"なし","on":"ノーマルのみ","oe":"イベントのみ"} # normal_or_event
 dt = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
 dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
-dne = {None:"なし",dataPN:"光のみ",dataPE:"対立のみ"} # setting_name
+cne = {None:"なし",dataPN:"光のみ",dataPE:"対立のみ"} # setting_name
 
 # ...settings end
 
 # change_precence
-@tasks.loop(seconds=30)
+@tasks.loop(minutes=1)
 async def loop():
   global pI
   if pI == 0: v = f"Display help with 'a.help (a.h)'"
@@ -136,8 +137,8 @@ async def sinfo(ctx, *, name=None):
 async def pinfo(ctx, *, name=None):
   if name == None:
     name = dataset[1] if dataset[1] != None else None 
-  partners = [i for i in dataPN if name in i.name]
-  if len(partners) == 0: partners = [i for i in dataPE if name in i.name]
+  dataP = dataPN.extend(dataPE)
+  partners = [i for i in dataP if name in i.name]
   if len(partners) == 0: return await ctx.send("パートナーが見つかりませんでした", delete_after=5.0)
   partner = partners[0]
   e = dc.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0x74596d)
@@ -154,33 +155,34 @@ async def pinfo(ctx, *, name=None):
 @bot.command(aliases=["ss"])
 async def sselect(ctx, count=1):
   if count > 10: return await ctx.send("1度に10連続まで可能です", delete_after=5.0)
-  enables_p = [i for i in data_s if not i.pack in so["ep"]] if len(so["ep"]) != 0 else data_s
-  enables_s = [i for i in enables_p if i.side == so["s"]] if so["s"] != None else enables_p
-  enables_l = [i for i in enables_s if i.level.FUTURE in so["l"]] if len(so["l"]) != 0 else enables_s
-  if len(enables_l) == 0: return await ctx.send("条件に該当する楽曲が見つかりませんでした", delete_after=5.0)
-  results = random.sample(enables_l, count)
+  enablesP = [i for i in dataS if not i.pack in so["ip"]] if len(so["ip"]) != 0 else dataS
+  enablesS = [i for i in enablesP if i.side == so["s"]] if so["s"] != None else enablesP
+  enablesL = [i for i in enablesS if i.level.FUTURE in so["l"]] if len(so["l"]) != 0 else enablesS
+  if len(enablesL) == 0: return await ctx.send("条件に該当する楽曲が見つかりませんでした", delete_after=5.0)
+  results = random.sample(enablesL, count)
   for song in results:
-    if song.side == "光": e = discord.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x00f1ff)
-    else: e = discord.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
+    if song.side == "光": e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x00f1ff)
+    else: e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
     e.timestamp = dt.utcnow()
     e.set_author(name="❖ 選曲 ❖",icon_url=bot.user.avatar_url)
     e.set_footer(text=f"詳細は a.song_info で確認できます\n送信者 : {ctx.author.name}")
     e.set_thumbnail(url=song.artwork.normal)
     await ctx.send(embed=e)
-    data_set[0] = song.name
+    dataset[0] = song.name
     
 @bot.command(aliases=["ps"])
 async def pselect(ctx):
-  if po["nl"] != None: enables_t = [i for i in po["nl"] if i.type in po["t"]] if len(po["t"]) != 0 else data_p_n
-  else: enables_t = [i for i in data_p_n.extend(data_p_l) if i.type in po["t"]] if len(po["t"]) != 0 else data_p_l
-  enables_s = [i for i in enables_t if i.skill.name in po["s"]] if len(po["t"]) != 0 else enables_t
-  if len(enables_s) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
-  result = enables_s[random.randint(0,len(enables_s)-1)]
-  e = discord.Embed(title=f"◆ パートナー名 {result.name}",description=f"◇ タイプ {result.type}",color=0x74596d)
+  if po["ne"] != None: enablesT = [i for i in po["ne"] if i.type in po["t"]] if len(po["t"]) != 0 else dataPN
+  else: enablesT = [i for i in dataPN.extend(dataPE) if i.type in po["t"]] if len(po["t"]) != 0 else dataPE
+  enablesS = [i for i in enablesT if i.skill.name in po["s"]] if len(po["s"]) != 0 else enablesT
+  if len(enablesS) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
+  result = enablesS[random.randint(0,len(enablesS)-1)]
+  e = dc.Embed(title=f"◆ パートナー名 {result.name}",description=f"◇ タイプ {result.type}",color=0x74596d)
+  e.timestamp = dt.utcnow()
   e.set_author(name="❖ パートナー選択 ❖",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"詳細は a.partner_info で確認できます\n送信者 : {ctx.author.name}")
   await ctx.send(embed=e)
-  data_set[1] = result.name 
+  dataset[1] = result.name 
   
 @bot.command(name="set",aliases=["s"])
 async def setting(ctx):
@@ -199,16 +201,46 @@ async def setting(ctx):
       m = await bot.wait_for('message', timeout=40.0, check=lambda m: ctx.author == m.author)
       await m.delete()
       if p == 0:
-        if m == "x": return await msg.delete()
-        if m == "ns":
+        if m.content == "x": return await msg.delete()
+        elif m.content == "ns":
           Sip = ' '.join(so["ip"]) + "を除外" if len(so["ip"]) > 0 else "なし"
           Sl = ' '.join(so["l"]) + "のみ" if len(so["l"]) > 0 else "全て"
           Pt = ' '.join(po["t"]) + "のみ" if len(po["t"]) > 0 else "全て"
           Ps = ' '.join(po["s"]) + "のみ" if len(po["s"]) > 0 else "全て"
-          Pn = 
-          ns = dc.Embed(title="現在の設定はこちらです",description="**◇ ",color=0x74596d)
-      if p == 1:
-        
+          Pne = cne[po["ne"]]
+          ns = dc.Embed(title="現在の設定はこちらです",description=f"**◇ 楽曲セレクト ◇**\n・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}\n**◇ パートナーセレクト ◇**\n・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",color=0x74596d)
+          es[1], p = ns, 1
+        elif m.content in main: p = main[m.content]
+        else: return
+      elif p == 1:
+        if m.content in ["back","b"]: p = 0
+        else: return
+      elif p == 2:
+        if m.content in dip:
+          if dip[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
+          else: so["ip"].append(dip[m.content])
+        else: return
+      elif p == 3:
+        if m.content in dl:
+          if dl[m.content] in so["l"]: del so["l"][so["l"].index(dl[m.content])]
+          else: so["l"].append(dl[m.content])      
+        else: return
+      elif p == 4:
+        if m.content in dss: so["s"] = dss[m.content]
+        else: return
+      elif p == 5:
+        if m.content in dne: po["ne"] = dne[m.content]
+        else: return
+      elif p == 6:
+        if m.content in dt:
+          if dt[m.content] in po["t"]: del po["t"][po["t"].index(dt[m.content])]
+          else: po["t"].append(dt[m.content])              
+        else: return
+      elif p == 7:
+        if m.content in dps:
+          if dps[m.content] in po["s"]: del po["s"][po["s"].index(dps[m.content])]
+          else: po["s"].append(dps[m.content])              
+        else: return                  
     except ao.TimeoutError: return await msg.delete()
       
 @bot.command(aliases=["e"])
@@ -222,6 +254,5 @@ async def exit(ctx):
 async def on_ready():
   print("起動しました")
   loop.start()
-  
+                        
 bot.run(token)
-    
