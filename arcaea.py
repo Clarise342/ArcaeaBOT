@@ -42,7 +42,7 @@ dip = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"
 dl = {"7":"7","8":"8","9":"9","9+":"9","10":"10","10+":"10+","11":"11"} # levels
 dss = {"N":None,"L":dataPN,"C":dataPE} # sides
 dne = {"N":"なし","on":"ノーマルのみ","oe":"イベントのみ"} # normal_or_event
-dt = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
+dpt = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
 dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
 
 # ...settings end
@@ -51,7 +51,7 @@ dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバ
 @tasks.loop(minutes=1)
 async def loop():
   global pI
-  if pI == 0: v = f"Display help with 'a.help (a.h)'"
+  if pI == 0: v = f"Display help with 'a.help (a@h)'"
   elif pI == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
   elif pI == 2: v = f"This BOT is developed by Clarice#0920"
   elif pI == 3: v = f"New songs such as Black Fate and World Extend added"
@@ -233,8 +233,8 @@ async def setting(ctx):
         else: return
       elif p == 6:
         if m.content in dt:
-          if dt[m.content] in po["t"]: del po["t"][po["t"].index(dt[m.content])]
-          else: po["t"].append(dt[m.content])              
+          if dpt[m.content] in po["t"]: del po["t"][po["t"].index(dpt[m.content])]
+          else: po["t"].append(dpt[m.content])              
         else: return
       elif p == 7:
         if m.content in dps:
