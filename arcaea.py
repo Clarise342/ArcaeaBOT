@@ -224,7 +224,7 @@ async def setting(ctx):
           ns.add_field(name="**◇ 楽曲セレクト ◇**",value=f"・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}",inline=False)
           ns.add_field(name="**◇ パートナーセレクト ◇**",value=f"・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",inline=False)
           ns.set_author(name="現在の設定",icon_url=bot.user.avatar_url)
-          ns.set_footer(name=f"送信者 : {ctx.author.name}")
+          ns.set_footer(text=f"送信者 : {ctx.author.name}")
           es[1], p = ns, 1
         elif m.content in main: p = main[m.content]
         else: pass
