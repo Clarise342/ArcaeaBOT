@@ -89,7 +89,7 @@ async def slist(ctx, *args):
   listsL = [i.name for i in listsS if i.level.FUTURE in SLs[2]] if SLs[2] != None else [i.name for i in listsS]
   sl = '\n'.join(listsL)
   if so["s"] != None: e = dc.Embed(description=sl,color=0x00f1ff) if so["s"] == "光" else discord.Embed(description=sl,color=0x461399)
-  else: e = discord.Embed(description=sl,color=0x74596d)
+  else: e = dc.Embed(description=sl,color=0x74596d)
   e.timestamp = dt.utcnow()
   e.set_author(name="楽曲リスト",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
