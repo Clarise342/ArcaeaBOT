@@ -145,9 +145,7 @@ async def pinfo(ctx, *, name=None):
   await ctx.message.delete()
   if name == None:
     name = dataset[1] if dataset[1] != None else None
-  print(dataPN)
-  print(dataPE)
-  partners = [i for i in dataPN.extend(dataPE) if name in i.name]
+  partners = [i for i in dataPN+dataPE if name in i.name]
   if len(partners) == 0: return await ctx.send("パートナーが見つかりませんでした", delete_after=5.0)
   partner = partners[0]
   e = dc.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0x74596d)
@@ -184,7 +182,7 @@ async def sselect(ctx, count=1):
 async def pselect(ctx):
   await ctx.message.delete()
   if po["ne"] != None: enablesT = [i for i in cne[po["ne"]] if i.type in po["t"]] if len(po["t"]) != 0 else cne[po["ne"]]
-  else: enablesT = [i for i in dataPN.extend(dataPE) if i.type in po["t"]] if len(po["t"]) != 0 else dataPN.extend(dataPE)
+  else: enablesT = [i for i in dataPN+dataPE if i.type in po["t"]] if len(po["t"]) != 0 else dataPN+dataPE
   enablesS = [i for i in enablesT if i.skill.name in po["s"]] if len(po["s"]) != 0 else enablesT
   if len(enablesS) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
   result = enablesS[random.randint(0,len(enablesS)-1)]
