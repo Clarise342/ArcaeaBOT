@@ -101,7 +101,7 @@ async def sinfo(ctx, *, name=None):
   if name == None:
     name = dataset[0] if dataset[0] != None else None 
   sgs = [i for i in dataS if name in i.name]
-  if len(songs) == 0: return await ctx.send("曲が見つかりませんでした", delete_after=5.0)
+  if len(sgs) == 0: return await ctx.send("曲が見つかりませんでした", delete_after=5.0)
   else: song = sgs[0]
   e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x00f1ff) if song.side == "光" else dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
   e.timestamp = dt.utcnow()
