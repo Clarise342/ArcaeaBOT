@@ -40,8 +40,9 @@ token = os.environ['TOKEN'] # token_read
 main = {"s-ip":2,"s-l":3,"s-s":4,"p-ne":5,"p-t":6,"p-s":7}
 dip = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","AV":"Ambivalent Vision","CS":"Crimson Solace","CM":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
 dl = {"7":"7","8":"8","9":"9","9+":"9","10":"10","10+":"10+","11":"11"} # levels
-dss = {"N":None,"L":dataPN,"C":dataPE} # sides
-dne = {"N":"なし","on":"ノーマルのみ","oe":"イベントのみ"} # normal_or_event
+dss = {"N":None,"L":"光","C":"対立"} # sides
+cne = {"全てが対象":None,"ノーマルのみ":dataPN,"イベントのみ":dataPE}
+dne = {"N":"全てが対象","on":"ノーマルのみ","oe":"イベントのみ"} # normal_or_event
 dpt = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
 dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
 
@@ -181,7 +182,7 @@ async def sselect(ctx, count=1):
 @bot.command()
 async def pselect(ctx):
   await ctx.message.delete()
-  if po["ne"] != None: enablesT = [i for i in po["ne"] if i.type in po["t"]] if len(po["t"]) != 0 else dataPN
+  if po["ne"] != None: enablesT = [i for i in cne[po["ne"]] if i.type in po["t"]] if len(po["t"]) != 0 else dataPN
   else: enablesT = [i for i in dataPN.extend(dataPE) if i.type in po["t"]] if len(po["t"]) != 0 else dataPE
   enablesS = [i for i in enablesT if i.skill.name in po["s"]] if len(po["s"]) != 0 else enablesT
   if len(enablesS) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
