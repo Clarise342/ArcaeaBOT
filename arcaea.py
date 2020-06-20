@@ -182,8 +182,8 @@ async def sselect(ctx, count=1):
 @bot.command()
 async def pselect(ctx):
   await ctx.message.delete()
-  if po["ne"] != None: enablesT = [i for i in cne[po["ne"]] if i.type in po["t"]] if len(po["t"]) != 0 else dataPN
-  else: enablesT = [i for i in dataPN.extend(dataPE) if i.type in po["t"]] if len(po["t"]) != 0 else dataPE
+  if po["ne"] != None: enablesT = [i for i in cne[po["ne"]] if i.type in po["t"]] if len(po["t"]) != 0 else cne[po["ne"]]
+  else: enablesT = [i for i in dataPN.extend(dataPE) if i.type in po["t"]] if len(po["t"]) != 0 else dataPN.extend(dataPE)
   enablesS = [i for i in enablesT if i.skill.name in po["s"]] if len(po["s"]) != 0 else enablesT
   if len(enablesS) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
   result = enablesS[random.randint(0,len(enablesS)-1)]
