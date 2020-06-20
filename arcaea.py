@@ -51,7 +51,7 @@ dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバ
 @tasks.loop(minutes=1)
 async def loop():
   global pI
-  if pI == 0: v = f"Display help with 'a.help (a@h)'"
+  if pI == 0: v = f"Display help with 'a@help'"
   elif pI == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
   elif pI == 2: v = f"This BOT is developed by Clarice#0920"
   elif pI == 3: v = f"New songs such as Black Fate and World Extend added"
@@ -61,9 +61,10 @@ async def loop():
 @bot.command()
 async def help(ctx):
   await ctx.message.delete()
-  e = dc.Embed(color=0x74596d)
+  e = dc.Embed(title="prefixは `a@` です",color=0x74596d)
   e.timestamp = dt.utcnow()
   e.add_field(name="help",value="ヘルプを表示します",inline=False)
+  e.add_field(name="slist <条件>",value="条件に一致する楽曲のリストを表示します",inline=False)
   e.add_field(name="sinfo <曲名>",value="曲の情報を表示します",inline=False)
   e.add_field(name="pinfo <パートナー名>",value="パートナーの情報を表示します",inline=False)
   e.add_field(name="sselect (回数)",value="BOTがランダムに選曲します",inline=False)
@@ -74,7 +75,7 @@ async def help(ctx):
   await ctx.send(embed=e)
   
 @bot.command()
-async def song_list(ctx, *args):
+async def slist(ctx, *args):
   await ctx.message.delete()
   if "/p" in args:
     if "\\p" in args: SLs[0] = args[args.index("/p")+1:args.index("\\p")]
