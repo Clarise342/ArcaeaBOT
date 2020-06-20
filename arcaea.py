@@ -54,7 +54,11 @@ async def loop():
   if pI == 0: v = f"Display help with 'a@help'"
   elif pI == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
   elif pI == 2: v = f"This BOT is developed by Clarice#0920"
-  elif pI == 3: v = f"New songs such as Black Fate and World Extend added"
+  elif pI == 3: v = f"New songs such as Black Fate and World Extend added"   
+  elif pI == 4: v = f"a@helpでヘルプを表示します"
+  elif pI == 5: v = f"現在のpingは{round(bot.latency * 1000)}msです"
+  elif pI == 6: v = f"このBOTの開発者はClarice#0920です"
+  elif pI == 7: v = f"Black FateとWorld Extendの楽曲を追加しました"
   await bot.change_presence(activity=dc.Game(name=v))
   pI += 1 if pI != 3 else -3
   
