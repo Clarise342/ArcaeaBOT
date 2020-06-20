@@ -145,6 +145,8 @@ async def pinfo(ctx, *, name=None):
   await ctx.message.delete()
   if name == None:
     name = dataset[1] if dataset[1] != None else None
+  print(dataPN)
+  print(dataPE)
   partners = [i for i in dataPN.extend(dataPE) if name in i.name]
   if len(partners) == 0: return await ctx.send("パートナーが見つかりませんでした", delete_after=5.0)
   partner = partners[0]
