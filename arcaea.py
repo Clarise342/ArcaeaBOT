@@ -10,7 +10,7 @@ bot.remove_command("help")
 pI = 0 # precence_INDEX
 SLs = [None,None,None] # SongList_settings
 so = {"ip":[],"l":[],"s":None} # song_option
-po = {"ne":None,"t":[],"s":[]} # partner_option
+po = {"ne":"全てが対象","t":[],"s":[]} # partner_option
 
 # song
 artworkNT = nt("Artwork", "normal beyond") # artwork
