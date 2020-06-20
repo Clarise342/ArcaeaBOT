@@ -60,7 +60,7 @@ async def loop():
   elif pI == 6: v = f"このBOTの開発者はClarice#0920です"
   elif pI == 7: v = f"Black FateとWorld Extendの楽曲を追加しました"
   await bot.change_presence(activity=dc.Game(name=v))
-  pI += 1 if pI != 3 else -3
+  pI += 1 if pI != 7 else -7
   
 @bot.command()
 async def help(ctx):
@@ -76,7 +76,7 @@ async def help(ctx):
   e.add_field(name="set",value="設定パネルを表示します",inline=False)
   e.set_author(name="ヘルプ",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
-  await ctx.send(embed=e)
+  await ctx.send(embed=e,delete_after=60)
   
 @bot.command()
 async def slist(ctx, *args):
@@ -97,7 +97,7 @@ async def slist(ctx, *args):
   e.timestamp = dt.utcnow()
   e.set_author(name="楽曲リスト",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
-  await ctx.send(embed=e)
+  await ctx.send(embed=e,delete_after=60)
   SLs[0], SLs[1], SLs[2] = None, None, None
     
 @bot.command()
@@ -130,14 +130,14 @@ async def sinfo(ctx, *, name=None):
     emojis, embeds, page = ["➡️","⬅️"], [e,b], 0
     m = await ctx.send(embed=embeds[0])
     while not bot.is_closed():
-      await m.edit(embed=embeds[page])
+      await m.edit(embed=embeds[page],delete_after=60)
       await m.add_reaction(emojis[page])
       r = await bot.wait_for('reaction_add', check=lambda r, u: u == ctx.author and str(r.emoji) in emojis)
       await m.clear_reactions()
       if str(r[0]) == "➡️": page = 1
       else: page = 0
   else:
-    await ctx.send(embed=e)
+    await ctx.send(embed=e,delete_after=60)
   
 @bot.command()
 async def pinfo(ctx, *, name=None):
@@ -157,7 +157,7 @@ async def pinfo(ctx, *, name=None):
   e.set_author(name="❖ パートナーの情報 ❖",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
   e.set_image(url=partner.image)
-  await ctx.send(embed=e)
+  await ctx.send(embed=e,delete_after=60)
   
 @bot.command()
 async def sselect(ctx, count=1):
