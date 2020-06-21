@@ -271,5 +271,9 @@ async def on_ready():
   await ch.send(embed=sn)
   print("起動しました")
   loop.start()
-                        
+                      
+@bot.event
+async def on_reaction_add(r, u):
+  print(r.id)
+                       
 bot.run(token)
