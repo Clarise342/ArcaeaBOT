@@ -273,8 +273,8 @@ async def on_ready():
   loop.start()
                       
 @bot.event
-async def on_reaction_add(r, u):
-  print(r.id)
+async def on_reaction_add(reaction, user):
+  print(reaction.emoji.id)
                   
 bot.add_listener(on_reaction_add)
 bot.run(token)
