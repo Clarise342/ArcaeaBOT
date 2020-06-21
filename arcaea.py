@@ -274,7 +274,7 @@ async def on_ready():
                       
 @bot.event
 async def on_reaction_add(reaction, user):
-  print(reaction.emoji.id)
+  ch = bot.get_channel(723600070284673036)
+  await ch.send(reaction.emoji.id)
                   
-bot.add_listener(on_reaction_add)
 bot.run(token)
