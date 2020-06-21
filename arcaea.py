@@ -274,7 +274,7 @@ async def on_ready():
                       
 @bot.event
 async def on_reaction_add(reaction, user):
-  ch = bot.get_channel(723600070284673036)
-  await ch.send(reaction.emoji.id)
+  if reaction.emoji.id == 723169353423519834:
+    await reaction.message.delete()
                   
 bot.run(token)
