@@ -11,18 +11,18 @@ with open(ROOT / 'requirements.txt', 'r', encoding='utf-8') as f:
 
 setup(
     name='arcaea',
-    author='Clarice342',
-    url='https://github.com/Starwort/discord.gui',
+    author='Clarise342',
+    url='https://github.com/Clarise342/discordpy-startup',
 
-    license='GNU GPL 3',
-    description='A discord.py extension providing a GUI interface to monitor the bot and modify command settings',
+    license='MIT LICENSE',
+    description='Arcaea',
     project_urls={
-        'Code': 'https://github.com/Starwort/discord.gui',
+        'Code': 'https://github.com/Clarise342/discordpy-startup',
         'Issue tracker': 'https://github.com/Starwort/discord.gui/issues'
     },
 
-    version='1.0.2',
-    packages=['discord_gui'],
+    version='1.0.0',
+    packages=['Arcaea'],
     include_package_data=True,
     install_requires=REQUIREMENTS,
     python_requires='>=3.6.0',
