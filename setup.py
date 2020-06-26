@@ -22,7 +22,7 @@ setup(
     },
 
     version='1.0.0',
-    packages=['Arcaea'],
+    packages=['discordpy-startup'],
     include_package_data=True,
     install_requires=REQUIREMENTS,
     python_requires='>=3.6.0',
