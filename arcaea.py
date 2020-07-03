@@ -17,7 +17,7 @@ artworkNT = nt("Artwork", "normal beyond") # artwork
 level = nt("Level", "PAST PRESENT FUTURE BEYOND") # レベル
 notes = nt("Notes", "PAST PRESENT FUTURE BEYOND") # ノーツ数
 constant = nt("Constant", "PAST PRESENT FUTURE BEYOND") # 譜面定数
-song = nt("Song", "name side pack artwork bpm composer level notes") # song_info
+song = nt("Song", "name side pack artwork bpm composer level notes constant") # song_info
 
 # partner
 skill = nt("Skill", "name description awaken") # skill
