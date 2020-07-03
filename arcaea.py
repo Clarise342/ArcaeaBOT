@@ -114,7 +114,7 @@ async def sinfo(ctx, *, name=None):
   e.timestamp = dt.utcnow()
   e.add_field(name="◇ BPM",value=f"{song.bpm}",inline=False)
   e.add_field(name="◇ 作曲者",value=f"{song.composer}",inline=False)
-  e.add_field(name="◇ 難易度とノーツ数、譜面定数(PST)",value=f"{song.level.PAST}({song.constant.PAST})\nノーツ数 `{song.notes.PAST}` 1ノート最高点 `{round(10000000 / int(song.notes.PAST), 3)}`",inline=False)
+  e.add_field(name="◇ 難易度とノーツ数、譜面定数(PST)",value=f"レベル: {song.level.PAST}, 譜面定数: {song.constant.PAST})\nノーツ数: `{song.notes.PAST}`, 1ノート最高点: `{round(10000000 / int(song.notes.PAST), 3)}`",inline=False)
   e.add_field(name="◇ 難易度とノーツ数、譜面定数(PRS)",value=f"{song.level.PRESENT}({song.constant.PRESENT})\nノーツ数 `{song.notes.PRESENT}` 1ノート最高点 `{round(10000000 / int(song.notes.PRESENT), 3)}`",inline=False)
   e.add_field(name="◇ 難易度とノーツ数、譜面定数(FTR)",value=f"{song.level.FUTURE}({song.constant.FUTURE})\nノーツ数 `{song.notes.FUTURE}` 1ノート最高点 `{round(10000000 / int(song.notes.FUTURE), 3)}`",inline=False)
   e.set_author(name="❖ 曲の情報(PST･PRS･FTR) ❖",icon_url=bot.user.avatar_url)
