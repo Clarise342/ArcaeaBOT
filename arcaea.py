@@ -14,8 +14,9 @@ po = {"ne":"全てが対象","t":[],"s":[]} # partner_option
 
 # song
 artworkNT = nt("Artwork", "normal beyond") # artwork
-level = nt("Level", "PAST PRESENT FUTURE BEYOND") # levels
-notes = nt("Notes", "PAST PRESENT FUTURE BEYOND") # notes
+level = nt("Level", "PAST PRESENT FUTURE BEYOND") # レベル
+notes = nt("Notes", "PAST PRESENT FUTURE BEYOND") # ノーツ数
+constant = nt("Constant", "PAST PRESENT FUTURE BEYOND") # 譜面定数
 song = nt("Song", "name side pack artwork bpm composer level notes") # song_info
 
 # partner
@@ -28,7 +29,7 @@ with open("arcaea.json", "r", encoding="utf-8") as f:
   data = json.load(f) # arcaea_data_add
 
 # to_namedtuple
-dataS = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], level(x[6][0], x[6][1], x[6][2], x[6][3]), notes(x[7][0],x[7][1],x[7][2],x[7][3])), data["songs"])) # song
+dataS = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], level(x[6][0], x[6][1], x[6][2], x[6][3]), notes(x[7][0],x[7][1],x[7][2],x[7][3]), constant(x[8][0],x[8][1],x[8][2],x[8][3])), data["songs"])) # song
 dataPN = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["normal"])) # partner_normal
 dataPE = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["last"])) # partner_event
 
@@ -113,9 +114,9 @@ async def sinfo(ctx, *, name=None):
   e.timestamp = dt.utcnow()
   e.add_field(name="◇ BPM",value=f"{song.bpm}",inline=False)
   e.add_field(name="◇ 作曲者",value=f"{song.composer}",inline=False)
-  e.add_field(name="◇ 難易度とノーツ数(PAST)",value=f"{song.level.PAST} | {song.notes.PAST}\n1ノート最高点 {round(10000000 / int(song.notes.PAST), 3)}",inline=False)
-  e.add_field(name="◇ 難易度とノーツ数(PRESENT)",value=f"{song.level.PRESENT} | {song.notes.PRESENT}\n1ノート最高点 {round(10000000 / int(song.notes.PRESENT), 3)}",inline=False)
-  e.add_field(name="◇ 難易度とノーツ数(FUTURE)",value=f"{song.level.FUTURE} | {song.notes.FUTURE}\n1ノート最高点 {round(10000000 / int(song.notes.FUTURE), 3)}",inline=False)
+  e.add_field(name="◇ 難易度とノーツ数、譜面定数(PST)",value=f"{song.level.PAST}({song.constant.PAST})\nノーツ数 `{song.notes.PAST}` 1ノート最高点 `{round(10000000 / int(song.notes.PAST), 3)}`",inline=False)
+  e.add_field(name="◇ 難易度とノーツ数、譜面定数(PRS)",value=f"{song.level.PRESENT}({song.constant.PRESENT})\nノーツ数 `{song.notes.PRESENT}` 1ノート最高点 `{round(10000000 / int(song.notes.PRESENT), 3)}`",inline=False)
+  e.add_field(name="◇ 難易度とノーツ数、譜面定数(FTR)",value=f"{song.level.FUTURE}({song.constant.FUTURE})\nノーツ数 `{song.notes.FUTURE}` 1ノート最高点 `{round(10000000 / int(song.notes.FUTURE), 3)}`",inline=False)
   e.set_author(name="❖ 曲の情報(PST･PRS･FTR) ❖",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
   e.set_image(url=song.artwork.normal)
@@ -124,7 +125,7 @@ async def sinfo(ctx, *, name=None):
     b.timestamp = dt.utcnow()
     b.add_field(name="❖ BPM",value=f"{song.bpm}",inline=False)
     b.add_field(name="❖ 作曲者",value=f"{song.composer}",inline=False)
-    b.add_field(name="❖ 難易度とノーツ数(BEYOND)",value=f"{song.level.BEYOND} | {song.notes.BEYOND}\n1ノート最高点 {round(10000000 / int(song.notes.BEYOND), 3)}",inline=False)
+    b.add_field(name="❖ 難易度とノーツ数、譜面定数(BYD)",value=f"{song.level.BEYOND} | {song.notes.BEYOND}\n1ノート最高点 {round(10000000 / int(song.notes.BEYOND), 3)}",inline=False)
     b.set_author(name="◆ 曲の情報(BYD) ❖",icon_url=bot.user.avatar_url)
     b.set_footer(text=f"送信者 : {ctx.author.name}")
     b.set_image(url=song.artwork.beyond)
