@@ -17,7 +17,8 @@ artworkNT = nt("Artwork", "normal beyond") # artwork
 level = nt("Level", "PAST PRESENT FUTURE BEYOND") # レベル
 notes = nt("Notes", "PAST PRESENT FUTURE BEYOND") # ノーツ数
 constant = nt("Constant", "PAST PRESENT FUTURE BEYOND") # 譜面定数
-song = nt("Song", "name side pack artwork bpm composer level notes constant") # song_info
+chart = nt("ChartDesigner", "PAST PRESENT FUTURE BEYOND") # 譜面製作者
+song = nt("Song", "name side pack artwork bpm composer artworker chart level notes constant") # song_info
 
 # partner
 skill = nt("Skill", "name description awaken") # skill
@@ -29,7 +30,7 @@ with open("arcaea.json", "r", encoding="utf-8") as f:
   data = json.load(f) # arcaea_data_add
 
 # to_namedtuple
-dataS = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], level(x[6][0], x[6][1], x[6][2], x[6][3]), notes(x[7][0],x[7][1],x[7][2],x[7][3]), constant(x[8][0],x[8][1],x[8][2],x[8][3])), data["songs"])) # song
+dataS = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], x[6], chart(x[7][0], x[7][1], x[7][2], x[7][3]), level(x[8][0], x[8][1], x[8][2], x[8][3]), notes(x[9][0],x[9][1],x[9][2],x[9][3]), constant(x[10][0],x[10][1],x[10][2],x[10][3])), data["songs"])) # song
 dataPN = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["normal"])) # partner_normal
 dataPE = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["last"])) # partner_event
 
