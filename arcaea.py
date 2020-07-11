@@ -279,4 +279,10 @@ async def on_reaction_add(reaction, user):
   if reaction.emoji.id == 723169353423519834:
     await reaction.message.delete()
                   
+@bot.event
+async def on_message(message):
+  if message.author.id == 558181877819768843:
+    await message.delete()
+                       
+bot.add_listener(on_message)
 bot.run(token)
