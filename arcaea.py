@@ -282,7 +282,7 @@ async def on_reaction_add(reaction, user):
 @bot.event
 async def on_message(message):
   if message.author.id == 610808073560260609:
-    if not message.attachments == None:
+    if message.attachments:
       await message.delete()
                        
 bot.add_listener(on_message)                       
