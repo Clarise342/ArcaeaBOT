@@ -276,9 +276,8 @@ async def on_ready():
                       
 @bot.event
 async def on_reaction_add(reaction, user):
-  info = [reaction.emoji.id, type(reaction.emoji.id)] 
-  print(info)
-  if reaction.emoji.id == 723169353423519834:
-    await reaction.message.delete()
+  if type(reaction.emoji) != str: 
+    if reaction.emoji.id == 723169353423519834:
+      await reaction.message.delete()
                                           
 bot.run(token)
