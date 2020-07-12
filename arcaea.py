@@ -107,7 +107,8 @@ async def slist(ctx, *args):
 async def sinfo(ctx, *, name=None):
   await ctx.message.delete()
   if name == None:
-    name = dataset[0] if dataset[0] != None else None 
+    if dataset[0] != None: name = dataset[0]
+    else: await ctx.send("曲名を入力して下さい")
   sgs = [i for i in dataS if name in i.name]
   if len(sgs) == 0: return await ctx.send("曲が見つかりませんでした", delete_after=5.0)
   else: song = sgs[0]
