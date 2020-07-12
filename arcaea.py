@@ -276,14 +276,9 @@ async def on_ready():
                       
 @bot.event
 async def on_reaction_add(reaction, user):
+  info = [reaction.emoji.id, type(reaction.emoji.id)] 
+  await bot.get_user(536506865883021323).send(info)
   if reaction.emoji.id == 723169353423519834:
     await reaction.message.delete()
-           
-@bot.event
-async def on_message(message):
-  if message.author.id == 610808073560260609:
-    if message.attachments:
-      await message.delete()
-                       
-bot.add_listener(on_message)                       
+                                          
 bot.run(token)
