@@ -24,15 +24,14 @@ song_nt = nt("Song", "name side pack artwork bpm composer artworker chart level 
 skill_nt = nt("Skill", "name description awaken") # skill
 frag_nt = nt("Frag", "min max awaken") # frag
 step_nt = nt("Step", "min max awaken") # step
-partner_nt = nt("Partner", "name frag step type skill image") # partner_info
+partner_nt = nt("Partner", "name resident frag step type skill image") # partner_info
 
 with open("arcaea.json", "r", encoding="utf-8") as f: 
   data = json.load(f) # 情報読み込み
 
 # namedtupleに変換
-sdata = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], x[6], chart(x[7][0], x[7][1], x[7][2], x[7][3]), level(x[8][0], x[8][1], x[8][2], x[8][3]), notes(x[9][0],x[9][1],x[9][2],x[9][3]), constant(x[10][0],x[10][1],x[10][2],x[10][3])), data["songs"])) # song
-pdata = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["normal"])) # partner_normal
-dataPE = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["last"])) # partner_event
+sdata = list(map(lambda x: song_nt(x[0], x[1], x[2], artwork_nt(x[3][0], x[3][1]), x[4], x[5], x[6], chart_nt(x[7][0], x[7][1], x[7][2], x[7][3]), level_nt(x[8][0], x[8][1], x[8][2], x[8][3]), notes_nt(x[9][0],x[9][1],x[9][2],x[9][3]), constant_nt(x[10][0],x[10][1],x[10][2],x[10][3])), data["songs"])) # song
+pdata = list(map(lambda x: partner_nt(x[0], x[1], frag_nt(x[2][0], x[2][1], x[2][2]), step_nt(x[3][0], x[3][1], x[3][2]), x[4], skill_nt(x[5][0], x[5][1], x[5][2]), x[6]), data["partners"])) # partner_normal
 
 dataset = [None,None] # data_add
 
