@@ -6,32 +6,32 @@ import discord as dc, json, random, sys, os, asyncio as ao
 bot = cmd.Bot(command_prefix="a@")
 bot.remove_command("help")
 
-# data settings...
-pI = 0 # precence_INDEX
-SLs = [None,None,None] # SongList_settings
-so = {"ip":[],"l":[],"s":None} # song_option
-po = {"ne":"全てが対象","t":[],"s":[]} # partner_option
+# 設定
+pindex = 0 # ステータス番号
+slset = [None,None,None] # "slist"での絞り込み
+sopt = {"ip":[],"l":[],"s":None} # "sselect"での絞り込み
+popt = {"ne":"全てが対象","t":[],"s":[]} # "pselect"での絞り込み
 
-# song
-artworkNT = nt("Artwork", "normal beyond") # artwork
-level = nt("Level", "PAST PRESENT FUTURE BEYOND") # レベル
-notes = nt("Notes", "PAST PRESENT FUTURE BEYOND") # ノーツ数
-constant = nt("Constant", "PAST PRESENT FUTURE BEYOND") # 譜面定数
-chart = nt("ChartDesigner", "PAST PRESENT FUTURE BEYOND") # 譜面製作者
-song = nt("Song", "name side pack artwork bpm composer artworker chart level notes constant") # song_info
+# 楽曲関連
+artwork_nt = nt("Artwork", "normal beyond") # artwork
+level_nt = nt("Level", "PAST PRESENT FUTURE BEYOND") # レベル
+notes_nt = nt("Notes", "PAST PRESENT FUTURE BEYOND") # ノーツ数
+constant_nt = nt("Constant", "PAST PRESENT FUTURE BEYOND") # 譜面定数
+chart_nt = nt("ChartDesigner", "PAST PRESENT FUTURE BEYOND") # 譜面製作者
+song_nt = nt("Song", "name side pack artwork bpm composer artworker chart level notes constant") # song_info
 
-# partner
-skill = nt("Skill", "name description awaken") # skill
-frag = nt("Frag", "min max awaken") # frag
-step = nt("Step", "min max awaken") # step
-partner = nt("Partner", "name frag step type skill image") # partner_info
+# パートナー関連
+skill_nt = nt("Skill", "name description awaken") # skill
+frag_nt = nt("Frag", "min max awaken") # frag
+step_nt = nt("Step", "min max awaken") # step
+partner_nt = nt("Partner", "name frag step type skill image") # partner_info
 
 with open("arcaea.json", "r", encoding="utf-8") as f: 
-  data = json.load(f) # arcaea_data_add
+  data = json.load(f) # 情報読み込み
 
-# to_namedtuple
-dataS = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], x[6], chart(x[7][0], x[7][1], x[7][2], x[7][3]), level(x[8][0], x[8][1], x[8][2], x[8][3]), notes(x[9][0],x[9][1],x[9][2],x[9][3]), constant(x[10][0],x[10][1],x[10][2],x[10][3])), data["songs"])) # song
-dataPN = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["normal"])) # partner_normal
+# namedtupleに変換
+sdata = list(map(lambda x: song(x[0], x[1], x[2], artworkNT(x[3][0], x[3][1]), x[4], x[5], x[6], chart(x[7][0], x[7][1], x[7][2], x[7][3]), level(x[8][0], x[8][1], x[8][2], x[8][3]), notes(x[9][0],x[9][1],x[9][2],x[9][3]), constant(x[10][0],x[10][1],x[10][2],x[10][3])), data["songs"])) # song
+pdata = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["normal"])) # partner_normal
 dataPE = list(map(lambda x: partner(x[0], frag(x[1][0], x[1][1], x[1][2]), step(x[2][0], x[2][1], x[2][2]), x[3], skill(x[4][0], x[4][1], x[4][2]), x[5]), data["partners"]["last"])) # partner_event
 
 dataset = [None,None] # data_add
