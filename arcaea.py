@@ -9,8 +9,8 @@ bot.remove_command("help")
 # 設定
 pindex = 0 # ステータス番号
 slset = [None,None,None] # "slist"での絞り込み
-sopt = {"ip":[],"l":[],"s":None} # "sselect"での絞り込み
-popt = {"ne":"全てが対象","t":[],"s":[]} # "pselect"での絞り込み
+sopt = {"ignorepacks":[],"levels":[],"side":None,"illustrators":[],"composers":[],"notes_limit":["0","1600"],"constant_limit"["1.0","12.0"]} # "sselect"での絞り込み
+popt = {"resident":"全てが対象","step_limit":["0","200"],"frag_limit":["0","200"],"types":[],"skills":[]} # "pselect"での絞り込み
 
 # 楽曲関連
 artwork_nt = nt("Artwork", "normal beyond") # artwork
@@ -18,7 +18,7 @@ level_nt = nt("Level", "PAST PRESENT FUTURE BEYOND") # レベル
 notes_nt = nt("Notes", "PAST PRESENT FUTURE BEYOND") # ノーツ数
 constant_nt = nt("Constant", "PAST PRESENT FUTURE BEYOND") # 譜面定数
 chart_nt = nt("ChartDesigner", "PAST PRESENT FUTURE BEYOND") # 譜面製作者
-song_nt = nt("Song", "name side pack artwork bpm composer artworker chart level notes constant") # song_info
+song_nt = nt("Song", "name side pack artwork bpm composer illustrator chart level notes constant") # song_info
 
 # パートナー関連
 skill_nt = nt("Skill", "name description awaken") # skill
@@ -33,19 +33,20 @@ with open("arcaea.json", "r", encoding="utf-8") as f:
 sdata = list(map(lambda x: song_nt(x[0], x[1], x[2], artwork_nt(x[3][0], x[3][1]), x[4], x[5], x[6], chart_nt(x[7][0], x[7][1], x[7][2], x[7][3]), level_nt(x[8][0], x[8][1], x[8][2], x[8][3]), notes_nt(x[9][0],x[9][1],x[9][2],x[9][3]), constant_nt(x[10][0],x[10][1],x[10][2],x[10][3])), data["songs"])) # song
 pdata = list(map(lambda x: partner_nt(x[0], x[1], frag_nt(x[2][0], x[2][1], x[2][2]), step_nt(x[3][0], x[3][1], x[3][2]), x[4], skill_nt(x[5][0], x[5][1], x[5][2]), x[6]), data["partners"])) # partner_normal
 
-dataset = [None,None] # data_add
+dataset = [None,None] # 臨時保存
 
-token = os.environ['TOKEN'] # token_read
+token = os.environ['TOKEN'] # トークン読み込み
 
-# setting_dict
-main = {"s-ip":2,"s-l":3,"s-s":4,"p-ne":5,"p-t":6,"p-s":7}
-dip = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","AV":"Ambivalent Vision","CS":"Crimson Solace","CM":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
-dl = {"7":"7","8":"8","9":"9","9+":"9","10":"10","10+":"10+","11":"11"} # levels
-dss = {"N":None,"L":"光","C":"対立"} # sides
-cne = {"全てが対象":None,"ノーマルのみ":dataPN,"イベントのみ":dataPE}
-dne = {"N":"全てが対象","on":"ノーマルのみ","oe":"イベントのみ"} # normal_or_event
-dpt = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
-dps = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
+# 設定に対する内容辞典
+first = {"s-ip":2,"s-l":3,"s-s":4,"p-ne":5,"p-t":6,"p-s":7}
+ignorepacks = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","AV":"Ambivalent Vision","CS":"Crimson Solace","CM":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
+sides = {"all":None,"light":"光","conflict":"対立"} # side
+composers = ['T2Kazuya', 'U-ske', 'Tiny Minim', 'chitose', 'HyuN', '旅人E', 'Sound Souler', 'Combatplayer', 'Aire', 'ak+q', 'DIA', 'U-ske (feat. lueur)', 'REDSHiFT', 'しーけー', 'Cosmograph', 'アリスシャッハと魔法の楽団', 'cYsmix', 'Mameyudoufu', '7mai', 'Farhan', 'Kolaa', 'Arch vs n3pu', 'ARForest', 'Nhato', 'Puru', 'sky_delta', 'REDALiCE', '翡乃イスカ', 'Saiph', 'Ryazan', 'MYTK', 'void', 'Frums', 'uma', '橘花音', 'Mili', 'a-zu-ra', 'ak+q', 'Sennzai', 'WHITEFISTS', 'Blacklolita', 'Kobaryo', 'YUKIYANGI', 'Iris', 'Sta', 'Virtual Self', 'お月さま交響曲', 'Rabbit House', 'Akira Complex', 'Soleily', '溝口ゆうま', '大瀬良あい', 'Laur', 'THB', 'MYUKKE.', 'ginkiha', 'PSYQUI', 'Street', 'Maozon', 'EBIMAYO', 'Zekk', 'モリモリあつし', 'Yunosuke', 'Ras', 'Junk', 'Mitomoro', 'Missionary', 'A.SAKA', '南ゆに', 'Jun Koroda', 'Noah', 'Sampling Masters MEGA', 'Missive New krew', 'Syepias', '黒皇帝', 'Tanchiky', 'cosmograph', 'Silentroom', 'Yamajet', 'DJ Noriken', 'CK', 'siqlo', 'Polysha', 't+pazolite', 'TQ☆', 'ikaruga_nex', 'Feryquitous', 'Yooh', 'nitro', 'かゆき', 'gmtn.', 'Apo11o program', 'Sakuzyo', 'IOSYS TRAX (uno with. ちょこ)', 'The SHAFT', 'ETIA.', 'ぺのれり', 'Jun Kuroda', 'からとpαnchii少年 feat. はるの', 'siromaru', 'TANO*C Sound Team', 'wa.', 'DJ Myosuke', '3R2', 'Mastermind', 'nora2r', 'DJ Genki', 'Gram', 'LeaF', 'Powerless', 'HATE', 'BACO', 'Aoi', 'P*Light', 'HITECH NINJA', 'MASAKI', 'WAiKURO', 'jioyi', 'INNOCENT NOISE', 'Team Grimoire', 'xi', 'Sta', 'Juggernaut.', 'cranky', 'cybermiso', '光吉猛修', 'Edelritter', 'void (Mournfinale)', 'かめりあ(EDP)', 'USAO', 'Cranky']
+illustrator = ['T2Kazuya', 'かぐやのもちづき', '不明', 'Khronetic', 'Tagtraume', 'NanoKun', 'ましろみ のあ', 'Doomfest', '雨風雪夏', 'Koyama Mai', 'Ancy', '橙乃遥', '黒刃愛, grosspanda', 'yoshimo', 'NTFS', 'アリスシャッハと魔法の楽団', 'Eric Dagley', 'DJ Poyoshi', 'Refla', 'Saga', 'キッカイキ', 'Shionty', 'SoU', 'rtil', 'mins', 'VMWT', 'クルエルGZ', 'deronoitz, Megu', '織日ちひろ', '未早', 'RiceGnat', 'softmode', 'Mechari', 'Frums', 'そゐち', 'シエラ', 'terry & nakanome', '釜飯轟々丸', 'きらばがに', 'お月さま交響曲', 'YEONIE', 'SERXPHIS', 'CinEraLiA', 'kobuta', 'Hanamori Hiro', 'SiNoe', 'Hie', '巻羊', 'wacca', 'アサヤ', 'EB十', 'Nano Kun', '白鳥怜', '岩十', 'LAM', 'mirimo', 'Photonskyto', 'deel', 'unKn', 'mokeo', 'SKT', '和音ハカ', 'すずなし', 'GreeN', 'HenryTz', '出前', '魔界の住人', '八葉', 'ふぇいフリック', '吠L', '久賀フーナ', 'hideo', 'レアル', 'fixro2n', 'リウイチ', 'Sta', '百舌谷', 'トロ3', 'BerryVerrine', 'iimo', 'yusi.', '駿', 'スズカミ', 'NAGU', '姐川', 'nonokuro', 'horte', '望月けい', 'Rolua', 'KEI']
+chart = [7]['Nitro', '-', 'k//eternal', 'Toast', 'Nitr∞', 'Kuro', '石樂', '東星', '', 'Taro', '!', 'nitro', 'toast', '不明', 'chaos//engine', 'N↓TRO', 'Haruba', 'chartaesthesia', 'Nuke', 'N[I]TRO', 'TOAST', 'KURORAK', 'N', 'K//urorak', 'Kero', 'CERiNG', ' NTRO', 'TaroNukeΔ', 'TΔroNuke', 'Nitro vanquish Toaster.', '週刊Toaster', '-chartaesthesia-', '月刊Toaster', '∅', 'DX譜面作者フルメタルNitro', 'THE TOAST', 'Shirorak', '恋のToaster', 'Arcaea Team', '過去の緑', '現在の緑', '未来の緑', 'Exschwation', 'NitroNukeδ', '₸öα$†ε₹', 'Astronomer (Toaster + 東星)', 'Requiem TaroNuke', 'Black Tea', '夜浪', 'Darkest Dream', 'Nitro「Katastrophe」', 'NiTRO', '東超新星', 'τoastεr', 'Zero Sky', '東星※紅空', 'NITRO', '東星', '闇運', '東星※星の宝石', '夜浪 - Apocalypse', 'Arcaea Charting Team【Royal Flash】', 'Arcaea Charting Teamからの挑戦状', 'Prelude - Ouverture', 'Convergence - Intermezzo', 'Onslaught - Crescendo', 'Finale - The Tempest', '夜浪[Spherical]', 'toaster + nitro', '夜浪「月食」', '夜浪「現在」', '先史の機械神【夜浪】', '東星※太陽', '夜浪 vs Nitro', '処刑人【東星】', '夜浪 VS 東星 "Convergence"', 'The Monolith', '夜浪、旧支配者', '夜浪 X 東星 "The Lost"', '東星※コラプサー', 'Groove 東星', 'Volatile Paradox', 'Absolute Paradox', 'Paradox Zero', '迷路第一層', '迷路第二層', '迷路深層', '最強FUMEN (夜浪 ft. 東星)']
+display_resident = {"all":"全てのパートナーを含みます","normal":"現在入手可能なパートナーのみを含みます","event":"イベントでのみ入手可能なパートナーのみを含みます"} # 常駐絞り込み
+types = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
+skills = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
 
 # ...settings end
 
@@ -200,9 +201,9 @@ async def setting(ctx):
   await ctx.message.delete()
   mp = dc.Embed(title="操作を以下から選んで下さい",description="`x`: 終了\n`ns`: 現在の設定を確認\n`s-ip`: 選曲 | 除外パック\n`s-l`: 選曲 | レベル\n`s-s`: 選曲 | サイド\n`p-ne`: パートナー | ノーマル/イベント\n`p-t`: パートナー | タイプ\n`p-s`: パートナー | スキル",color=0x74596d)
   ip = dc.Embed(title="以下から除外、追加するパックを選択してください",description="`Ae`: Archive\n`Aa`: Arcaea\n`WE`: World Extend\n`BF`: Black Fate\n`AP`: Adverse Prelude\n`LS`: Luminous Sky\n`VL`: Vicious Labyrinth\n`EC`: Eternal Core\n`SR`: Sunset Radiance\n`AR`: Absolute Reason\n`BE`: Binary Enfold\n`AV`: Ambivalent Vision\n`CS`: Crimson Solace\n`CM`: CHUNITHM\n`GC`: Groove Coaster\n`TS`: Tone Sphere\n`La`: Lanota\n`Dx`: Dynamix",color=0x74596d)
-  l = dc.Embed(title="以下から追加、除外する難易度を選択してください",description="`6`: 6\n`7`: 7\n`8`: 8\n`9`: 9\n`9+`: 9+\n`10`: 10\n`10+`: 10+\n`11`: 11",color=0x74596d)
-  ss = dc.Embed(title="以下からサイドを選択してください",description="`N`: なし\n`L`: 光のみ\n`C`: 対立のみ",color=0x74596d)
-  ne = dc.Embed(title="以下から選択してください",description="`N`: なし\n`on`: ノーマルのみ\n`oe`: イベントのみ",color=0x74596d)
+  l = dc.Embed(title="以下から追加、除外する難易度を選択してください",description="`7`: 7\n`8`: 8\n`9`: 9\n`9+`: 9+\n`10`: 10\n`10+`: 10+\n`11`: 11",color=0x74596d)
+  ss = dc.Embed(title="以下から絞り込むサイドを選択してください",description="`all`: 全て\n`light`: 光のみ\n`conflict`: 対立のみ",color=0x74596d)
+  ne = dc.Embed(title="以下から選択してください",description="`all`: 全て\n`normal`: ノーマルのみ\n`event`: イベントのみ",color=0x74596d)
   t = dc.Embed(title="以下から追加、除外するタイプを選択してください",description="`B`: バランス\n`S`: サポート\n`C`: チャレンジ\n`?`: ???",color=0x74596d)
   ps = dc.Embed(title="以下から追加、除外するスキルを選択してください",description="`-`: -\n`E`: Easy\n`H`: Hard\n`V`: Visual\n`M`: ミラー\n`O`: オーバーフロー\n`C`: チュウニズム\n`A`: Audio",color=0x74596d)
   p, es = 0, [mp, None, ip, l, ss, ne, t, ps]
@@ -235,8 +236,8 @@ async def setting(ctx):
         else: pass
       else:
         if p == 2:
-          if m.content in dip:
-            if dip[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
+          if m.content in ignorepacks:
+            if ignorepacks[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
             else: so["ip"].append(dip[m.content])
           else: pass
         elif p == 3:
