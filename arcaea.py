@@ -9,7 +9,7 @@ bot.remove_command("help")
 # 設定
 pindex = 0 # ステータス番号
 slset = [None,None,None] # "slist"での絞り込み
-sopt = {"ignorepacks":[],"ignoresongs":[],"levels":[],"side":None,"illustrators":[],"composers":[],"chart_creators":[]"notes_limit":[0,1600],"constant_limit":[1.0,12.0]} # "sselect"での絞り込み
+sopt = {"ignorepacks":[],"ignoresongs":[],"levels":[],"side":None,"illustrators":[],"composers":[],"chart_creators":[],"notes_limit":[0,1600],"constant_limit":[1.0,12.0]} # "sselect"での絞り込み
 popt = {"resident":"全てが対象","step_limit":[0,200],"frag_limit":[0,200],"types":[],"skills":[]} # "pselect"での絞り込み
 
 # 楽曲関連
@@ -200,71 +200,12 @@ async def pselect(ctx):
 @bot.command(name="set")
 async def setting(ctx):
   await ctx.message.delete()
-  mp = dc.Embed(title="操作を以下から選んで下さい",description="`x`: 終了\n`ns`: 現在の設定を確認\n`s-ip`: 選曲 | 除外パック\n`s-l`: 選曲 | レベル\n`s-s`: 選曲 | サイド\n`p-ne`: パートナー | ノーマル/イベント\n`p-t`: パートナー | タイプ\n`p-s`: パートナー | スキル",color=0x74596d)
-  ip = dc.Embed(title="以下から除外、追加するパックを選択してください",description="`Ae`: Archive\n`Aa`: Arcaea\n`WE`: World Extend\n`BF`: Black Fate\n`AP`: Adverse Prelude\n`LS`: Luminous Sky\n`VL`: Vicious Labyrinth\n`EC`: Eternal Core\n`SR`: Sunset Radiance\n`AR`: Absolute Reason\n`BE`: Binary Enfold\n`AV`: Ambivalent Vision\n`CS`: Crimson Solace\n`CM`: CHUNITHM\n`GC`: Groove Coaster\n`TS`: Tone Sphere\n`La`: Lanota\n`Dx`: Dynamix",color=0x74596d)
-  l = dc.Embed(title="以下から追加、除外する難易度を選択してください",description="`7`: 7\n`8`: 8\n`9`: 9\n`9+`: 9+\n`10`: 10\n`10+`: 10+\n`11`: 11",color=0x74596d)
-  ss = dc.Embed(title="以下から絞り込むサイドを選択してください",description="`all`: 全て\n`light`: 光のみ\n`conflict`: 対立のみ",color=0x74596d)
-  ne = dc.Embed(title="以下から選択してください",description="`all`: 全て\n`normal`: ノーマルのみ\n`event`: イベントのみ",color=0x74596d)
-  t = dc.Embed(title="以下から追加、除外するタイプを選択してください",description="`B`: バランス\n`S`: サポート\n`C`: チャレンジ\n`?`: ???",color=0x74596d)
-  ps = dc.Embed(title="以下から追加、除外するスキルを選択してください",description="`-`: -\n`E`: Easy\n`H`: Hard\n`V`: Visual\n`M`: ミラー\n`O`: オーバーフロー\n`C`: チュウニズム\n`A`: Audio",color=0x74596d)
-  p, es = 0, [mp, None, ip, l, ss, ne, t, ps]
-  msg = await ctx.send(embed=es[p])
-  while not bot.is_closed():
-    await msg.edit(embed=es[p])
-    try:
-      m = await bot.wait_for('message', timeout=40.0, check=lambda m: ctx.author == m.author)
-      await m.delete()
-      if p == 0:
-        if m.content == "x": return await msg.delete()
-        elif m.content == "ns":
-          Sip = ' '.join(so["ip"]) + "を除外" if len(so["ip"]) > 0 else "なし"
-          Sl = ' '.join(so["l"]) + "のみ" if len(so["l"]) > 0 else "全て"
-          Pt = ' '.join(po["t"]) + "のみ" if len(po["t"]) > 0 else "全て"
-          Ps = ' '.join(po["s"]) + "のみ" if len(po["s"]) > 0 else "全て"
-          if po["ne"] == None: Pne = "全てが対象"
-          else: Pne = "ノーマルのみ" if po["ne"] == dataPN else "イベントのみ"
-          ns = dc.Embed(color=0x74596d)
-          ns.timestamp = dt.utcnow()
-          ns.add_field(name="**◇ 楽曲セレクト ◇**",value=f"・除外パック: {Sip}\n・レベル: {Sl}\n・サイド: {so['s']}",inline=False)
-          ns.add_field(name="**◇ パートナーセレクト ◇**",value=f"・セレクト対象: {Pne}\n・タイプ: {Pt}\n・スキル: {Ps}",inline=False)
-          ns.set_author(name="現在の設定",icon_url=bot.user.avatar_url)
-          ns.set_footer(text=f"送信者 : {ctx.author.name}")
-          es[1], p = ns, 1
-        elif m.content in main: p = main[m.content]
-        else: pass
-      elif p == 1:
-        if m.content in ["back","b"]: p = 0
-        else: pass
-      else:
-        if p == 2:
-          if m.content in ignorepacks:
-            if ignorepacks[m.content] in so["ip"]: del so["ip"][so["ip"].index(dip[m.content])]
-            else: so["ip"].append(dip[m.content])
-          else: pass
-        elif p == 3:
-          if m.content in dl:
-            if dl[m.content] in so["l"]: del so["l"][so["l"].index(dl[m.content])]
-            else: so["l"].append(dl[m.content])      
-          else: pass
-        elif p == 4:
-          if m.content in dss: so["s"] = dss[m.content]
-          else: pass
-        elif p == 5:
-          if m.content in dne: po["ne"] = dne[m.content]
-          else: pass
-        elif p == 6:
-          if m.content in dpt:
-            if dpt[m.content] in po["t"]: del po["t"][po["t"].index(dpt[m.content])]
-            else: po["t"].append(dpt[m.content])              
-          else: pass
-        elif p == 7:
-          if m.content in dps:
-            if dps[m.content] in po["s"]: del po["s"][po["s"].index(dps[m.content])]
-            else: po["s"].append(dps[m.content])              
-          else: pass
-        p = 0
-    except ao.TimeoutError: return await msg.delete()
- 
+  start_e = dc.Embed(title="【1】どうしますか？",description="**`end`** : 設定を終了します\n**`check`** : 現在の設定を確認します\n**`song`** : 楽曲自動選択に関する設定です\n**`partner`** : パートナー自動選択に関する設定です")
+  ssstart_e = dc.Embed(title="【2=S】次に設定項目を選択して下さい",description="**`ip`** : 除外/追加するパックを設定します\n**`is`** : 除外/追加する楽曲を設定します\n**`l`** : 対象とするレベルを設定します\n**`s`** : 対象とするサイドを設定します\n**`nl`** : 対象とするノーツ数の上下限を設定します\n**`cl`** : 対象とする譜面定数の上下限を設定します\n**`co`** : 対象とする作曲者を設定します\n**`il`** : 対象とするイラストレーターを設定します\n**`ch`** : 対象とする譜面製作者を設定します")
+  ignorepack_e = dc.Embed(title="【3=S-ip】次に以下から選択して下さい\n(以下短縮名称を使用してください)",description="`Ae`(Archive)  `Aa`(Arcaea)\n`WE`(World Extend)\n`BF`(Black Fate)\n`AP`(Adverse Prelude)\n`LS`(Luminous Sky)\n`VL`(Vicious Labyrinth)\n`EC`(Eternal Core)\n`SR`(Sunset Radiance)\n`AR`(Absolute Reason)\n`BE`(Binary Enfold)\n`Am`(Ambivalent Vision)\n`CS`(Crimson Solace)\n`CH`(CHUNITHM)\n`GC`(Groove Coaster)\n`TS`(Tone Sphere)\n`La`(Lanota)\n`Dx`(Dynamix)")
+  
+  psstart_e = dc.Embed(title="【2=P】次に設定項目を選択して下さい",description="**`p`** : 恒常・期間限定について設定します\n**`t`** : 対象とするタイプを設定します\n**`s`** : 対象とするスキルを設定します\n**`fl`** : 対象とするFRAGの上下限を設定します\n**`sl`** : 対象とするStepの上下限を設定します")
+      
 @bot.event
 async def on_ready():
   sn = dc.Embed(title="ArcaeaBOTが起動しました",color=0xBCF946)
