@@ -9,7 +9,7 @@ bot.remove_command("help")
 # 設定
 pindex = 0 # ステータス番号
 slset = [None,None,None] # "slist"での絞り込み
-sopt = {"ignorepacks":[],"ignoresongs":[],"levels":[[],[],[],[]],"side":None,"illustrators":[],"composers":[],"chart_creators":[],"notes_limit":[0,1600],"constant_limit":[1.0,12.0]} # "sselect"での絞り込み
+sopt = {"ignorepacks":[],"ignoresongs":[],"levels":[[],[],[],[]],"side":None,"illustrators":[],"composers":[],"chart_creators":[],"notes_limit":[[0,1600],[0,1600],[0,1600],[0,1600]],"constant_limit":[[1.0,12.0],[1.0,12.0],[1.0,12.0],[1.0,12.0]]} # "sselect"での絞り込み
 popt = {"resident":"全てが対象","step_limit":[0,200],"frag_limit":[0,200],"types":[],"skills":[]} # "pselect"での絞り込み
 
 # 楽曲関連
@@ -211,8 +211,13 @@ async def setting(ctx):
   lbyd_e = dc.Embed(title="【4=S-l-byd】次に数値を入力して下さい\n(下限 : 8 , 上限 : 11)")
   side_e = dc.Embed(title="【3=S-s】次に以下から選択して下さい",description="`all` : 全てを含みます\n`Light` : サイドを光のみにします\n`Conflict` : サイドを対立のみにします")
   noteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
-  constantlimit_e = dc.Embed(title="【3=S-cl】次に数値を2つ入力してください\n(・2つの数値は小数を含んでも構いません\n・2つの数値の間には半角空白を入れて下さい)")
-  composer_e = dc.Embed(title="【3=S-co】次に以下から選択して下さい\n※完全一致である必要はありません\n(類似する場合を除く)",description="T2Kazuya, chitose, a-zu-ra\n南ゆに, Sound Souler, U-ske\nlueur Tiny Minim Frums\nHyuN, 旅人E, REDSHiFT\nBlacklolita, しーけー, Arch\nn3pu, ARForest, Iris\ngmtn., Missionary, DIA\nAire, ak+q, WHITEFISTS\nSakuzyo, Jun Kuroda, Farhan\nKolaa, Puru, THB, Sta\nsky_delta, 翡野イスカ, お月さま交響曲', 'Rabbit House', 'Ryazan', 'Combatplayer', 'Soleily', 'Yooh', 'void', 'cYsmix', 'wa.', 'DJ Myosuke', '7mai', '3R2', 'Cosmograph', 'Mameyudoufu', 'uno', 'ちょこ', 'Silentroom', 'アリスシャッハと魔法の楽団', 'REDALiCE', 'siromaru', 't+pazolite', 'TQ☆', 'ikaruga_nex', 'Feryquitous', 'Sennzai', 'MYTK', 'Ras', 'BACO', '溝口ゆうま', '大瀬良あい', 'WHITEFIST', 'からとpαnchii少年', 'はるの', 'MYUKKE.', 'ginkiha', 'Sampling Masters MEGA', 'TANO*C Sound Team', 'USAO', 'DJ Genki', 'DJ Noriken', 'P*Light', 't*pazolite', '黒皇帝', 'Laur', 'Street', 'Maozon', 'Noah', '光吉猛修', 'Zekk', 'Apo11o program', 'ETIA.', 'HiTECH NINJA', 'Saiph', 'Virtual Self', 'HATE', 'Junk', 'Mitomoro', 'Mili', 'PSYQUI', 'Nitro', 'Missive New Krew', 'かゆき', 'Hyun', 'Syepias', 'jioyi', 'Tanchiky', 'xi', 'nora2r', 'Gram', 'YUKIYANAGI', 'Nhato', 'EBIMAYO', 'Yamajet', 'Powerless', 'Aoi', 'siqlo', 'モリモリあつし', 'Yunosuke', 'MASAKI', 'ぺのれり', 'Kobaryo', 'WAiKURO', 'Cranky', 'cybermiso', '翡乃イスカ', 'uma', 'LeaF', 'Polysha', '橘花音', 'Akira Complex', 'Juggernaut.', 'A.SAKA', 'Team Grimoire', 'かめりあ(EDP)', 'Edelritter']")
+  noteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
+  noteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
+  noteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
+  constnoteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
+  constnoteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
+  constnoteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
+  constnoteslimit_e = dc.Embed(title="【3=S-nl】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
   psstart_e = dc.Embed(title="【2=P】次に設定項目を選択して下さい",description="**`p`** : 恒常・期間限定について設定します\n**`t`** : 対象とするタイプを設定します\n**`s`** : 対象とするスキルを設定します\n**`fl`** : 対象とするFRAGの上下限を設定します\n**`sl`** : 対象とするStepの上下限を設定します")
       
 @bot.event
