@@ -233,6 +233,44 @@ async def setting(ctx):
   steplimit_e = dc.Embed(title="【3=P-sl】次に以下から選択して下さい",description="`initial` : Lv1 基準\n`highest` : Lv20 基準")
   slinitial_e = dc.Embed(title="【4=P-sl-il】次に数値を2つ入力して下さい\n(・2つの数値は整数でなくとも構いません\n・2つの数値の間には半角空白を入れて下さい)")
   slhighest_e = dc.Embed(title="【4=P-sl-ht】次に数値を2つ入力して下さい\n(・2つの数値は整数でなくとも構いません\n・2つの数値の間には半角空白を入れて下さい)")                      
+  
+  embeds = [start_e,
+            None,
+            ssstart_e,
+            ignorepack_e,
+            ignoresong_e,
+            level_e,
+            lpst_e,
+            lprs_e,
+            lftr_e,
+            lbyd_e,
+            side_e,
+            noteslimit_e,
+            nlpst_e,
+            nlprs_e,
+            nlftr_e,
+            nlbyd_e,
+            constantlimit_e,
+            clpst_e,
+            clprs_e,
+            clftr_e,
+            clbyd_e,
+            composer_e,
+            illustrator_e,
+            chart_creator_e,
+            psstart_e,
+            resident_e,
+            type_e,
+            skill_e,
+            flaglimit_e,
+            flinitial_e,
+            flhighest_e,
+            steplimit_e,
+            slinitial_e,
+            slhighest_e]
+                        
+  while not bot.is_closed():
+    msg = await bot.wait_for('message', timeout=60.0)
                         
 @bot.event
 async def on_ready():
