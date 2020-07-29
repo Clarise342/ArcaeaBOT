@@ -234,6 +234,7 @@ async def setting(ctx):
   slinitial_e = dc.Embed(title="【4=P-sl-il】次に数値を2つ入力して下さい\n(・2つの数値は整数でなくとも構いません\n・2つの数値の間には半角空白を入れて下さい)")
   slhighest_e = dc.Embed(title="【4=P-sl-ht】次に数値を2つ入力して下さい\n(・2つの数値は整数でなくとも構いません\n・2つの数値の間には半角空白を入れて下さい)")                      
   
+  page = 0
   embeds = [start_e,
             None,
             ssstart_e,
@@ -269,8 +270,15 @@ async def setting(ctx):
             slinitial_e,
             slhighest_e]
                         
+  emb = await ctx.send(embed=embeds[0])
   while not bot.is_closed():
-    msg = await bot.wait_for('message', timeout=60.0)
+    await emb.edit(embed=embeds[page])
+    try:
+      msg = await bot.wait_for('message', timeout=60.0, check=lambda m: m.author == ctx.author)
+      if page == 0:
+        if msg.content
+    except asyncio.TimeoutError:
+      await emb.delete()                  
                         
 @bot.event
 async def on_ready():
