@@ -276,7 +276,9 @@ async def setting(ctx):
     try:
       msg = await bot.wait_for('message', timeout=60.0, check=lambda m: m.author == ctx.author)
       if page == 0:
-        if msg.content
+        if msg.content == "end":
+          await emb.delete()
+          break
     except asyncio.TimeoutError:
       await emb.delete()                  
                         
