@@ -280,9 +280,9 @@ async def setting(ctx):
           await emb.delete()
           break
         if msg.content == "check":
-          ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4",description=f"除外パック : {' '.join(sopt['ignorepacks'])}\n除外楽曲 : {' '.join(sopt['ignoresongs'])}")
-          levels_e = dc.Embed(title="自動選択設定\n - 楽曲 2/4",description=f"レベル制限\n PAST基準 : {' '.join(sopt['levels'][0])}\n PRESENT基準 : {' '.join(sopt['levels'][1])}\n FUTURE基準 : {' '.join(sopt['levels'][2])}\n BEYOND基準 : {' '.join(sopt['levels'][3])}")
-          infos_e = dc.Embed(title="自動選択設定\n - 楽曲 4/4",description=f"サイド : {sopt['side']})\nその他情報制限\n 作曲者 : {' '.join(sopt['composers'])}\n イラストレーター : {' '.join(sopt['illustrators'])}\n 譜面製作者 : {' '.join(['chart_creators'])}")
+          ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4",description=f"**除外パック** : {' '.join(sopt['ignorepacks'])}\n**除外楽曲** : {' '.join(sopt['ignoresongs'])}")
+          levels_e = dc.Embed(title="自動選択設定\n - 楽曲 2/4",description=f"**レベル制限**\n `PAST基準` : {' '.join(sopt['levels'][0])}\n `PRESENT基準` : {' '.join(sopt['levels'][1])}\n `FUTURE基準` : {' '.join(sopt['levels'][2])}\n `BEYOND基準` : {' '.join(sopt['levels'][3])}")
+          infos_e = dc.Embed(title="自動選択設定\n - 楽曲 4/4",description=f"**サイド** : {sopt['side']}\n**その他情報制限**\n `作曲者` : {' '.join(sopt['composers'])}\n `イラストレーター` : {' '.join(sopt['illustrators'])}\n `譜面製作者` : {' '.join(sopt['chart_creators'])}")
           jopt = {
             "notes_limit":[
               [str(x) for x in sopt["notes_limit"][0]],
@@ -305,8 +305,8 @@ async def setting(ctx):
               [str(x) for x in popt["step_limit"][1]]
             ]
           }
-          limits_e = dc.Embed(title="自動選択設定\n - 楽曲 3/4",description=f"ノーツ数・譜面定数制限\n PAST基準 :\n  ノーツ数 : {' 〜 '.join(jopt['notes_limit'][0])}\n  譜面定数 : {' 〜 '.join(jopt['constant_limit'][0])}\n PRESENT基準 :\n  ノーツ数 : {' 〜 '.join(jopt['notes_limit'][1])}\n  譜面定数 : {' 〜 '.join(jopt['constant_limit'][1])}\n FUTURE基準 :\n  ノーツ数 : {' 〜 '.join(jopt['notes_limit'][2])}\n  譜面定数 : {' 〜 '.join(jopt['constant_limit'][2])}\n BEYOND基準 :\n  ノーツ数 : {' 〜 '.join(jopt['notes_limit'][3])}\n  譜面定数 : {' 〜 '.join(jopt['constant_limit'][3])}")
-          partner_e = dc.Embed(title="自動選択設定\n - パートナー 1",description=f"対象 : {popt['resident']})\nタイプ制限 : {' '.join(popt['types'])}\nレベル制限 : {popt['skills']}\nFRAG制限 :\n Lv1基準 : {' 〜 '.join(jopt['frag_limit'][0])}\n Lv20基準 : {' 〜 '.join(jopt['frag_limit'][1])}\nSTEP制限 :\n Lv1基準 : {' 〜 '.join(jopt['step_limit'][0])}\n Lv20基準 : {' 〜 '.join(jopt['step_limit'][1])}")
+          limits_e = dc.Embed(title="自動選択設定\n - 楽曲 3/4",description=f"**ノーツ数・譜面定数制限**\n **`PAST基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][0])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][0])}\n **`PRESENT基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][1])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][1])}\n **`FUTURE基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][2])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][2])}\n **`BEYOND基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][3])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][3])}")
+          partner_e = dc.Embed(title="自動選択設定\n - パートナー",description=f"**対象** : {popt['resident']})\n**タイプ制限** : {' '.join(popt['types'])}\n**レベル制限** : {' '.join(popt['skills'])}\n**FRAG制限** :\n `Lv1基準` : {' 〜 '.join(jopt['frag_limit'][0])}\n `Lv20基準` : {' 〜 '.join(jopt['frag_limit'][1])}\n**STEP制限** :\n `Lv1基準` : {' 〜 '.join(jopt['step_limit'][0])}\n `Lv20基準` : {' 〜 '.join(jopt['step_limit'][1])}")
           check_embeds = [ignores_e,levels_e,limits_e,infos_e,partner_e] 
           check_page = 0
           while not bot.is_closed():
@@ -325,7 +325,8 @@ async def setting(ctx):
               page = 0
               break
     except ao.TimeoutError:
-      await emb.delete()                  
+      await emb.delete()
+      break
                         
 @bot.event
 async def on_ready():
