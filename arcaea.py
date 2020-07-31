@@ -10,7 +10,7 @@ bot.remove_command("help")
 pindex = 0 # ステータス番号
 slset = [None,None,None] # "slist"での絞り込み
 sopt = {"ignorepacks":[],"ignoresongs":[],"levels":[[],[],[],[]],"side":None,"illustrators":[],"composers":[],"chart_creators":[],"notes_limit":[[0,1600],[0,1600],[0,1600],[0,1600]],"constant_limit":[[1.0,12.0],[1.0,12.0],[1.0,12.0],[1.0,12.0]]} # "sselect"での絞り込み
-popt = {"resident":"全てが対象","step_limit":[0,200],"frag_limit":[0,200],"types":[],"skills":[]} # "pselect"での絞り込み
+popt = {"resident":"全てが対象","step_limit":[[0,200],[0,200]],"frag_limit":[[0,200],[0,200]],"types":[],"skills":[]} # "pselect"での絞り込み
 
 # 楽曲関連
 artwork_nt = nt("Artwork", "normal beyond") # artwork
