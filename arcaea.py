@@ -300,7 +300,7 @@ async def setting(ctx):
             else: 
               page = 0
               break
-    except asyncio.TimeoutError:
+    except ao.TimeoutError:
       await emb.delete()                  
                         
 @bot.event
