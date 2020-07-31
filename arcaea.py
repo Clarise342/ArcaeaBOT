@@ -274,6 +274,7 @@ async def setting(ctx):
     await emb.edit(embed=embeds[page])
     try:
       msg = await bot.wait_for('message', timeout=60.0, check=lambda m: m.author == ctx.author)
+      await msg.edit(delete_after=2.0)
       if page == 0:
         if msg.content == "end":
           await emb.delete()
@@ -317,6 +318,7 @@ async def setting(ctx):
               await emb.add_reaction("⬅️")
               await emb.add_reaction("➡️")
             react = await bot.wait_for('reaction_add', check=lambda r, u: u == ctx.author and str(r.emoji) in ["❌","➡️","⬅️"])
+            await emb.clear_reactions()
             if str(react[0]) == "➡️": check_page += 1
             elif str(react[0]) == "⬅️": check_page -= 1
             else: 
