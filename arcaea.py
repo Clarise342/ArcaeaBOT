@@ -55,14 +55,14 @@ skills = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オー
 @tasks.loop(minutes=1)
 async def loop():
   global pI
-  if pI == 0: v = f"Display help with 'a@help'"
-  elif pI == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
-  elif pI == 2: v = f"This BOT is developed by Clarice#0920"
-  elif pI == 3: v = f"New songs such as Black Fate and World Extend added"   
-  elif pI == 4: v = f"a@helpでヘルプを表示します"
-  elif pI == 5: v = f"現在のpingは{round(bot.latency * 1000)}msです"
-  elif pI == 6: v = f"このBOTの開発者はClarice#0920です"
-  elif pI == 7: v = f"Black FateとWorld Extendの楽曲を追加しました"
+  if pindex == 0: v = f"Display help with 'a@help'"
+  elif pindex == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
+  elif pindex == 2: v = f"This BOT is developed by Clarice#0920"
+  elif pindex == 3: v = f"New songs such as Black Fate and World Extend added"   
+  elif pindex == 4: v = f"a@helpでヘルプを表示します"
+  elif pindex == 5: v = f"現在のpingは{round(bot.latency * 1000)}msです"
+  elif pindex == 6: v = f"このBOTの開発者はClarice#0920です"
+  elif pindex == 7: v = f"Black FateとWorld Extendの楽曲を追加しました"
   await bot.change_presence(activity=dc.Game(name=v))
   pI += 1 if pI != 7 else -7
   
