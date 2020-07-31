@@ -288,8 +288,16 @@ async def setting(ctx):
           check_page = 0
           while not bot.is_closed():
             emb.edit(embed=check_embeds[check_page])
-            react = await bot.wait_for('reaction_add', check=lambda r, u: u = ctx.author and str(r.emoji) in ["➡️","⬅️"])
-            if
+            await emb.add_reaction("❌")
+            if check_page == 0: await emb.add_reaction("➡️")
+            elif check_page == 4: await emb.add_reaction("⬅️")
+            else:
+              await emb.add_reaction("⬅️")
+              await emb.add_reaction("➡️")
+            react = await bot.wait_for('reaction_add', check=lambda r, u: u == ctx.author and str(r.emoji) in ["❌","➡️","⬅️"])
+            if str(react[0]) == "➡️": check_page += 1
+            elif str(react[0]) == "⬅️": check_page -= 1
+            else: return page = 0
     except asyncio.TimeoutError:
       await emb.delete()                  
                         
