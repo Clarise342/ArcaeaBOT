@@ -297,7 +297,9 @@ async def setting(ctx):
             react = await bot.wait_for('reaction_add', check=lambda r, u: u == ctx.author and str(r.emoji) in ["❌","➡️","⬅️"])
             if str(react[0]) == "➡️": check_page += 1
             elif str(react[0]) == "⬅️": check_page -= 1
-            else: return page = 0
+            else: 
+              page = 0
+              break
     except asyncio.TimeoutError:
       await emb.delete()                  
                         
