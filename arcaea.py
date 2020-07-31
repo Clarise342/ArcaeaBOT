@@ -309,7 +309,7 @@ async def setting(ctx):
           check_embeds = [ignores_e,levels_e,limits_e,infos_e,partner_e] 
           check_page = 0
           while not bot.is_closed():
-            emb.edit(embed=check_embeds[check_page])
+            await emb.edit(embed=check_embeds[check_page])
             await emb.add_reaction("❌")
             if check_page == 0: await emb.add_reaction("➡️")
             elif check_page == 4: await emb.add_reaction("⬅️")
