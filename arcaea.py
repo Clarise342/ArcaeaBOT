@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from collections import namedtuple as nt
 import discord as dc, json, random, sys, os, asyncio as ao
 
-bot = cmd.Bot(command_prefix="a@")
+bot = cmd.Bot(command_prefix="a-")
 bot.remove_command("help")
 
 # 設定
@@ -55,16 +55,14 @@ skills = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オー
 @tasks.loop(minutes=1)
 async def loop():
   global pI
-  if pindex == 0: v = f"Display help with 'a@help'"
+  if pindex == 0: v = f"Get help by typing 'a-help'"
   elif pindex == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
-  elif pindex == 2: v = f"This BOT is developed by Clarice#0920"
-  elif pindex == 3: v = f"New songs such as Black Fate and World Extend added"   
-  elif pindex == 4: v = f"a@helpでヘルプを表示します"
-  elif pindex == 5: v = f"現在のpingは{round(bot.latency * 1000)}msです"
-  elif pindex == 6: v = f"このBOTの開発者はClarice#0920です"
-  elif pindex == 7: v = f"Black FateとWorld Extendの楽曲を追加しました"
+  elif pindex == 2: v = f"Let's play Arcaea!!!"
+  elif pindex == 3: v = f"a-helpでヘルプを表示します"
+  elif pindex == 4: v = f"現在のpingは{round(bot.latency * 1000)}msです"
+  elif pindex == 5: v = f"さあ、Arcaeaをプレイしましょう！"
   await bot.change_presence(activity=dc.Game(name=v))
-  pI += 1 if pI != 7 else -7
+  pI += 1 if pI != 5 else -5
   
 @bot.command()
 async def help(ctx):
@@ -78,6 +76,7 @@ async def help(ctx):
   e.add_field(name="sselect (回数)",value="BOTがランダムに選曲します",inline=False)
   e.add_field(name="pselect",value="BOTがランダムにパートナーを選びます",inline=False)
   e.add_field(name="set",value="設定パネルを表示します",inline=False)
+  e.add_field(name="Other",value="BOTの導入は[こちら](https://discord.com/api/oauth2/authorize?client_id=702587324718120991&permissions=60480&scope=bot)",inline=False)
   e.set_author(name="ヘルプ",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
   await ctx.send(embed=e,delete_after=60)
