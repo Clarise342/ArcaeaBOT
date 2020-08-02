@@ -62,7 +62,7 @@ async def loop():
   elif pindex == 4: v = f"現在のpingは{round(bot.latency * 1000)}msです"
   elif pindex == 5: v = f"さあ、Arcaeaをプレイしましょう！"
   await bot.change_presence(activity=dc.Game(name=v))
-  pI += 1 if pI != 5 else -5
+  pindex += 1 if pindex != 5 else -5
   
 @bot.command()
 async def help(ctx):
