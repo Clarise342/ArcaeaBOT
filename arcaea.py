@@ -54,7 +54,7 @@ skills = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オー
 # change_precence
 @tasks.loop(minutes=1)
 async def loop():
-  global pI
+  global pindex
   if pindex == 0: v = f"Get help by typing 'a-help'"
   elif pindex == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
   elif pindex == 2: v = f"Let's play Arcaea!!!"
