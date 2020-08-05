@@ -78,7 +78,7 @@ token = os.environ['TOKEN'] # トークン読み込み
 
 # 設定に対する内容辞典
 sfirst = {"ip":2,"is":3,"l":4,"s":9,"nl":10,"cl":15,"co":20,"il":21,"ch":22}
-pfirst = {}
+pfirst = {"r":24,"t":25,"s":26,"fl":27,"sl":30}
 ignorepacks = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","Am":"Ambivalent Vision","CS":"Crimson Solace","CH":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
 sides = {"all":None,"light":"光","conflict":"対立"} # side
 composers = ['T2Kazuya', 'chitose', 'a-zu-ra', '南ゆに', 'Sound Souler', 'U-ske', 'lueur', 'Tiny Minim', 'Frums', 'HyuN', '旅人E', 'REDSHiFT', 'Blacklolita', 'しーけー', 'Arch', 'n3pu', 'ARForest', 'Iris', 'gmtn.', 'Missionary', 'DIA', 'Aire', 'ak+q', 'WHITEFISTS', 'Sakuzyo', 'Jun Kuroda', 'Farhan', 'Kolaa', 'Puru', 'THB', 'Sta', 'sky_delta', '翡野イスカ', 'お月さま交響曲', 'Rabbit House', 'Ryazan', 'Combatplayer', 'Soleily', 'Yooh', 'void', 'cYsmix', 'wa.', 'DJ Myosuke', '7mai', '3R2', 'Cosmograph', 'Mameyudoufu', 'uno', 'ちょこ', 'Silentroom', 'アリスシャッハと魔法の楽団', 'REDALiCE', 'siromaru', 't+pazolite', 'TQ☆', 'ikaruga_nex', 'Feryquitous', 'Sennzai', 'MYTK', 'Ras', 'BACO', '溝口ゆうま', '大瀬良あい', 'WHITEFIST', 'からとpαnchii少年', 'はるの', 'MYUKKE.', 'ginkiha', 'Sampling Masters MEGA', 'TANO*C Sound Team', 'USAO', 'DJ Genki', 'DJ Noriken', 'P*Light', 't*pazolite', '黒皇帝', 'Laur', 'Street', 'Maozon', 'Noah', '光吉猛修', 'Zekk', 'Apo11o program', 'ETIA.', 'HiTECH NINJA', 'Saiph', 'Virtual Self', 'HATE', 'Junk', 'Mitomoro', 'Mili', 'PSYQUI', 'Nitro', 'Missive New Krew', 'かゆき', 'Hyun', 'Syepias', 'jioyi', 'Tanchiky', 'xi', 'nora2r', 'Gram', 'YUKIYANAGI', 'Nhato', 'EBIMAYO', 'Yamajet', 'Powerless', 'Aoi', 'siqlo', 'モリモリあつし', 'Yunosuke', 'MASAKI', 'ぺのれり', 'Kobaryo', 'WAiKURO', 'Cranky', 'cybermiso', '翡乃イスカ', 'uma', 'LeaF', 'Polysha', '橘花音', 'Akira Complex', 'Juggernaut.', 'A.SAKA', 'Team Grimoire', 'かめりあ(EDP)', 'Edelritter']
@@ -148,7 +148,7 @@ async def sinfo(ctx, *, name=None):
   if name == None:
     if dataset[0] != None: name = dataset[0]
     else: await ctx.send("曲名を入力して下さい")
-  sgs = [i for i in dataS if name in i.name]
+  sgs = [i for i in sdata if name in i.name]
   if len(sgs) == 0: return await ctx.send("曲が見つかりませんでした", delete_after=5.0)
   else: song = sgs[0]
   e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x00f1ff) if song.side == "光" else dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
@@ -187,7 +187,7 @@ async def pinfo(ctx, *, name=None):
   await ctx.message.delete()
   if name == None:
     name = dataset[1] if dataset[1] != None else None
-  partners = [i for i in dataPN+dataPE if name in i.name]
+  partners = [i for i in pdata if name in i.name]
   if len(partners) == 0: return await ctx.send("パートナーが見つかりませんでした", delete_after=5.0)
   partner = partners[0]
   e = dc.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0x74596d)
@@ -247,7 +247,7 @@ async def setting(ctx):
   lprs_e = dc.Embed(title="【4=S-l-prs】次に数値を入力して下さい\n(下限 : 3 , 上限 : 9)")
   lftr_e = dc.Embed(title="【4=S-l-ftr】次に数値を入力して下さい\n(下限 : 7 , 上限 : 11)")
   lbyd_e = dc.Embed(title="【4=S-l-byd】次に数値を入力して下さい\n(下限 : 8 , 上限 : 11)")
-  side_e = dc.Embed(title="【3=S-s】次に以下から選択して下さい",description="`all` : 全てを含みます\n`Light` : サイドを光のみにします\n`Conflict` : サイドを対立のみにします")
+  side_e = dc.Embed(title="【3=S-s】次に以下から選択して下さい",description="`all` : 全てを含みます\n`light` : サイドを光のみにします\n`conflict` : サイドを対立のみにします")
   noteslimit_e = dc.Embed(title="【3=S-nl】次に以下から選択して下さい",description="`pst` : PAST基準\n`prs` : PRESENT基準\n`ftr` : FUTURE基準\n`byd` : BEYOND基準")
   nlpst_e = dc.Embed(title="【4=S-nl-pst】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
   nlprs_e = dc.Embed(title="【4=S-nl-prs】次に数値を2つ入力してください\n(・2つの数値は整数にして下さい\n・2つの数値の間には半角空白を入れて下さい)")
@@ -261,7 +261,7 @@ async def setting(ctx):
   composer_e = dc.Embed(title="【3=S-co】次に作曲者名を入力して下さい\n※作曲者名は完全一致である必要はありません\n(類似する場合を除く)",description="- 作曲者名一覧\n(1部名義は集約してあります)\nT2Kazuya, chitose, a-zu-ra, 南ゆに(アリスシャッハと魔法の楽団), Sound Souler , U-ske, lueur, Tiny Minim, Frums, HyuN, 旅人E, REDSHiFT, Blacklolita, しーけー, Arch, n3pu, ARForest, Iris, gmtn., Missionary, DIA, Aire, ak+q, WHITEFISTS, Sakuzyo, Jun Kuroda, Farhan, Kolaa, Puru, THB, Sta(THE SHAFT), sky_delta, お月さま交響曲, Rabbit House, Ryazan, Combatplayer, Soleily, Yooh, void, cYsmix, wa., DJ Myosuke(HARDCORE TANO\*C), 7mai, 3R2, Cosmograph, Mameyudoufu, uno, ちょこ, Silentroom, アリスシャッハと魔法の楽団, REDALiCE(HARDCORE TANO*C), siromaru(INNOCENT NOISE), t+pazolite(HARDCORE TANO\*C), TQ☆, ikaruga_nex, Feryquitous, Sennzai, MYTK, Ras, BACO, 溝口ゆうま, 大瀬良あい, WHITEFIST, からとpαnchii少年, はるの, MYUKKE., ginkiha, Sampling Masters MEGA, TANO*C Sound Team, USAO(HARDCORE TANO\*C), DJ Genki(HARDCORE TANO*C), DJ Noriken(HARDCORE TANO\*C), P*Light(HARDCORE TANO\*C), 黒皇帝, Laur, Street, Maozon, Noah, 光吉猛修, Zekk, Apo11o program, ETIA., HiTECH NINJA, Saiph, Virtual Self, HATE, Junk, Mitomoro, Mili, PSYQUI, Nitro, Missive New Krew, かゆき, Syepias, jioyi, Tanchiky, xi, nora2r, Gram, YUKIYANAGI, Nhato, EBIMAYO, Yamajet, Powerless, Aoi, siqlo, モリモリあつし, Yunosuke, MASAKI, ぺのれり, Kobaryo, WAiKURO, Cranky, cybermiso, 翡乃イスカ, uma, LeaF, Polysha, 橘花音, Akira Complex, Juggernaut., A.SAKA, Team Grimoire, かめりあ(EDP), Edelritter")
   illustrator_e = dc.Embed(title="【3-S-il】次に名前を入力して下さい\n※名前は完全一致である必要はありません\n(類似する場合を除く)",description="- イラストレーター名一覧\nT2Kazuya, Khronetic, 不明, 白鳥怜, ましろみ のあ, 橙乃遥, Hanamori Hiro, Tagtraume, NanoKun, 黒刃愛, grosspanda, 釜飯轟々丸, かぐやのもちづき, yoshimo, Shionty, RiceGnat, Ancy, 雨風雪夏, Mechari, terry, nakanome, レアル, Saga, キッカイキ, mins, Frums, VMWT, シエラ, deronoitz, Megu, お月さま交響曲, YEONIE, 織日ちひろ, Doomfest, CinEraLiA, 八葉, Koyama Mai, Eric Dagley, 百舌谷, トロ3, Refla, BerryVerrine, Photonskyto, DJ Poyoshi, unKn, アリスシャッハと魔法の楽団, nonokuro, 駿, HenryTz, 出前, 魔界の住人, 未早, softmode, kobuta, ふぇいフリック, SiNoe, LAM, Sta, NTFS, 巻羊, mokeo, fixro2n, rtil, 和音ハカ, wacca, hideo, yusi., クルエルGZ, スズカミ, そゐち, 久賀フーナ, Hie, mirimo, iimo, すずなし, きらばがに, Sou, SKT, アサヤ, 吠L, EB十, 姐川, リウイチ, 岩十, horte, deel, GreeN, SERXPHIS, Rolua, NAGU, 望月けい, KEI")
   chart_creator_e = dc.Embed(title="【3-S-ch】次に譜面製作者名を入力して下さい\n※譜面製作者名は完全一致である必要はありません\n(類似する場合を除く)",description="- 譜面製作者名一覧\n(1部名義は集約してあります)\nNitro(夜浪などを含む), Toaster(東星などを含む), Kurorak(黒運などを含む), k//eternal(chaos//engineなどを含む), -chartaesthesia-, TaroNuke, 石樂, Exschwation, Black Tea, Arcaea Team, 緑, CERiNG, Kero, Darkest Dream, 不明, /(Arcahv), Arcaea Charting Team, The Monolith, Zero Sky, Paradox(Fracture Ray), 迷路(Grievous Lady), Tempest(Tempestissimo)")
-  psstart_e = dc.Embed(title="【2=P】次に設定項目を選択して下さい",description="**`ip`** : 除外/追加するパックを設定します\n**`is`** : 除外/追加する楽曲を設定します\n**`l`** : 対象とするレベルを設定します\n**`s`** : 対象とするサイドを設定します\n**`nl`** : 対象とするノーツ数の上下限を設定します\n**`cl`** : 対象とする譜面定数の上下限を設定します\n**`co`** : 対象とする作曲者を設定します\n**`il`** : 対象とするイラストレーターを設定します\n**`ch`** : 対象とする譜面製作者を設定します")
+  psstart_e = dc.Embed(title="【2=P】次に設定項目を選択して下さい",description="**`r`** : 恒常・期間限定について設定します\n**`t`** : 対象とするタイプを設定します\n**`s`** : 対象とするスキルを設定します\n**`fl`** : 対象とするFRAGの上下限を設定します\n**`sl`** : 対象とするStepの上下限を設定します")
   resident_e = dc.Embed(title="【3=P-r】以下から選択して下さい",description="`all` : 全て含みます\n`normal` : 恒常パートナーのみ\n`event` : 期間限定パートナーのみ")
   type_e = dc.Embed(title="【3=P-t】次に以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="B(バランス), S(サポート), C(チャレンジ), ?(???)")
   skill_e = dc.Embed(title="【3=P-s】次に以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="-(-), E(Easy), H(Hard), V(Visual), M(ミラー), O(オーバーフロー), C(チュウニズム), A(Audio)")
@@ -283,7 +283,7 @@ async def setting(ctx):
     6: lprs_e,
     7: lftr_e,
     8: lbyd_e,
-    9:  side_e,
+    9: side_e,
     10: noteslimit_e,
     11: nlpst_e,
     12: nlprs_e,
@@ -368,7 +368,120 @@ async def setting(ctx):
         elif msg.content == "partner": page = 23
         else:
           pass
-      elif page == 1:                        
+      else:
+        if msg.content == "back": 
+          if page not in [5,6,7,8,11,12,13,14,16,17,18,19,28,29,31,32]:
+            page = 0            
+        elif page == 1: # song_start
+          if msg.content in sfirst:
+            page = sfirst[msg.content]
+          else:
+            pass
+        elif page == 2: # song_ignore_pack
+          if msg.content in ignorepacks:
+            if ignorepacks[msg.content] in sopt["ignorepacks"]:
+              del sopt["ignorepacks"][sopt["ignorepacks"].index(ignorepacks[msg.content])]
+            else:
+              sopt["ignorepacks"].append(ignorepacks[msg.content])
+            page = 1 
+          else:
+            pass
+        elif page == 3: # song_ignore_songs
+          for s in sdata:
+            if msg.content in s.name:
+              if s in sopt["ignoresongs"]:
+                del sopt["ignoresongs"][sopt["ignoresongs"].index(s)]
+              else:
+                sopt["ignoresongs"].append(s)
+              page = 1
+        elif page in [4,10,15]: # difficulty_select
+          if msg.content in ["pst","prs","ftr","byd"]:
+            page += {"pst":1,"prs":2,"ftr":3,"byd":4}[msg.content]
+          else:
+            pass
+        elif 5 <= page <= 8: # level
+          if msg.content == "back":
+            page = 4
+          elif msg.content in {5:["1","2","3","4","5","6"],6:["3","4","5","6","7","8","9"],7:["7","8","9","9+","10","10+","11"],8:["8","9","9+","10","10+","11"]}[page]:
+            if msg.content in sopt["levels"][{5:0,6:1,7:2,8:3}[page]]:
+              del sopt["levels"][{5:0,6:1,7:2,8:3}[page]][sopt["levels"][{5:0,6:1,7:2,8:3}[page]].index(msg.content)]
+            else:
+              sopt["levels"][{5:0,6:1,7:2,8:3}[page]].append(msg.content)
+            page = 1
+          else:
+            pass
+        elif 11 <= page <= 14:
+          if msg.content == "back":
+            page = 4
+          splits = msg.content.split(" ")
+          try:
+            nlvalues = [int(x) for x in splits]
+          except Exception:
+            pass
+          else:
+            sopt["notes_limit"][{11:0,12:1,13:2,14:3}[page]][0] = nlvalues[0]
+            sopt["notes_limit"][{11:0,12:1,13:2,14:3}[page]][1] = nlvalues[1]
+            page = 1
+        elif page == 9:
+          if msg.content in sides:
+            sopt["side"] = sides[msg.content]
+            page = 1
+          else:
+            pass
+        elif 20 <= page <= 22:
+          for p in {20:composers,21:illustrators,22:chart_creators}[page]:
+            if msg.content in p:
+              if p in sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]]:
+                del sopt[{20:"composers",21:"illustrators",22:"chart_creators"}][sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].index(p)]
+              else:
+                sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].append(p)
+              page = 1
+        elif page == 23: # partner_start
+          if msg.content in pfirst:
+            page = pfirst[msg.content]
+          else:
+            pass                
+        elif page == 24: # resident
+          if msg.content in ["all","normal","event"]:
+            popt["resident"] = msg.content
+            page = 23
+          else:
+            pass
+        elif page == 25: # type
+          if msg.content in types:
+            if types[msg.content] in popt["types"]:
+              del popt["types"][popt["types"].index(types[msg.content])]
+            else:
+              popt["types"].append(types[msg.content])
+            page = 23
+          else:
+            pass
+        elif page == 26: # skill
+          if msg.content in skills:
+            if skills[msg.content] in popt["skills"]:
+              del popt["skills"][popt["skills"].index(skills[msg.content])]
+            else:
+              popt["skills"].append(skills[msg.content])
+            page = 23
+          else:
+            pass
+        elif page in [16,17,18,19,28,29,31,32]:
+          if msg.content == "back":
+            page = {16:15,17:15,18:15,19:15,28:27,29:27,31:30,32:30}[page]
+          splits = msg.content.split(" ")
+          try:
+            clvalues = [float(x) for x in splits]
+          except Exception:
+            pass
+          else:
+            if 16 <= page <= 19:
+              sopt["constant_limit"][{16:0,17:1,18:2,19:3}[page]][0] = clvalues[0]
+              sopt["constant_limit"][{16:0,17:1,18:2,19:3}[page]][1] = clvalues[1]
+            elif 28 <= page <= 32:
+              popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][0] = clvalues[0]
+              popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][1] = clvalues[1]
+            page = 23
+          
     except ao.TimeoutError:
       await emb.delete()
       break
