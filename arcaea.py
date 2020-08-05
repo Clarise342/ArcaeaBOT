@@ -8,9 +8,47 @@ bot.remove_command("help")
 
 # 設定
 pindex = 0 # ステータス番号
-slset = [None,None,None] # "slist"での絞り込み
-sopt = {"ignorepacks":[],"ignoresongs":[],"levels":[[],[],[],[]],"side":None,"illustrators":[],"composers":[],"chart_creators":[],"notes_limit":[[0,1600],[0,1600],[0,1600],[0,1600]],"constant_limit":[[1.0,12.0],[1.0,12.0],[1.0,12.0],[1.0,12.0]]} # "sselect"での絞り込み
-popt = {"resident":"全てが対象","step_limit":[[0,200],[0,200]],"frag_limit":[[0,200],[0,200]],"types":[],"skills":[]} # "pselect"での絞り込み
+
+sopt = {
+  "ignorepacks":[],
+  "ignoresongs":[],
+  "levels":[
+    [],
+    [],
+    [],
+    []
+  ],
+  "side":None,
+  "illustrators":[],
+  "composers":[],
+  "chart_creators":[],
+  "notes_limit":[
+    [0,1600],
+    [0,1600],
+    [0,1600],
+    [0,1600]
+  ],
+  "constant_limit":[
+    [1.0,12.0],
+    [1.0,12.0],
+    [1.0,12.0],
+    [1.0,12.0]
+  ]
+}
+
+popt = {
+  "resident":"全てが対象",
+  "step_limit":[
+    [0,200],
+    [0,200]
+  ],
+  "frag_limit":[
+    [0,200],
+    [0,200]
+  ],
+  "types":[],
+  "skills":[]
+}
 
 # 楽曲関連
 artwork_nt = nt("Artwork", "normal beyond") # artwork
@@ -39,8 +77,9 @@ dataset = [None,None] # 臨時保存
 token = os.environ['TOKEN'] # トークン読み込み
 
 # 設定に対する内容辞典
-first = {"s-ip":2,"s-l":3,"s-s":4,"p-ne":5,"p-t":6,"p-s":7}
-ignorepacks = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","AV":"Ambivalent Vision","CS":"Crimson Solace","CM":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
+sfirst = {"ip":2,"is":3,"l":4,"s":9,"nl":10,"cl":15,"co":20,"il":21,"ch":22}
+pfirst = {}
+ignorepacks = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","Am":"Ambivalent Vision","CS":"Crimson Solace","CH":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
 sides = {"all":None,"light":"光","conflict":"対立"} # side
 composers = ['T2Kazuya', 'chitose', 'a-zu-ra', '南ゆに', 'Sound Souler', 'U-ske', 'lueur', 'Tiny Minim', 'Frums', 'HyuN', '旅人E', 'REDSHiFT', 'Blacklolita', 'しーけー', 'Arch', 'n3pu', 'ARForest', 'Iris', 'gmtn.', 'Missionary', 'DIA', 'Aire', 'ak+q', 'WHITEFISTS', 'Sakuzyo', 'Jun Kuroda', 'Farhan', 'Kolaa', 'Puru', 'THB', 'Sta', 'sky_delta', '翡野イスカ', 'お月さま交響曲', 'Rabbit House', 'Ryazan', 'Combatplayer', 'Soleily', 'Yooh', 'void', 'cYsmix', 'wa.', 'DJ Myosuke', '7mai', '3R2', 'Cosmograph', 'Mameyudoufu', 'uno', 'ちょこ', 'Silentroom', 'アリスシャッハと魔法の楽団', 'REDALiCE', 'siromaru', 't+pazolite', 'TQ☆', 'ikaruga_nex', 'Feryquitous', 'Sennzai', 'MYTK', 'Ras', 'BACO', '溝口ゆうま', '大瀬良あい', 'WHITEFIST', 'からとpαnchii少年', 'はるの', 'MYUKKE.', 'ginkiha', 'Sampling Masters MEGA', 'TANO*C Sound Team', 'USAO', 'DJ Genki', 'DJ Noriken', 'P*Light', 't*pazolite', '黒皇帝', 'Laur', 'Street', 'Maozon', 'Noah', '光吉猛修', 'Zekk', 'Apo11o program', 'ETIA.', 'HiTECH NINJA', 'Saiph', 'Virtual Self', 'HATE', 'Junk', 'Mitomoro', 'Mili', 'PSYQUI', 'Nitro', 'Missive New Krew', 'かゆき', 'Hyun', 'Syepias', 'jioyi', 'Tanchiky', 'xi', 'nora2r', 'Gram', 'YUKIYANAGI', 'Nhato', 'EBIMAYO', 'Yamajet', 'Powerless', 'Aoi', 'siqlo', 'モリモリあつし', 'Yunosuke', 'MASAKI', 'ぺのれり', 'Kobaryo', 'WAiKURO', 'Cranky', 'cybermiso', '翡乃イスカ', 'uma', 'LeaF', 'Polysha', '橘花音', 'Akira Complex', 'Juggernaut.', 'A.SAKA', 'Team Grimoire', 'かめりあ(EDP)', 'Edelritter']
 illustrators = ['T2Kazuya', 'Khronetic', '不明', '白鳥怜', 'ましろみ のあ', '橙乃遥', 'Hanamori Hiro', 'Tagtraume', 'NanoKun', '黒刃愛', 'grosspanda', '釜飯轟々丸', 'かぐやのもちづき', 'yoshimo', 'Shionty', 'RiceGnat', 'Ancy', '雨風雪夏', 'Mechari', 'terry', 'nakanome', 'レアル', 'Saga', 'キッカイキ', 'mins', 'Frums', 'VMWT', 'シエラ', 'deronoitz', 'Megu', 'お月さま交響曲', 'YEONIE', '織日ちひろ', 'Doomfest', 'CinEraLiA', '八葉', 'Koyama Mai', 'Eric Dagley', '百舌谷', 'トロ3', 'Refla', 'BerryVerrine', 'Photonskyto', 'DJ Poyoshi', 'unKn', 'アリスシャッハと魔法の楽団', 'nonokuro', '駿', 'HenryTz', '出前', '魔界の住人', '未早', 'softmode', 'kobuta', 'ふぇいフリック', 'SiNoe', 'LAM', 'Sta', 'NTFS', '巻羊', 'mokeo', 'fixro2n', 'rtil', '和音ハカ', 'wacca', 'hideo', 'yusi.', 'クルエルGZ', ' スズカミ', 'そゐち', '久賀フーナ', 'Hie', 'mirimo', 'iimo', 'すずなし', 'きらばがに', 'Sou', 'SKT', 'アサヤ', '吠L', 'EB十', '姐川', 'リウイチ', '岩十', 'horte', 'deel', 'GreeN', 'SERXPHIS', 'Rolua', 'NAGU', '望月けい', 'KEI']
@@ -222,7 +261,7 @@ async def setting(ctx):
   composer_e = dc.Embed(title="【3=S-co】次に作曲者名を入力して下さい\n※作曲者名は完全一致である必要はありません\n(類似する場合を除く)",description="- 作曲者名一覧\n(1部名義は集約してあります)\nT2Kazuya, chitose, a-zu-ra, 南ゆに(アリスシャッハと魔法の楽団), Sound Souler , U-ske, lueur, Tiny Minim, Frums, HyuN, 旅人E, REDSHiFT, Blacklolita, しーけー, Arch, n3pu, ARForest, Iris, gmtn., Missionary, DIA, Aire, ak+q, WHITEFISTS, Sakuzyo, Jun Kuroda, Farhan, Kolaa, Puru, THB, Sta(THE SHAFT), sky_delta, お月さま交響曲, Rabbit House, Ryazan, Combatplayer, Soleily, Yooh, void, cYsmix, wa., DJ Myosuke(HARDCORE TANO\*C), 7mai, 3R2, Cosmograph, Mameyudoufu, uno, ちょこ, Silentroom, アリスシャッハと魔法の楽団, REDALiCE(HARDCORE TANO*C), siromaru(INNOCENT NOISE), t+pazolite(HARDCORE TANO\*C), TQ☆, ikaruga_nex, Feryquitous, Sennzai, MYTK, Ras, BACO, 溝口ゆうま, 大瀬良あい, WHITEFIST, からとpαnchii少年, はるの, MYUKKE., ginkiha, Sampling Masters MEGA, TANO*C Sound Team, USAO(HARDCORE TANO\*C), DJ Genki(HARDCORE TANO*C), DJ Noriken(HARDCORE TANO\*C), P*Light(HARDCORE TANO\*C), 黒皇帝, Laur, Street, Maozon, Noah, 光吉猛修, Zekk, Apo11o program, ETIA., HiTECH NINJA, Saiph, Virtual Self, HATE, Junk, Mitomoro, Mili, PSYQUI, Nitro, Missive New Krew, かゆき, Syepias, jioyi, Tanchiky, xi, nora2r, Gram, YUKIYANAGI, Nhato, EBIMAYO, Yamajet, Powerless, Aoi, siqlo, モリモリあつし, Yunosuke, MASAKI, ぺのれり, Kobaryo, WAiKURO, Cranky, cybermiso, 翡乃イスカ, uma, LeaF, Polysha, 橘花音, Akira Complex, Juggernaut., A.SAKA, Team Grimoire, かめりあ(EDP), Edelritter")
   illustrator_e = dc.Embed(title="【3-S-il】次に名前を入力して下さい\n※名前は完全一致である必要はありません\n(類似する場合を除く)",description="- イラストレーター名一覧\nT2Kazuya, Khronetic, 不明, 白鳥怜, ましろみ のあ, 橙乃遥, Hanamori Hiro, Tagtraume, NanoKun, 黒刃愛, grosspanda, 釜飯轟々丸, かぐやのもちづき, yoshimo, Shionty, RiceGnat, Ancy, 雨風雪夏, Mechari, terry, nakanome, レアル, Saga, キッカイキ, mins, Frums, VMWT, シエラ, deronoitz, Megu, お月さま交響曲, YEONIE, 織日ちひろ, Doomfest, CinEraLiA, 八葉, Koyama Mai, Eric Dagley, 百舌谷, トロ3, Refla, BerryVerrine, Photonskyto, DJ Poyoshi, unKn, アリスシャッハと魔法の楽団, nonokuro, 駿, HenryTz, 出前, 魔界の住人, 未早, softmode, kobuta, ふぇいフリック, SiNoe, LAM, Sta, NTFS, 巻羊, mokeo, fixro2n, rtil, 和音ハカ, wacca, hideo, yusi., クルエルGZ, スズカミ, そゐち, 久賀フーナ, Hie, mirimo, iimo, すずなし, きらばがに, Sou, SKT, アサヤ, 吠L, EB十, 姐川, リウイチ, 岩十, horte, deel, GreeN, SERXPHIS, Rolua, NAGU, 望月けい, KEI")
   chart_creator_e = dc.Embed(title="【3-S-ch】次に譜面製作者名を入力して下さい\n※譜面製作者名は完全一致である必要はありません\n(類似する場合を除く)",description="- 譜面製作者名一覧\n(1部名義は集約してあります)\nNitro(夜浪などを含む), Toaster(東星などを含む), Kurorak(黒運などを含む), k//eternal(chaos//engineなどを含む), -chartaesthesia-, TaroNuke, 石樂, Exschwation, Black Tea, Arcaea Team, 緑, CERiNG, Kero, Darkest Dream, 不明, /(Arcahv), Arcaea Charting Team, The Monolith, Zero Sky, Paradox(Fracture Ray), 迷路(Grievous Lady), Tempest(Tempestissimo)")
-  psstart_e = dc.Embed(title="【2=P】次に設定項目を選択して下さい",description="**`r`** : 恒常・期間限定について設定します\n**`t`** : 対象とするタイプを設定します\n**`s`** : 対象とするスキルを設定します\n**`fl`** : 対象とするFRAGの上下限を設定します\n**`sl`** : 対象とするStepの上下限を設定します")
+  psstart_e = dc.Embed(title="【2=P】次に設定項目を選択して下さい",description="**`ip`** : 除外/追加するパックを設定します\n**`is`** : 除外/追加する楽曲を設定します\n**`l`** : 対象とするレベルを設定します\n**`s`** : 対象とするサイドを設定します\n**`nl`** : 対象とするノーツ数の上下限を設定します\n**`cl`** : 対象とする譜面定数の上下限を設定します\n**`co`** : 対象とする作曲者を設定します\n**`il`** : 対象とするイラストレーターを設定します\n**`ch`** : 対象とする譜面製作者を設定します")
   resident_e = dc.Embed(title="【3=P-r】以下から選択して下さい",description="`all` : 全て含みます\n`normal` : 恒常パートナーのみ\n`event` : 期間限定パートナーのみ")
   type_e = dc.Embed(title="【3=P-t】次に以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="B(バランス), S(サポート), C(チャレンジ), ?(???)")
   skill_e = dc.Embed(title="【3=P-s】次に以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="-(-), E(Easy), H(Hard), V(Visual), M(ミラー), O(オーバーフロー), C(チュウニズム), A(Audio)")
@@ -234,39 +273,41 @@ async def setting(ctx):
   slhighest_e = dc.Embed(title="【4=P-sl-ht】次に数値を2つ入力して下さい\n(・2つの数値は整数でなくとも構いません\n・2つの数値の間には半角空白を入れて下さい)")                      
   
   page = 0
-  embeds = [start_e,
-            ssstart_e,
-            ignorepack_e,
-            ignoresong_e,
-            level_e,
-            lpst_e,
-            lprs_e,
-            lftr_e,
-            lbyd_e,
-            side_e,
-            noteslimit_e,
-            nlpst_e,
-            nlprs_e,
-            nlftr_e,
-            nlbyd_e,
-            constantlimit_e,
-            clpst_e,
-            clprs_e,
-            clftr_e,
-            clbyd_e,
-            composer_e,
-            illustrator_e,
-            chart_creator_e,
-            psstart_e,
-            resident_e,
-            type_e,
-            skill_e,
-            flaglimit_e,
-            flinitial_e,
-            flhighest_e,
-            steplimit_e,
-            slinitial_e,
-            slhighest_e]
+  embeds = {
+    0: start_e,
+    1: ssstart_e,
+    2: ignorepack_e,
+    3: ignoresong_e,
+    4: level_e,
+    5: lpst_e,
+    6: lprs_e,
+    7: lftr_e,
+    8: lbyd_e,
+    9:  side_e,
+    10: noteslimit_e,
+    11: nlpst_e,
+    12: nlprs_e,
+    13: nlftr_e,
+    14: nlbyd_e,
+    15: constantlimit_e,
+    16: clpst_e,
+    17: clprs_e,
+    18: clftr_e,
+    19: clbyd_e,
+    20: composer_e,
+    21: illustrator_e,
+    22: chart_creator_e,
+    23: psstart_e,
+    24: resident_e,
+    25: type_e,
+    26: skill_e,
+    27: flaglimit_e,
+    28: flinitial_e,
+    29: flhighest_e,
+    30: steplimit_e,
+    31: slinitial_e,
+    32: slhighest_e
+  }
                         
   emb = await ctx.send(embed=embeds[0])
   while not bot.is_closed():
@@ -278,7 +319,7 @@ async def setting(ctx):
         if msg.content == "end":
           await emb.delete()
           break
-        if msg.content == "check":
+        elif msg.content == "check":
           ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4",description=f"**除外パック** : {' '.join(sopt['ignorepacks'])}\n**除外楽曲** : {' '.join(sopt['ignoresongs'])}")
           levels_e = dc.Embed(title="自動選択設定\n - 楽曲 2/4",description=f"**レベル制限**\n `PAST基準` : {' '.join(sopt['levels'][0])}\n `PRESENT基準` : {' '.join(sopt['levels'][1])}\n `FUTURE基準` : {' '.join(sopt['levels'][2])}\n `BEYOND基準` : {' '.join(sopt['levels'][3])}")
           infos_e = dc.Embed(title="自動選択設定\n - 楽曲 4/4",description=f"**サイド** : {sopt['side']}\n**その他情報制限**\n `作曲者` : {' '.join(sopt['composers'])}\n `イラストレーター` : {' '.join(sopt['illustrators'])}\n `譜面製作者` : {' '.join(sopt['chart_creators'])}")
@@ -323,6 +364,11 @@ async def setting(ctx):
             else: 
               page = 0
               break
+        elif msg.content == "song": page = 1
+        elif msg.content == "partner": page = 23
+        else:
+          pass
+      elif page == 1:                        
     except ao.TimeoutError:
       await emb.delete()
       break
