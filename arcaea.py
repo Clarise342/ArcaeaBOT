@@ -339,7 +339,6 @@ async def setting(ctx):
               ' 〜 '.join([str(x) for x in sopt["constant_limit"][2]]),
               ' 〜 '.join([str(x) for x in sopt["constant_limit"][3]])
             ],
-            print(popt["frag_limit"][0])
             [
               ' 〜 '.join([str(x) for x in popt["frag_limit"][0]]),
               ' 〜 '.join([str(x) for x in popt["frag_limit"][1]])
