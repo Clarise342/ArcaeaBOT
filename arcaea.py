@@ -445,7 +445,7 @@ async def setting(ctx):
           values = list(filter(lambda x:msg.content in x, {20:composers,21:illustrators,22:chart_creators}[page]))
           if len(values) != 0:
             if values[0] in sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]]:
-              del sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]][sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page].index(values[0])]
+              del sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]][sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page].index(values[0])]]
             else:
               sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]].append(values[0])
             page = 1
