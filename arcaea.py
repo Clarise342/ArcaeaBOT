@@ -421,7 +421,8 @@ async def setting(ctx):
                 del sopt[{20:"composers",21:"illustrators",22:"chart_creators"}][sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].index(p)]
               else:
                 sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].append(p)
-              page = 1
+            continue      
+          page = 1
         elif page == 23: # partner_start
           if msg.content in pfirst:
             page = pfirst[msg.content]
