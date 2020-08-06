@@ -37,7 +37,7 @@ sopt = {
 }
 
 popt = {
-  "resident":"全てが対象",
+  "resident":"all",
   "step_limit":[
     [0,200],
     [0,200]
