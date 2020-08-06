@@ -352,8 +352,11 @@ async def setting(ctx):
           pass
       else:
         if msg.content == "back": 
+          if page in [1,23]:
+            page = 0
           if page not in [5,6,7,8,11,12,13,14,16,17,18,19,28,29,31,32]:
-            page = 0            
+            if 2 <= page <= 22: page = 1
+            elif 24 <= page <= 32: page = 23
         elif page == 1: # song_start
           if msg.content in sfirst:
             page = sfirst[msg.content]
@@ -445,6 +448,13 @@ async def setting(ctx):
             else:
               popt["skills"].append(skills[msg.content])
             page = 23
+          else:
+            pass
+        elif page in [27,30]:
+          if msg.content == "initial":
+            page += 1
+          elif msg.content == "highest":
+            page += 2
           else:
             pass
         elif page in [16,17,18,19,28,29,31,32]:
