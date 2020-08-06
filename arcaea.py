@@ -121,40 +121,18 @@ async def help(ctx):
   await ctx.send(embed=e,delete_after=60)
   
 @bot.command()
-async def slist(ctx, *args):
-  await ctx.message.delete()
-  if "/p" in args:
-    if "\\p" in args: SLs[0] = args[args.index("/p")+1:args.index("\\p")]
-    else: SLs[0] = args[args.index("/p")+1:args.index("/p")+2]
-  if "/s" in args: SLs[1] = args[args.index("/s")+1]
-  if "/l" in args:
-    if "\\l" in args: SLs[2] = args[args.index("/l")+1:args.index("\\l")]
-    else: SLs[2] = args[args.index("/l")+1:args.index("/l")+2]
-  listsP = [i for i in dataS if not i.pack in SLs[0]] if SLs[0] != None else dataS
-  listsS = [i for i in listsP if i.side == SLs[1]] if SLs[1] != None else listsP
-  listsL = [i.name for i in listsS if i.level.FUTURE in SLs[2]] if SLs[2] != None else [i.name for i in listsS]
-  sl = '\n'.join(listsL)
-  if so["s"] != None: e = dc.Embed(description=sl,color=0x00f1ff) if so["s"] == "光" else dc.Embed(description=sl,color=0x461399)
-  else: e = dc.Embed(description=sl,color=0x74596d)
-  e.timestamp = dt.utcnow()
-  e.set_author(name="楽曲リスト",icon_url=bot.user.avatar_url)
-  e.set_footer(text=f"送信者 : {ctx.author.name}")
-  await ctx.send(embed=e,delete_after=60)
-  SLs[0], SLs[1], SLs[2] = None, None, None
-    
-@bot.command()
 async def sinfo(ctx, *, name=None):
   await ctx.message.delete()
   if name == None:
     if dataset[0] != None: name = dataset[0]
-    else: await ctx.send("曲名を入力して下さい")
+    else: await ctx.send(embed=dc.Embed(title="曲名を入力して下さい"),delete_after=5.0)
   sgs = [i for i in sdata if name in i.name]
-  if len(sgs) == 0: return await ctx.send("曲が見つかりませんでした", delete_after=5.0)
+  if len(sgs) == 0: return await ctx.send(embed=dc.Embed(title="曲が見つかりませんでした"), delete_after=5.0)
   else: song = sgs[0]
   e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x00f1ff) if song.side == "光" else dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
   e.timestamp = dt.utcnow()
   e.add_field(name="◇ BPM",value=f"{song.bpm}",inline=False)
-  e.add_field(name="◇ 作曲者 ・ アートワーク画像作者",value=f"{song.composer} ・ {song.artworker}",inline=False)
+  e.add_field(name="◇ 作曲者 ・ アートワーク画像作者",value=f"{song.composer} ・ {song.illustrator}",inline=False)
   e.add_field(name="◇ 難易度とノーツ数、譜面定数(PST)",value=f"`譜面製作者`: {song.chart.PAST}\n`レベル`: {song.level.PAST}, `譜面定数`: {song.constant.PAST}\n`ノーツ数`: {song.notes.PAST}, `1ノート最高点`: {round(10000000 / int(song.notes.PAST), 3)}",inline=False)
   e.add_field(name="◇ 難易度とノーツ数、譜面定数(PRS)",value=f"`譜面製作者`: {song.chart.PRESENT}\n`レベル`: {song.level.PRESENT}, `譜面定数`: {song.constant.PRESENT}\n`ノーツ数`: {song.notes.PRESENT}, `1ノート最高点`: {round(10000000 / int(song.notes.PRESENT), 3)}",inline=False)
   e.add_field(name="◇ 難易度とノーツ数、譜面定数(FTR)",value=f"`譜面製作者`: {song.chart.FUTURE}\n`レベル`: {song.level.FUTURE}, `譜面定数`: {song.constant.FUTURE}\n`ノーツ数`: {song.notes.FUTURE}, `1ノート最高点`: {round(10000000 / int(song.notes.FUTURE), 3)}",inline=False)
@@ -165,7 +143,7 @@ async def sinfo(ctx, *, name=None):
     b = dc.Embed(title=f"◇ 曲名 {song.name}",description=f"❖ パック {song.pack}",color=0xD00000)
     b.timestamp = dt.utcnow()
     b.add_field(name="❖ BPM",value=f"{song.bpm}",inline=False)
-    b.add_field(name="❖ 作曲者 ・ アートワーク画像作者",value=f"{song.composer} ・ {song.artworker}",inline=False)
+    b.add_field(name="❖ 作曲者 ・ アートワーク画像作者",value=f"{song.composer} ・ {song.illustrator}",inline=False)
     b.add_field(name="❖ 難易度とノーツ数、譜面定数(BYD)",value=f"`譜面製作者`: {song.chart.BEYOND}\n`レベル`: {song.level.BEYOND}, `譜面定数`: {song.constant.BEYOND}\n`ノーツ数`: {song.notes.BEYOND}, `1ノート最高点`: {round(10000000 / int(song.notes.BEYOND), 3)}",inline=False)
     b.set_author(name="◆ 曲の情報(BYD) ❖",icon_url=bot.user.avatar_url)
     b.set_footer(text=f"送信者 : {ctx.author.name}")
@@ -173,12 +151,16 @@ async def sinfo(ctx, *, name=None):
     emojis, embeds, page = ["➡️","⬅️"], [e,b], 0
     m = await ctx.send(embed=embeds[0])
     while not bot.is_closed():
-      await m.edit(embed=embeds[page],delete_after=60)
+      await m.edit(embed=embeds[page])
       await m.add_reaction(emojis[page])
-      r = await bot.wait_for('reaction_add', check=lambda r, u: u == ctx.author and str(r.emoji) in emojis)
-      await m.clear_reactions()
-      if str(r[0]) == "➡️": page = 1
-      else: page = 0
+      try:
+        r = await bot.wait_for('reaction_add', timeout=60.0, check=lambda r, u: u == ctx.author and str(r.emoji) in emojis)
+        await m.clear_reactions()
+        if str(r[0]) == "➡️": page = 1
+        else: page = 0
+      except ao.TimeoutError:
+        await m.delete()
+        break
   else:
     await ctx.send(embed=e,delete_after=60)
   
