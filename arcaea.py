@@ -503,8 +503,8 @@ async def setting(ctx):
               sopt["constant_limit"][{16:0,17:1,18:2,19:3}[page]][0] = clvalues[0]
               sopt["constant_limit"][{16:0,17:1,18:2,19:3}[page]][1] = clvalues[1]
             elif 28 <= page <= 32:
-              popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][0] = clvalues[0]
-              popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][1] = clvalues[1]
+              popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][{28:0,29:1,31:0,32:1}[page]][0] = clvalues[0]
+              popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][{28:0,29:1,31:0,32:1}[page]][1] = clvalues[1]
             page = 23
           
     except ao.TimeoutError:
