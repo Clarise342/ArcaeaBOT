@@ -413,7 +413,7 @@ async def setting(ctx):
         elif 20 <= page <= 22:
           for p in {20:composers,21:illustrators,22:chart_creators}[page]:
             if msg.content in p:
-              if p in sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]]:
+              if p in sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]]:
                 del sopt[{20:"composers",21:"illustrators",22:"chart_creators"}][sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].index(p)]
               else:
                 sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].append(p)
