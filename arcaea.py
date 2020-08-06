@@ -311,6 +311,8 @@ async def setting(ctx):
           co_display = '\n'.join(sopt["composers"]) if len(sopt["composers"]) != 0 else "全て"
           il_display = '\n'.join(sopt["illustrators"]) if len(sopt["illustrators"]) != 0 else "全て"
           ch_display = '\n'.join(sopt["chart_creators"]) if len(sopt["chart_creators"]) != 0 else "全て"
+          t_display = ' '.join(popt["types"]) if len(popt["types"]) != 0 else "全て"
+          s_display = ' '.join(popt["skills"]) if len(popt["skills"]) != 0 else "全て"
           ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4")
           ignores_e.add_field(name="❖ 除外パック",value=ip_display,inline=False)
           ignores_e.add_field(name="❖ 除外楽曲",value=is_display,inline=False)
@@ -353,8 +355,8 @@ async def setting(ctx):
           limits_e.add_field(name="BEYOND基準",value=f"ノーツ数 : {jopt[0][3]}\n譜面定数 : {jopt[1][3]}",inline=False)
           partner_e = dc.Embed(title="自動選択設定\n - パートナー")
           partner_e.add_field(name="対象",value=display_resident[popt['resident']],inline=False)
-          partner_e.add_field(name="タイプ制限",value=' '.join(popt['types']),inline=False)
-          partner_e.add_field(name="レベル制限",value=' '.join(popt['skills']),inline=False)
+          partner_e.add_field(name="タイプ制限",value=t_display,inline=False)
+          partner_e.add_field(name="レベル制限",value=s_display,inline=False)
           partner_e.add_field(name="FRAG制限",value=f"Lv1基準 : {jopt[2][0]}\nLv20基準 : {jopt[2][1]}",inline=False)
           partner_e.add_field(name="STEP制限",value=f"Lv1基準 : {jopt[3][0]}\nLv20基準 : {jopt[3][1]}",inline=False)
           check_embeds = [ignores_e,levels_e,limits_e,infos_e,partner_e] 
