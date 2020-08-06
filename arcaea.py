@@ -449,7 +449,8 @@ async def setting(ctx):
             else:
               sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]].append(values[0])
             page = 1
-          else: pass
+          else: 
+            pass
         elif page == 23: # partner_start
           if msg.content in pfirst:
             page = pfirst[msg.content]
