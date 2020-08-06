@@ -302,33 +302,61 @@ async def setting(ctx):
           await emb.delete()
           break
         elif msg.content == "check":
-          ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4",description=f"**除外パック** : {' '.join(sopt['ignorepacks'])}\n**除外楽曲** : {' '.join(sopt['ignoresongs'])}")
-          levels_e = dc.Embed(title="自動選択設定\n - 楽曲 2/4",description=f"**レベル制限**\n `PAST基準` : {' '.join(sopt['levels'][0])}\n `PRESENT基準` : {' '.join(sopt['levels'][1])}\n `FUTURE基準` : {' '.join(sopt['levels'][2])}\n `BEYOND基準` : {' '.join(sopt['levels'][3])}")
-          infos_e = dc.Embed(title="自動選択設定\n - 楽曲 4/4",description=f"**サイド** : {sopt['side']}\n**その他情報制限**\n `作曲者` : {' '.join(sopt['composers'])}\n `イラストレーター` : {' '.join(sopt['illustrators'])}\n `譜面製作者` : {' '.join(sopt['chart_creators'])}")
-          jopt = {
-            "notes_limit":[
-              [str(x) for x in sopt["notes_limit"][0]],
-              [str(x) for x in sopt["notes_limit"][1]],
-              [str(x) for x in sopt["notes_limit"][2]],
-              [str(x) for x in sopt["notes_limit"][3]]
+          ip_display = '\n'.join(sopt["ignorepacks"]) if len(sopt["ignorepacks"]) != 0 else "なし"
+          is_display = '\n'.join(sopt["ignoresongs"]) if len(sopt["ignoresongs"]) != 0 else "なし"
+          l_display_pst = ' '.join(sopt["levels"][0]) if len(sopt["levels"][0]) != 0 else "なし"
+          l_display_prs = ' '.join(sopt["levels"][1]) if len(sopt["levels"][1]) != 0 else "なし"         
+          l_display_ftr = ' '.join(sopt["levels"][2]) if len(sopt["levels"][2]) != 0 else "なし"
+          l_display_byd = ' '.join(sopt["levels"][3]) if len(sopt["levels"][3]) != 0 else "なし"
+          co_display = '\n'.join(sopt["composers"]) if len(sopt["composers"]) != 0 else "全て"
+          il_display = '\n'.join(sopt["illustrators"]) if len(sopt["illustrators"]) != 0 else "全て"
+          ch_display = '\n'.join(sopt["chart_creators"]) if len(sopt["chart_creators"]) != 0 else "全て"
+          ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4")
+          ignores_e.add_field(name="❖ 除外パック",value=ip_display,inline=False)
+          ignores_e.add_field(name="❖ 除外楽曲",value=is_display,inline=False)
+          levels_e = dc.Embed(title="自動選択設定\n - 楽曲 2/4",description="❖ レベル制限")
+          levels_e.add_field(name="PAST基準",value=l_display_pst,inline=False)
+          levels_e.add_field(name="PRESENT基準",value=l_display_prs,inline=False)
+          levels_e.add_field(name="FUTURE基準",value=l_display_ftr,inline=False)
+          levels_e.add_field(name="BEYOND基準",value=l_display_byd,inline=False)
+          infos_e = dc.Embed(title="自動選択設定\n - 楽曲 4/4")
+          infos_e.add_field(name="サイド",value=sopt['side'],inline=False)
+          infos_e.add_field(name="作曲者",value=co_display,inline=False)
+          infos_e.add_field(name="イラストレーター",value=il_display,inline=False)
+          infos_e.add_field(name="譜面製作者",value=ch_display,inline=False)
+          jopt = [
+            [
+              ' 〜 '.join([str(x) for x in sopt["notes_limit"][0]]),
+              ' 〜 '.join([str(x) for x in sopt["notes_limit"][1]]),
+              ' 〜 '.join([str(x) for x in sopt["notes_limit"][2]]),
+              ' 〜 '.join([str(x) for x in sopt["notes_limit"][3]])
             ],
-            "constant_limit":[
-              [str(x) for x in sopt["constant_limit"][0]],
-              [str(x) for x in sopt["constant_limit"][1]],
-              [str(x) for x in sopt["constant_limit"][2]],
-              [str(x) for x in sopt["constant_limit"][3]]
+            [
+              ' 〜 '.join([str(x) for x in sopt["constant_limit"][0]]),
+              ' 〜 '.join([str(x) for x in sopt["constant_limit"][1]]),
+              ' 〜 '.join([str(x) for x in sopt["constant_limit"][2]]),
+              ' 〜 '.join([str(x) for x in sopt["constant_limit"][3]])
             ],
-            "frag_limit":[
-              [str(x) for x in popt["frag_limit"][0]],
-              [str(x) for x in popt["frag_limit"][1]]
+            [
+              ' 〜 '.join([str(x) for x in popt["frag_limit"][0]]),
+              ' 〜 '.join([str(x) for x in popt["frag_limit"][1]])
             ],
-            "step_limit":[
-              [str(x) for x in popt["step_limit"][0]],
-              [str(x) for x in popt["step_limit"][1]]
+            [
+              ' 〜 '.join([str(x) for x in popt["step_limit"][0]]),
+              ' 〜 '.join([str(x) for x in popt["step_limit"][1]])
             ]
-          }
-          limits_e = dc.Embed(title="自動選択設定\n - 楽曲 3/4",description=f"**ノーツ数・譜面定数制限**\n **`PAST基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][0])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][0])}\n **`PRESENT基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][1])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][1])}\n **`FUTURE基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][2])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][2])}\n **`BEYOND基準`** :\n  `ノーツ数` : {' 〜 '.join(jopt['notes_limit'][3])}\n  `譜面定数` : {' 〜 '.join(jopt['constant_limit'][3])}")
-          partner_e = dc.Embed(title="自動選択設定\n - パートナー",description=f"**対象** : {popt['resident']})\n**タイプ制限** : {' '.join(popt['types'])}\n**レベル制限** : {' '.join(popt['skills'])}\n**FRAG制限** :\n `Lv1基準` : {' 〜 '.join(jopt['frag_limit'][0])}\n `Lv20基準` : {' 〜 '.join(jopt['frag_limit'][1])}\n**STEP制限** :\n `Lv1基準` : {' 〜 '.join(jopt['step_limit'][0])}\n `Lv20基準` : {' 〜 '.join(jopt['step_limit'][1])}")
+          ]
+          limits_e = dc.Embed(title="自動選択設定\n - 楽曲 3/4",description="ノーツ数・譜面定数制限")
+          limits_e.add_field(name="PAST基準",value=f"ノーツ数 : {jopt[0][0]}\n譜面定数 : {jopt[1][0]}",inline=False)
+          limits_e.add_field(name="PRESENT基準",value=f"ノーツ数` : {jopt[0][1]}\n譜面定数 : {jopt[1][1]}",inline=False)
+          limits_e.add_field(name="FUTURE基準",value=f"ノーツ数` : {jopt[0][2]}\n譜面定数 : {jopt[1][2]}",inline=False)
+          limits_e.add_field(name="BEYOND基準",value=f"ノーツ数 : {jopt[0][3]}\n譜面定数 : {jopt[1][3]}",inline=False)
+          partner_e = dc.Embed(title="自動選択設定\n - パートナー")
+          partner_e.add_field(name="対象",value=display_resident[popt['resident']],inline=False)
+          partner_e.add_field(name="タイプ制限",value=' '.join(popt['types']),inline=False)
+          partner_e.add_field(name="レベル制限",value=' '.join(popt['skills']),inline=False)
+          partner_e.add_field(name="FRAG制限",value=f"Lv1基準 : {jopt[2][0]}\nLv20基準 : {jopt[2][1]}",inline=False)
+          partner_e.add_field(name="STEP制限",value=f"Lv1基準 : {jopt[3][0]}\nLv20基準 : {jopt[3][1]}",inline=False)
           check_embeds = [ignores_e,levels_e,limits_e,infos_e,partner_e] 
           check_page = 0
           while not bot.is_closed():
@@ -414,14 +442,8 @@ async def setting(ctx):
           else:
             pass
         elif 20 <= page <= 22:
-          for p in {20:composers,21:illustrators,22:chart_creators}[page]:
-            if msg.content in p:
-              print(page)
-              if p in sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]]:
-                del sopt[{20:"composers",21:"illustrators",22:"chart_creators"}][sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].index(p)]
-              else:
-                sopt[{20:"composers",21:"illustratorss",22:"chart_creators"}[page]].append(p)
-              continue      
+          、len(list(filter(lambda x:msg.content in x, {20:composers,21:illustrators,22:chart_creators}[page]))) < 0:
+            if in sopt[{20:"composers",21:"illustrators",22:"chart_creators"}[page]]:
           page = 1
         elif page == 23: # partner_start
           if msg.content in pfirst:
