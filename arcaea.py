@@ -303,7 +303,7 @@ async def setting(ctx):
           break
         elif msg.content == "check":
           ip_display = '\n'.join(sopt["ignorepacks"]) if len(sopt["ignorepacks"]) != 0 else "なし"
-          is_display = '\n'.join(sopt["ignoresongs"]) if len(sopt["ignoresongs"]) != 0 else "なし"
+          is_display = '\n'.join(list(map(lambda x: x.name, sopt["ignoresongs"]))) if len(sopt["ignoresongs"]) != 0 else "なし"
           l_display_pst = ' '.join(sopt["levels"][0]) if len(sopt["levels"][0]) != 0 else "なし"
           l_display_prs = ' '.join(sopt["levels"][1]) if len(sopt["levels"][1]) != 0 else "なし"         
           l_display_ftr = ' '.join(sopt["levels"][2]) if len(sopt["levels"][2]) != 0 else "なし"
