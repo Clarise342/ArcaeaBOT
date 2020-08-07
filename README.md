@@ -1,1 +1,2 @@
-# discordpy-startup
+# ArcaeaBOT (Discord)
+ Arcaeaのプレイヤーの皆さんをサポートするBOTです
