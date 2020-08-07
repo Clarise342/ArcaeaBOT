@@ -313,19 +313,19 @@ async def setting(ctx):
           ch_display = '\n'.join(sopt["chart_creators"]) if len(sopt["chart_creators"]) != 0 else "全て"
           t_display = ' '.join(popt["types"]) if len(popt["types"]) != 0 else "全て"
           s_display = ' '.join(popt["skills"]) if len(popt["skills"]) != 0 else "全て"
-          ignores_e = dc.Embed(title="自動選択設定\n - 楽曲 1/4")
+          ignores_e = dc.Embed(title="◇ 自動選択設定 - 楽曲(1/4)",color=0x74596d)
           ignores_e.add_field(name="❖ 除外パック",value=ip_display,inline=False)
           ignores_e.add_field(name="❖ 除外楽曲",value=is_display,inline=False)
-          levels_e = dc.Embed(title="自動選択設定\n - 楽曲 2/4",description="❖ レベル制限")
-          levels_e.add_field(name="PAST基準",value=l_display_pst,inline=False)
-          levels_e.add_field(name="PRESENT基準",value=l_display_prs,inline=False)
-          levels_e.add_field(name="FUTURE基準",value=l_display_ftr,inline=False)
-          levels_e.add_field(name="BEYOND基準",value=l_display_byd,inline=False)
-          infos_e = dc.Embed(title="自動選択設定\n - 楽曲 4/4")
-          infos_e.add_field(name="サイド",value=sopt['side'],inline=False)
-          infos_e.add_field(name="作曲者",value=co_display,inline=False)
-          infos_e.add_field(name="イラストレーター",value=il_display,inline=False)
-          infos_e.add_field(name="譜面製作者",value=ch_display,inline=False)
+          levels_e = dc.Embed(title="◇ 自動選択設定 - 楽曲(2/4)",description="❖ レベル制限",color=0x74596d)
+          levels_e.add_field(name="**PAST基準 -**",value=l_display_pst,inline=False)
+          levels_e.add_field(name="**PRESENT基準 -**",value=l_display_prs,inline=False)
+          levels_e.add_field(name="**FUTURE基準 -**",value=l_display_ftr,inline=False)
+          levels_e.add_field(name="**BEYOND基準 -**",value=l_display_byd,inline=False)
+          infos_e = dc.Embed(title="◇ 自動選択設定 - 楽曲(4/4)",color=0x74596d)
+          infos_e.add_field(name="❖ サイド",value=sopt['side'],inline=False)
+          infos_e.add_field(name="❖ 作曲者",value=co_display,inline=False)
+          infos_e.add_field(name="❖ イラストレーター",value=il_display,inline=False)
+          infos_e.add_field(name="❖ 譜面製作者",value=ch_display,inline=False)
           jopt = [
             [
               ' 〜 '.join([str(x) for x in sopt["notes_limit"][0]]),
@@ -348,12 +348,12 @@ async def setting(ctx):
               ' 〜 '.join([str(x) for x in popt["step_limit"][1]])
             ]
           ]
-          limits_e = dc.Embed(title="自動選択設定\n - 楽曲 3/4",description="ノーツ数・譜面定数制限")
+          limits_e = dc.Embed(title="◇ 自動選択設定 - 楽曲(3/4)",description="ひしか制限",color=0x74596d)
           limits_e.add_field(name="PAST基準",value=f"ノーツ数 : {jopt[0][0]}\n譜面定数 : {jopt[1][0]}",inline=False)
           limits_e.add_field(name="PRESENT基準",value=f"ノーツ数` : {jopt[0][1]}\n譜面定数 : {jopt[1][1]}",inline=False)
           limits_e.add_field(name="FUTURE基準",value=f"ノーツ数` : {jopt[0][2]}\n譜面定数 : {jopt[1][2]}",inline=False)
           limits_e.add_field(name="BEYOND基準",value=f"ノーツ数 : {jopt[0][3]}\n譜面定数 : {jopt[1][3]}",inline=False)
-          partner_e = dc.Embed(title="自動選択設定\n - パートナー")
+          partner_e = dc.Embed(title="◇ 自動選択設定 - パートナー",color=0x74596d)
           partner_e.add_field(name="対象",value=display_resident[popt['resident']],inline=False)
           partner_e.add_field(name="タイプ制限",value=t_display,inline=False)
           partner_e.add_field(name="レベル制限",value=s_display,inline=False)
