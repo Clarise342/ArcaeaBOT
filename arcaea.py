@@ -8,11 +8,11 @@ bot.remove_command("help")
 
 # 設定
 pindex = 0 # ステータス番号
-
+	
 sopt = {
-  "ignorepacks":[],
-  "ignoresongs":[],
-  "levels":[
+    "ignorepacks":[],
+    "ignoresongs":[],
+    "levels":[
     [],
     [],
     [],
