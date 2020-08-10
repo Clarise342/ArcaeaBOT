@@ -385,7 +385,13 @@ async def setting(ctx):
             page = 0
           elif page not in [5,6,7,8,11,12,13,14,16,17,18,19,28,29,31,32]:
             if 2 <= page <= 22: page = 1
-            elif 24 <= page <= 32: page = 23
+            elif 24 <= page <= 32: page = 2:
+          else:
+            if 5 <= page <= 8: page = 4
+            elif 11 <= page <= 14: page = 10
+            elif 16 <= page <= 19: page = 15
+            elif 28 <= page <= 29: page = 27
+            else: page = 30
         elif page == 1: # song_start
           if msg.content in sfirst:
             page = sfirst[msg.content]
@@ -414,10 +420,7 @@ async def setting(ctx):
           else:
             pass
         elif 5 <= page <= 8: # level
-          if msg.content == "back":
-            page = 4
-            continue
-          elif msg.content in {5:["1","2","3","4","5","6"],6:["3","4","5","6","7","8","9"],7:["7","8","9","9+","10","10+","11"],8:["8","9","9+","10","10+","11"]}[page]:
+          if msg.content in {5:["1","2","3","4","5","6"],6:["3","4","5","6","7","8","9"],7:["7","8","9","9+","10","10+","11"],8:["8","9","9+","10","10+","11"]}[page]:
             if msg.content in sopt["levels"][{5:0,6:1,7:2,8:3}[page]]:
               del sopt["levels"][{5:0,6:1,7:2,8:3}[page]][sopt["levels"][{5:0,6:1,7:2,8:3}[page]].index(msg.content)]
             else:
@@ -426,9 +429,6 @@ async def setting(ctx):
           else:
             pass
         elif 11 <= page <= 14:
-          if msg.content == "back":
-            page = 4
-            continue
           splits = msg.content.split(" ")
           try:
             nlvalues = [int(x) for x in splits]
@@ -491,9 +491,6 @@ async def setting(ctx):
           else:
             pass
         elif page in [16,17,18,19,28,29,31,32]:
-          if msg.content == "back":
-            page = {16:15,17:15,18:15,19:15,28:27,29:27,31:30,32:30}[page]
-            continue
           splits = msg.content.split(" ")
           try:
             clvalues = [float(x) for x in splits]
