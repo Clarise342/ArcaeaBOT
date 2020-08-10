@@ -385,7 +385,7 @@ async def setting(ctx):
             page = 0
           elif page not in [5,6,7,8,11,12,13,14,16,17,18,19,28,29,31,32]:
             if 2 <= page <= 22: page = 1
-            elif 24 <= page <= 32: page = 2
+            elif 24 <= page <= 32: page = 23
           else:
             if 5 <= page <= 8: page = 4
             elif 11 <= page <= 14: page = 10
