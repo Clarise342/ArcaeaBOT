@@ -186,11 +186,39 @@ async def pinfo(ctx, *, name=None):
 async def sselect(ctx, count=1):
   await ctx.message.delete()
   if count > 10: return await ctx.send("1度に10連続まで可能です", delete_after=5.0)
-  enablesP = [i for i in dataS if not i.pack in so["ip"]] if len(so["ip"]) != 0 else dataS
-  enablesS = [i for i in enablesP if i.side == so["s"]] if so["s"] != None else enablesP
-  enablesL = [i for i in enablesS if i.level.FUTURE in so["l"]] if len(so["l"]) != 0 else enablesS
-  if len(enablesL) == 0: return await ctx.send("条件に該当する楽曲が見つかりませんでした", delete_after=5.0)
-  results = random.sample(enablesL, count)
+  enables_p = [i for i in sdata if not i.pack in sopt["ignorepacks"]] if len(sopt["ignorepacks"]) != 0 else sdata
+  enables_so = [i for i in enables_p if not i in sopt["ignoresongs"]] if len(sopt["ignoresongs"]) != 0 else enables_p
+  enables_si = [i for i in enables_so if i.side == sopt["side"]] if sopt["side"] != None else enables_so
+  for level in sopt["levels"]:
+    enables_si = [i for i in enables_si if [i.level.PAST,i.level.PRESENT,i.level.FUTURE,i.level.BEYOND][sopt["levels"].index(level)] in level] if len(level) != 0 else enables_si
+  for nl in sopt["notes_limit"]:
+    enables_si = [i for i in enables_si if nl[0] <= [i.notes.PAST,i.notes.PRESENT,i.notes.FUTURE,i.notes.BEYOND][sopt["notes_limit"].index(nl)] <= nl[1]]
+  for cl in sopt["constant_limit"]:
+    enables_si = [i for i in enables_si if cl[0] <= [i.constant.PAST,i.constant.PRESENT,i.constant.FUTURE,i.constant.BEYOND][sopt["constant_limit"].index(cl)] <= cl[1]]
+  enables_co, enables_il, enables_ch = [], [], []
+  if len(sopt["composers"]) != 0:
+    for song in enables_si:
+      for co in song.tags.composer:
+        if co in sopt["composers"]:
+          enables_co.append(song)
+          pass
+  else: enables_co = enables_si
+  if len(sopt["illustrators"]) != 0:
+    for song in enables_co:
+      for il in song.tags.illustrator:
+        if il in sopt["illustrators"]:
+          enables_il.append(song)
+          pass
+  else: enables_il = enables_co
+  if len(sopt["chart_creators"]) != 0:
+    for song in enables_il:
+      for ch in song.tags.chartdesigner:
+        if ch in sopt["chart_creators"]:
+          enables_ch.append(song)
+          pass
+  else: enables_ch = enables_il
+  if len(enables_ch) == 0: return await ctx.send("条件に該当する楽曲が見つかりませんでした", delete_after=5.0)
+  results = random.sample(enables_ch, count)
   for song in results:
     if song.side == "光": e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x00f1ff)
     else: e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
