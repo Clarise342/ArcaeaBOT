@@ -194,7 +194,7 @@ async def sselect(ctx, count=1):
   for nl in sopt["notes_limit"]:
     enables_si = [i for i in enables_si if nl[0] <= int([i.notes.PAST,i.notes.PRESENT,i.notes.FUTURE,i.notes.BEYOND][sopt["notes_limit"].index(nl)]) <= nl[1]]
   for cl in sopt["constant_limit"]:
-    enables_si = [i for i in enables_si if cl[0] <= int([i.constant.PAST,i.constant.PRESENT,i.constant.FUTURE,i.constant.BEYOND][sopt["constant_limit"].index(cl)]) <= cl[1]]
+    enables_si = [i for i in enables_si if cl[0] <= float([i.constant.PAST,i.constant.PRESENT,i.constant.FUTURE,i.constant.BEYOND][sopt["constant_limit"].index(cl)]) <= cl[1]]
   enables_co, enables_il, enables_ch = [], [], []
   if len(sopt["composers"]) != 0:
     for song in enables_si:
