@@ -294,7 +294,7 @@ async def setting(ctx):
   while not bot.is_closed():
     await emb.edit(embed=embeds[page])
     try:
-      msg = await bot.wait_for('message', timeout=60.0, check=lambda m: m.author == ctx.author)
+      msg = await bot.wait_for('message', timeout=120.0, check=lambda m: m.author == ctx.author)
       await msg.edit(delete_after=2.0)
       if page == 0:
         if msg.content == "end":
@@ -416,7 +416,7 @@ async def setting(ctx):
         elif 5 <= page <= 8: # level
           if msg.content == "back":
             page = 4
-            pass
+            continue
           elif msg.content in {5:["1","2","3","4","5","6"],6:["3","4","5","6","7","8","9"],7:["7","8","9","9+","10","10+","11"],8:["8","9","9+","10","10+","11"]}[page]:
             if msg.content in sopt["levels"][{5:0,6:1,7:2,8:3}[page]]:
               del sopt["levels"][{5:0,6:1,7:2,8:3}[page]][sopt["levels"][{5:0,6:1,7:2,8:3}[page]].index(msg.content)]
@@ -428,7 +428,7 @@ async def setting(ctx):
         elif 11 <= page <= 14:
           if msg.content == "back":
             page = 4
-            pass
+            continue
           splits = msg.content.split(" ")
           try:
             nlvalues = [int(x) for x in splits]
@@ -493,7 +493,7 @@ async def setting(ctx):
         elif page in [16,17,18,19,28,29,31,32]:
           if msg.content == "back":
             page = {16:15,17:15,18:15,19:15,28:27,29:27,31:30,32:30}[page]
-            pass
+            continue
           splits = msg.content.split(" ")
           try:
             clvalues = [float(x) for x in splits]
@@ -506,7 +506,7 @@ async def setting(ctx):
             elif 28 <= page <= 32:
               popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][{28:0,29:1,31:0,32:1}[page]][0] = clvalues[0]
               popt[{28:"frag_limit",29:"frag_limit",31:"step_limit",32:"step_limit"}[page]][{28:0,29:1,31:0,32:1}[page]][1] = clvalues[1]
-            page = 23
+            page = {16:1,17:1,18:1,19:1,28:23,29:23,31:23,32:23}[page]
           
     except ao.TimeoutError:
       await emb.delete()
