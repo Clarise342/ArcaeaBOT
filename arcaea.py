@@ -109,7 +109,6 @@ async def help(ctx):
   e = dc.Embed(title="prefixは `a@` です",color=0x74596d)
   e.timestamp = dt.utcnow()
   e.add_field(name="help",value="ヘルプを表示します",inline=False)
-  e.add_field(name="slist <条件>",value="条件に一致する楽曲のリストを表示します",inline=False)
   e.add_field(name="sinfo <曲名>",value="曲の情報を表示します",inline=False)
   e.add_field(name="pinfo <パートナー名>",value="パートナーの情報を表示します",inline=False)
   e.add_field(name="sselect (回数)",value="BOTがランダムに選曲します",inline=False)
