@@ -220,7 +220,7 @@ async def pselect(ctx):
 @bot.command(name="set")
 async def setting(ctx):
   await ctx.message.delete()
-  start_e = dc.Embed(title="【1】\nどうしますか？",description="**`end`** : 設定を終了します\n**`check`** : 現在の設定を確認します\n**`song`** : 楽曲自動選択に関する設定です\n**`partner`** : パートナー自動選択に関する設定です",color=0x005AD6)
+  start_e = dc.Embed(title="1】どうしますか？",description="**`end`** : 設定を終了します\n**`check`** : 現在の設定を確認します\n**`song`** : 楽曲自動選択に関する設定です\n**`partner`** : パートナー自動選択に関する設定です",color=0x005AD6)
   ssstart_e = dc.Embed(title="【2=S】\n設定項目を選択して下さい",description="**`ip`** : 除外/追加 (パック)\n**`is`** : 除外/追加 (楽曲)\n**`l`** : 対象設定 (レベル)\n**`s`** : 対象設定 (サイド)\n**`nl`** : 上下限設定 (ノーツ数)\n**`cl`** : 上下限設定 (譜面定数)\n**`co`** : 対象設定 (作曲者)\n**`il`** : 対象設定 (イラストレーター)\n**`ch`** : 対象設定 (譜面製作者)",color=0x6FFFBA)
   ignorepack_e = dc.Embed(title="【3=S-ip】\n以下から選択して下さい\n(以下短縮名称を使用してください)",description="`Ae`(Archive)  `Aa`(Arcaea)\n`WE`(World Extend) `BF`(Black Fate)\n`AP`(Adverse Prelude)\n`LS`(Luminous Sky) `VL`(Vicious Labyrinth)\n`EC`(Eternal Core) `SR`(Sunset Radiance)\n`AR`(Absolute Reason) `BE`(Binary Enfold)\n`Am`(Ambivalent Vision)\n`CS`(Crimson Solace) `CH`(CHUNITHM)\n`GC`(Groove Coaster) `TS`(Tone Sphere)\n`La`(Lanota) `Dx`(Dynamix)",color=0x6FFFBA)
   ignoresong_e = dc.Embed(title="【3=S-is】\n楽曲名を入力して下さい\n※曲名は完全一致である必要はありません\n(類似する楽曲がある場合を除く)",color=0x6FFFBA)
