@@ -189,8 +189,13 @@ async def sselect(ctx, count=1):
   enables_p = [i for i in sdata if not i.pack in sopt["ignorepacks"]] if len(sopt["ignorepacks"]) != 0 else sdata
   enables_so = [i for i in enables_p if not i in sopt["ignoresongs"]] if len(sopt["ignoresongs"]) != 0 else enables_p
   enables_si = [i for i in enables_so if i.side == sopt["side"]] if sopt["side"] != None else enables_so
-  for level in sopt["levels"]:
-    enables_si = [i for i in enables_si if [i.level.PAST,i.level.PRESENT,i.level.FUTURE,i.level.BEYOND][sopt["levels"].index(level)] in level] if len(level) != 0 else enables_si
+  for song in enables_si:
+    if song.level.BEYOND != "-":
+      for level in sopt["levels"]:
+        enables_si = [i for i in enables_si if [i.level.PAST,i.level.PRESENT,i.level.FUTURE,i.level.BEYOND][sopt["levels"].index(level)] in level] if len(level) != 0 else enables_si
+    else:
+      for level in sopt["levels"][0:3]:
+        enables_si = [i for i in enables_si if [i.level.PAST,i.level.PRESENT,i.level.FUTURE][sopt["levels"].index(level)] in level] if len(level) != 0 else enables_si
   for nl in sopt["notes_limit"]:
     enables_si = [i for i in enables_si if nl[0] <= int([i.notes.PAST,i.notes.PRESENT,i.notes.FUTURE,i.notes.BEYOND][sopt["notes_limit"].index(nl)]) <= nl[1]]
   for cl in sopt["constant_limit"]:
@@ -230,19 +235,24 @@ async def sselect(ctx, count=1):
     dataset[0] = song.name
     
 @bot.command()
-async def pselect(ctx):
+async def pselect(ctx, count=1):
   await ctx.message.delete()
-  if cne[po["ne"]] != None: enablesT = [i for i in cne[po["ne"]] if i.type in po["t"]] if len(po["t"]) != 0 else cne[po["ne"]]
-  else: enablesT = [i for i in dataPN+dataPE if i.type in po["t"]] if len(po["t"]) != 0 else dataPN+dataPE
-  enablesS = [i for i in enablesT if i.skill.name in po["s"]] if len(po["s"]) != 0 else enablesT
-  if len(enablesS) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
-  result = enablesS[random.randint(0,len(enablesS)-1)]
-  e = dc.Embed(title=f"◆ パートナー名 {result.name}",description=f"◇ タイプ {result.type}",color=0x74596d)
-  e.timestamp = dt.utcnow()
-  e.set_author(name="❖ パートナー選択 ❖",icon_url=bot.user.avatar_url)
-  e.set_footer(text=f"詳細は a.partner_info で確認できます\n送信者 : {ctx.author.name}")
-  await ctx.send(embed=e)
-  dataset[1] = result.name 
+  enables_r = [i for i in pdata if i.resident == popt["resident"]] if popt["resident"] != "all" else pdata
+  enables_t = [i for i in enables_r if i.type in popt["types"]] if len(popt["types"]) != 0 else enables_r
+  enables_s = [i for i in enables_t if i.skill.name in popt["skills"]] if len(popt["skills"]) != 0 else enables_t
+  for fl in popt["frag_limit"]:
+    enables_s = [i for i in enables_s if fl[0] <= float([i.frag.min,i.frag.max][popt["frag_limit"].index(fl)]) <= fl[1]]
+  for sl in popt["step_limit"]:
+    enables_s = [i for i in enables_s if sl[0] <= float([i.step.min,i.step.max][popt["step_limit"].index(sl)]) <= sl[1]]
+  if len(enables_s) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
+  result = random.sample(enables_s, count)
+  for partner in result:
+    e = dc.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0x74596d)
+    e.timestamp = dt.utcnow()
+    e.set_author(name="❖ パートナー選択 ❖",icon_url=bot.user.avatar_url)
+    e.set_footer(text=f"詳細は a.partner_info で確認できます\n送信者 : {ctx.author.name}")
+    await ctx.send(embed=e)
+    dataset[1] = partner.name 
   
 @bot.command(name="set")
 async def setting(ctx):
