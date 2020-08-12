@@ -242,8 +242,14 @@ async def pselect(ctx, count=1):
   enables_s = [i for i in enables_t if i.skill.name in popt["skills"]] if len(popt["skills"]) != 0 else enables_t
   for fl in popt["frag_limit"]:
     enables_s = [i for i in enables_s if fl[0] <= float([i.frag.min,i.frag.max][popt["frag_limit"].index(fl)]) <= fl[1]]
+  a = [i for i in pdata if i.name == "Tempest対立"][0]
+  b = pdata.index(a)
+  c = nt("P", "step")
+  d = nt("S", "min max")
+  pdata[b] = c(d(70, 100))
   for sl in popt["step_limit"]:
     enables_s = [i for i in enables_s if sl[0] <= float([i.step.min,i.step.max][popt["step_limit"].index(sl)]) <= sl[1]]
+  pdata[b] = a
   if len(enables_s) == 0: return await ctx.send("条件に該当するパートナーが見つかりませんでした", delete_after=5.0)
   result = random.sample(enables_s, count)
   for partner in result:
