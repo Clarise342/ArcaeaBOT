@@ -35,17 +35,14 @@ if __name__ == '__main__':
     discord.Embed(title="このコマンドは開発者以外使用できません",color=ctx.guild.me.color) 
     if ctx.author.id == 536506865883021323: 
       for cog in extension: 
-        try: 
-          bot.unload_extension(cog) 
-        except Exception: 
-          pass 
+        try: bot.unload_extension(cog) 
+        except Exception: pass 
         finally: 
-          try: 
-            bot.load_extension(cog) 
+          try: bot.load_extension(cog) 
           except Exception as e: 
             print(e) 
-            await msg.edit(embed=f,delete_after=3.0)
-          else: 
-            await ctx.send(embed=e) 
-        
+            await msg.edit(embed=discord.Embed(title=f"<Error> A Error occurred in cog '{cog}'",color=0xFF0000),delete_after=3.0)
+          else: await ctx.send(embed=discord.Embed(title=f"<Success> Cog '{cog}' reloading is complete",color=0x00FF2D),delete_after=1.0) 
+      await ctx.send(embed=discord.Embed(title="<Complete> All cogs was finished reloading",color=0x00FF2D), delete_after=3.0)
+      
 bot.run(token)
