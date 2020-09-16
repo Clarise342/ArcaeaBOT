@@ -5,9 +5,12 @@ import os
 
 token = os.environ['TOKEN']
 extension = [
-  'cogs.bot_event',
-  'cogs.fun_dict',
-  'cogs.many_command'
+  'cogs.main',
+  'cogs.acs',
+  'cogs.acp',
+  'cogs.si',
+  'cogs.pi',
+  'cogs.o'
 ] 
 
 class ArcaeaSupportBot(commands.Bot): 
