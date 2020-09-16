@@ -1,9 +1,6 @@
-from discord.ext import commands, tasks
-from datetime import datetime
+from discord.ext import commands
 import sys
 import discord
-import asyncio
-import json
 import os 
 
 token = os.environ['TOKEN']
@@ -20,9 +17,9 @@ class ArcaeaSupportBot(commands.Bot):
       try: 
         self.load_extension(cog) 
       except Exception: 
-        print("エラーが発生しました") 
+        print(f"<Error> A error occurred in cog '{cog}'.") 
       else: 
-        print(f"コグ: {cog}を読み込みました") 
+        print("<Success> Cog '{cog}' loading is complete.") 
     
 if __name__ == '__main__': 
   bot = ArcaeaSupportBot(command_prefix="a") 
@@ -30,9 +27,6 @@ if __name__ == '__main__':
   @bot.command(name="reload",aliases=["r"]) 
   async def system_reload(ctx): 
     await ctx.message.delete() 
-    s, f, e = discord.Embed(title="再読み込み中です",color=ctx.guild.me.color), 
-    discord.Embed(title="読み込みが完了しました",color=ctx.guild.me.color), 
-    discord.Embed(title="このコマンドは開発者以外使用できません",color=ctx.guild.me.color) 
     if ctx.author.id == 536506865883021323: 
       for cog in extension: 
         try: bot.unload_extension(cog) 
@@ -40,9 +34,10 @@ if __name__ == '__main__':
         finally: 
           try: bot.load_extension(cog) 
           except Exception as e: 
-            print(e) 
-            await msg.edit(embed=discord.Embed(title=f"<Error> A Error occurred in cog '{cog}'",color=0xFF0000),delete_after=3.0)
-          else: await ctx.send(embed=discord.Embed(title=f"<Success> Cog '{cog}' reloading is complete",color=0x00FF2D),delete_after=1.0) 
-      await ctx.send(embed=discord.Embed(title="<Complete> All cogs was finished reloading",color=0x00FF2D), delete_after=3.0)
+            print(f"<Error> Error info:\n{e}") 
+            await msg.edit(embed=discord.Embed(title=f"<Error> A error occurred in cog '{cog}'.",color=0xFF0000),delete_after=3.0)
+          else: await ctx.send(embed=discord.Embed(title=f"<Success> Cog '{cog}' reloading is complete.",color=0x00FF2D),delete_after=1.0) 
+      await ctx.send(embed=discord.Embed(title="<Complete> All cogs were finished reloading.",color=0x00FF2D), delete_after=3.0)
+    else: await ctx.send(embed=discord.Embed(title="<Error> You don't have permissions.",color=0xFF0000), delete_after=3.0)
       
 bot.run(token)
