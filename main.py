@@ -6,11 +6,11 @@ import os
 token = os.environ['TOKEN']
 extension = [
   'cogs.main',
-  'cogs.acs',
-  'cogs.acp',
-  'cogs.si',
-  'cogs.pi',
-  'cogs.o'
+  'cogs.auto_choose_song',
+  'cogs.auto_choose_partner',
+  'cogs.song_info',
+  'cogs.partner_info',
+  'cogs.option'
 ] 
 
 class ArcaeaSupportBot(commands.Bot): 
