@@ -6,6 +6,11 @@ class Main(commands.Cog):
   
   def __init__(self, bot):
     self.bot = bot
+    bot.remove_command("help")
+    
+  @commands.command()
+  async def help(self, ctx):
+    
     
   @self.bot.event
   async def on_ready(self): 
