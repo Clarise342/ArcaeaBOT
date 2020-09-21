@@ -80,6 +80,6 @@ class Main(commands.Cog):
       guilddata.setdefault(str(g.id), data)
       with open("guild.json", "w", encoding="utf-8") as f:
         json.dump(guiktddata, f)
-    print("<Success> サーバーデータの設定が完了しました")
+    print("<Complete> サーバーデータの設定が完了しました")
              
 def setup(bot): bot.add_cog(Main(bot))
