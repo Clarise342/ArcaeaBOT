@@ -34,4 +34,15 @@ class Main(commands.Cog):
     await channel.send(embed=embed) 
     print("<Ready> 起動しました")
     
+    with open("guild.json", "r", encoding="utf-8") as f:
+      guilddata = json.load(f)
+    for g in self.bot.guilds:
+      if str(g.id) in guilddata: 
+        lang = guilddata[str(g.id)]["lang"]
+        del guilddata[str(g.id)]
+      else: lang = "eng"
+      data = {
+        "lang":lang,
+        }
+             
 def setup(bot): bot.add_cog(Main(bot))
