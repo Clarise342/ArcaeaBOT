@@ -2,6 +2,9 @@ from discord.ext import commands
 from datetime import datetime
 import discord, json
 
+with open("guild.json", "r", encoding="utf-8") as f:
+  guilddata = json.load(f)
+
 class Main(commands.Cog):
   
   def __init__(self, bot):
@@ -34,8 +37,6 @@ class Main(commands.Cog):
     await channel.send(embed=embed) 
     print("<Ready> 起動しました")
     
-    with open("guild.json", "r", encoding="utf-8") as f:
-      guilddata = json.load(f)
     for g in self.bot.guilds:
       if str(g.id) in guilddata: 
         lang = guilddata[str(g.id)]["lang"]
