@@ -26,13 +26,13 @@ class PartnerInfo(commands.Cog):
     partners = [i for i in pdata if name in i.name] 
     if len(partners) == 0: return await ctx.send("パートナーが見つかりませんでした", delete_after=5.0) 
     partner = partners[0] 
-    e = dc.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0x74596d) 
+    e = discord.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0x74596d) 
     e.timestamp = dt.utcnow() 
     e.add_field(name="◇ FragとStep(最小値)",value=f"{partner.frag.min} | {partner.step.min}",inline=False) 
     e.add_field(name="◇ FragとStep(最大値)",value=f"{partner.frag.max} | {partner.step.max}",inline=False) 
     e.add_field(name="◇ FragとStep(覚醒後)",value=f"{partner.frag.awaken} | {partner.step.awaken}",inline=False) 
     e.add_field(name=f"◇ Skill ({partner.skill.name})",value=f"{partner.skill.description}\n(覚醒後: {partner.skill.awaken})",inline=False) 
-    e.set_author(name="❖ パートナーの情報 ❖",icon_url=bot.user.avatar_url) 
+    e.set_author(name=" パートナーの情報 ",icon_url=bot.user.avatar_url) 
     e.set_footer(text=f"送信者 : {ctx.author.name}") 
     e.set_image(url=partner.image) 
     await ctx.send(embed=e,delete_after=60)
