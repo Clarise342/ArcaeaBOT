@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from collections import namedtuple as nt
 import discord as dc, json, random, sys, os, asyncio as ao
 
-bot = cmd.Bot(command_prefix="a-")
+bot = cmd.Bot(command_prefix="ac:")
 bot.remove_command("help")
 
 # 設定
@@ -81,39 +81,35 @@ sfirst = {"ip":2,"is":3,"l":4,"s":9,"nl":10,"cl":15,"co":20,"il":21,"ch":22}
 pfirst = {"r":24,"t":25,"s":26,"fl":27,"sl":30}
 ignorepacks = {"Ae":"Archive","Aa":"Arcaea","WE":"World Extend","BF":"Black Fate","AP":"Adverse Prelude","LS":"Luminous Sky","VL":"Vicious Labyrinth","EC":"Eternal Core","SR":"Sunset Radiance","AR":"Absolute Reason","BE":"Binary Enfold","Am":"Ambivalent Vision","CS":"Crimson Solace","CH":"CHUNITHM","GC":"Groove Coaster","TS":"Tone Sphere","La":"Lanota","Dx":"Dynamix"} # ignore_packs
 sides = {"all":None,"light":"光","conflict":"対立"} # side
-composers = ['T2Kazuya', 'chitose', 'a-zu-ra', '南ゆに', 'Sound Souler', 'U-ske', 'lueur', 'Tiny Minim', 'Frums', 'HyuN', '旅人E', 'REDSHiFT', 'Blacklolita', 'しーけー', 'Arch', 'n3pu', 'ARForest', 'Iris', 'gmtn.', 'Missionary', 'DIA', 'Aire', 'ak+q', 'WHITEFISTS', 'Sakuzyo', 'Jun Kuroda', 'Farhan', 'Kolaa', 'Puru', 'THB', 'Sta', 'sky_delta', '翡野イスカ', 'お月さま交響曲', 'Rabbit House', 'Ryazan', 'Combatplayer', 'Soleily', 'Yooh', 'void', 'cYsmix', 'wa.', 'DJ Myosuke', '7mai', '3R2', 'Cosmograph', 'Mameyudoufu', 'uno', 'ちょこ', 'Silentroom', 'アリスシャッハと魔法の楽団', 'REDALiCE', 'siromaru', 't+pazolite', 'TQ☆', 'ikaruga_nex', 'Feryquitous', 'Sennzai', 'MYTK', 'Ras', 'BACO', '溝口ゆうま', '大瀬良あい', 'WHITEFIST', 'からとpαnchii少年', 'はるの', 'MYUKKE.', 'ginkiha', 'Sampling Masters MEGA', 'TANO*C Sound Team', 'USAO', 'DJ Genki', 'DJ Noriken', 'P*Light', 't*pazolite', '黒皇帝', 'Laur', 'Street', 'Maozon', 'Noah', '光吉猛修', 'Zekk', 'Apo11o program', 'ETIA.', 'HiTECH NINJA', 'Saiph', 'Virtual Self', 'HATE', 'Junk', 'Mitomoro', 'Mili', 'PSYQUI', 'Nitro', 'Missive New Krew', 'かゆき', 'Hyun', 'Syepias', 'jioyi', 'Tanchiky', 'xi', 'nora2r', 'Gram', 'YUKIYANAGI', 'Nhato', 'EBIMAYO', 'Yamajet', 'Powerless', 'Aoi', 'siqlo', 'モリモリあつし', 'Yunosuke', 'MASAKI', 'ぺのれり', 'Kobaryo', 'WAiKURO', 'Cranky', 'cybermiso', '翡乃イスカ', 'uma', 'LeaF', 'Polysha', '橘花音', 'Akira Complex', 'Juggernaut.', 'A.SAKA', 'Team Grimoire', 'かめりあ(EDP)', 'Edelritter']
-illustrators = ['T2Kazuya', 'Khronetic', '不明', '白鳥怜', 'ましろみ のあ', '橙乃遥', 'Hanamori Hiro', 'Tagtraume', 'NanoKun', '黒刃愛', 'grosspanda', '釜飯轟々丸', 'かぐやのもちづき', 'yoshimo', 'Shionty', 'RiceGnat', 'Ancy', '雨風雪夏', 'Mechari', 'terry', 'nakanome', 'レアル', 'Saga', 'キッカイキ', 'mins', 'Frums', 'VMWT', 'シエラ', 'deronoitz', 'Megu', 'お月さま交響曲', 'YEONIE', '織日ちひろ', 'Doomfest', 'CinEraLiA', '八葉', 'Koyama Mai', 'Eric Dagley', '百舌谷', 'トロ3', 'Refla', 'BerryVerrine', 'Photonskyto', 'DJ Poyoshi', 'unKn', 'アリスシャッハと魔法の楽団', 'nonokuro', '駿', 'HenryTz', '出前', '魔界の住人', '未早', 'softmode', 'kobuta', 'ふぇいフリック', 'SiNoe', 'LAM', 'Sta', 'NTFS', '巻羊', 'mokeo', 'fixro2n', 'rtil', '和音ハカ', 'wacca', 'hideo', 'yusi.', 'クルエルGZ', ' スズカミ', 'そゐち', '久賀フーナ', 'Hie', 'mirimo', 'iimo', 'すずなし', 'きらばがに', 'Sou', 'SKT', 'アサヤ', '吠L', 'EB十', '姐川', 'リウイチ', '岩十', 'horte', 'deel', 'GreeN', 'SERXPHIS', 'Rolua', 'NAGU', '望月けい', 'KEI']
-chart_creators = ['Nitro', 'Toaster', 'Kurorak', 'k//eternal', '-chartaesthesia-', 'TaroNuke', '石樂', 'Exschwation', 'Black Tea', 'Arcaea Team', '緑', 'CERiNG', 'Kero', 'Darkest Dream', '不明', '/', 'Arcaea Charting Team', 'The Monolith', 'Zero Sky', 'Paradox', '迷路', 'Tempest']
-display_resident = {"all":"全てのパートナーを含みます","normal":"現在入手可能なパートナーのみを含みます","event":"イベントでのみ入手可能なパートナーのみを含みます"} # 常駐絞り込み
+composers = ['T2Kazuya', 'U-ske', 'Cosmograph', 'Tiny Minim', 'chitose', 'HyuN', '旅人E', 'Sound Souler', 'Combatplayer', 'REDSHiFT', 'Aire', 'ak+q', 'DIA', 'lueur', 'しーけー', 'WHITEFISTS', 'Blacklolita', 'cYsmix', 'Kobaryo', 'Mameyudoufu', '7mai', 'Farhan', 'Kolaa', 'Arch', 'n3pu', 'YUKIYANAGI', 'ARForest', 'Nhato', 'Iris', 'Puru', 'Sta', 'sky_delta', 'REDALiCE', 'Saiph', 'Virtual Self', 'お月さま交響曲', 'Ryazan', 'Rabbit House', 'Akira Complex', 'MYTK', 'Soleily', 'void', '溝口ゆうま', '大瀬良あい', 'Laur', 'Frums', 'uma', '橘花音', 'Mili', 'a-zu-ra', 'アリスシャッハと魔法の楽団', '南ゆに', 'THB', 'Sennzai', 'MYUKKE.', 'Jun Kuroda', 'Noah', 'ginkiha', 'Sampling Masters MEGA', 'PSYQUI', 'Missive New Krew', 'Syepias', '黒皇帝', 'Tanchiky', '翡乃イスカ', 'Street', 'Maozon', 'Taishi', 'Silentroom', 'Mysteka', 'EBIMAYO', 'Yamajet', 'DJ Noriken', 'SHIKI', 'Zekk', 'Polysha', 't+pazolite', 'TQ☆', 'モリモリあつし', 'Yunosuke', 'ikaruga_nex', 'Feryquitous', 'Ras', 'Junk', 'Yooh', 'Mitomoro', 'owl*tree', 'WHITEFIST', 'Nitro', 'かゆき', 'Missionary', 'gmtn.', 'A.SAKA', 'Apo11o program', 'Sakuzyo', 'siromaru', 'TANO*C Sound Team', 'USAO', 'DJ Myosuke', 'DJ Genki', 'P*Light', 'wa.', '3R2', 'uno', 'ちょこ', 'xi', 'nora2r', 'Gram', 'E.G.G.', 'LeaF', 'Powerless', 'ETIA.', 'HATE', 'BACO', 'Daisuke Kurosawa', 'ぺのれり', 'BlackY', 'からとpαnchii少年', 'はるの', 'WAiKURO', 's-don', 'Aoi', 'siqlo', 'HiTECH NINJA', 'MASAKI', 'Team Grimoire', 'Juggernaut.', 'Cranky', 'cybermiso', 'jioyi', '光吉猛修', 'かめりあ(EDP)', 'Edelritter']
+illustrators =  ['T2Kazuya', 'かぐやのもちづき', 'NTFS', '不明', 'Khronetic', 'Tagtraume', 'NanoKun', 'ましろみ のあ', 'Doomfest', '黒刃愛', 'grosspanda', '雨風雪夏', 'Koyama Mai', 'Ancy', '橙乃遥', 'yoshimo', 'terry', 'nakanome', '釜飯轟々丸', 'Eric Dagley', 'DJ Poyoshi', 'Refla', 'Saga', 'キッカイキ', 'Shionty', 'きらばがに', 'Sou', 'RiceGnat', 'rtil', 'mins', 'VMWT', 'クルエルGZ', 'deronoitz', 'Megu', 'お月さま交響曲', '織日ちひろ', 'YEONIE', 'SERXPHIS', '未早', 'CinEraLiA', 'softmode', 'kobuta', 'Mechari', 'Hanamori Hiro', 'Frums', 'そゐち', 'アリスシャッハと魔法の楽団', 'シエラ', 'SiNoe', '岩十', 'LAM', 'Hie', 'KEI', 'Tamio Iwaya', 'mirimo', 'Photonskyto', '巻羊', 'deel', 'SoU', 'unKn', 'mokeo', 'SKT', '和音ハカ', 'wacca', 'GreeN', 'HenryTz', 'アサヤ', '出前', '魔界の住人', '八葉', 'TOKIYA SAKBA', 'ふぇいフリック', 'EB十', '久賀フーナ', 'hideo', ' 白鳥怜', 'レアル', 'リウイチ', 'トロ3', 'Sta', '百舌谷', 'BerryVerrine', 'iimo', 'すずなし', 'fixro2n', 'yusi.', '駿', 'スズカミ', 'NAGU', 'nonokuro', '吠L', 'horte', '姐川', '望月けい', 'koji', 'Rolua']
+chart_creators = ['Nitro', 'Toaster', 'k//eternal', 'Kurorak', '石樂', 'TaroNuke', '-chartaesthesia-', '不明', 'Kero', 'CERiNG', '/', 'Arcaea Team', '緑', 'Exschwation', 'Black Tea', 'Darkest Dream', 'Zero Sky', 'Arcaea Charting Team', 'Tempest', 'The Monolith', 'Paradox', '迷路']
+display_resident = {"all":"全てのパートナーを含みます","constant":"恒常パートナーのみを含みます","limited":"期間限定パートナーのみを含みます"} # 常駐絞り込み
 types = {"B":"バランス","S":"サポート","C":"チャレンジ","?":"???"} # types
 skills = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オーバーフロー","C":"チュウニズム","A":"Audio"} # skills
 
 # ...settings end
-
 # change_precence
 @tasks.loop(minutes=1)
 async def loop():
   global pindex
-  if pindex == 0: v = f"Get help by typing 'a-help'"
-  elif pindex == 1: v = f"Current ping is {round(bot.latency * 1000)}ms"
-  elif pindex == 2: v = f"Let's play Arcaea!!!"
-  elif pindex == 3: v = f"a-helpでヘルプを表示します"
-  elif pindex == 4: v = f"現在のpingは{round(bot.latency * 1000)}msです"
-  elif pindex == 5: v = f"さあ、Arcaeaをプレイしましょう！"
+  if pindex == 0: v = f"ac:helpでヘルプを表示します"
+  elif pindex == 1: v = f"現在のpingは{round(bot.latency * 1000)}msです"
+  elif pindex == 2: v = f"さあ、Arcaeaをプレイしましょう！"
   await bot.change_presence(activity=dc.Game(name=v))
-  pindex += 1 if pindex != 5 else -5
+  pindex += 1 if pindex != 2 else -2
   
 @bot.command()
 async def help(ctx):
   await ctx.message.delete()
-  e = dc.Embed(title="prefixは `a@` です",color=0x74596d)
+  e = dc.Embed(title="prefixは `ac:` です",color=0x74596d)
   e.timestamp = dt.utcnow()
   e.add_field(name="help",value="ヘルプを表示します",inline=False)
-  e.add_field(name="sinfo <曲名>",value="曲の情報を表示します",inline=False)
-  e.add_field(name="pinfo <パートナー名>",value="パートナーの情報を表示します",inline=False)
-  e.add_field(name="sselect (回数)",value="BOTがランダムに選曲します",inline=False)
-  e.add_field(name="pselect",value="BOTがランダムにパートナーを選びます",inline=False)
-  e.add_field(name="set",value="設定パネルを表示します",inline=False)
+  e.add_field(name="sinfo <楽曲名>",value="楽曲情報を表示します",inline=False)
+  e.add_field(name="pinfo <パートナー名>",value="パートナー情報を表示します",inline=False)
+  e.add_field(name="schoice (回数)",value="ランダムに楽曲を選びます",inline=False)
+  e.add_field(name="pchoice",value="ランダムにパートナーを選びます",inline=False)
+  e.add_field(name="setting",value="設定パネルを表示します",inline=False)
   e.add_field(name="Other",value="BOTの導入は[こちら](https://discord.com/api/oauth2/authorize?client_id=702587324718120991&permissions=60480&scope=bot)",inline=False)
   e.set_author(name="ヘルプ",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
@@ -183,7 +179,7 @@ async def pinfo(ctx, *, name=None):
   await ctx.send(embed=e,delete_after=60)
   
 @bot.command()
-async def sselect(ctx, count=1):
+async def schoice(ctx, count=1):
   await ctx.message.delete()
   if count > 10: return await ctx.send("1度に10連続まで可能です", delete_after=5.0)
   enables_p = [i for i in sdata if not i.pack in sopt["ignorepacks"]] if len(sopt["ignorepacks"]) != 0 else sdata
@@ -235,7 +231,7 @@ async def sselect(ctx, count=1):
     dataset[0] = song.name
     
 @bot.command()
-async def pselect(ctx, count=1):
+async def pchoice(ctx, count=1):
   await ctx.message.delete()
   enables_r = [i for i in pdata if i.resident == popt["resident"]] if popt["resident"] != "all" else pdata
   enables_t = [i for i in enables_r if i.type in popt["types"]] if len(popt["types"]) != 0 else enables_r
@@ -279,7 +275,7 @@ async def setting(ctx):
   illustrator_e = dc.Embed(title="3-S-il】名前を入力して下さい\n※名前は完全一致である必要はありません\n(類似する場合を除く)",description="- イラストレーター名一覧\n```T2Kazuya, Khronetic, 不明, 白鳥怜, ましろみ のあ, 橙乃遥, Hanamori Hiro, Tagtraume, NanoKun, 黒刃愛, grosspanda, 釜飯轟々丸, かぐやのもちづき, yoshimo, Shionty, RiceGnat, Ancy, 雨風雪夏, Mechari, terry, nakanome, レアル, Saga, キッカイキ, mins, Frums, VMWT, シエラ, deronoitz, Megu, お月さま交響曲, YEONIE, 織日ちひろ, Doomfest, CinEraLiA, 八葉, Koyama Mai, Eric Dagley, 百舌谷, トロ3, Refla, BerryVerrine, Photonskyto, DJ Poyoshi, unKn, アリスシャッハと魔法の楽団, nonokuro, 駿, HenryTz, 出前, 魔界の住人, 未早, softmode, kobuta, ふぇいフリック, SiNoe, LAM, Sta, NTFS, 巻羊, mokeo, fixro2n, rtil, 和音ハカ, wacca, hideo, yusi., クルエルGZ, スズカミ, そゐち, 久賀フーナ, Hie, mirimo, iimo, すずなし, きらばがに, Sou, SKT, アサヤ, 吠L, EB十, 姐川, リウイチ, 岩十, horte, deel, GreeN, SERXPHIS, Rolua, NAGU, 望月けい, KEI```",color=0x6FFFBA)
   chart_creator_e = dc.Embed(title="3-S-ch】譜面製作者名を入力して下さい\n※製作者名は完全一致でなくとも問題ありません\n(類似する場合を除く)",description="- 譜面製作者名一覧\n(1部名義は集約してあります)\n```Nitro(夜浪などを含む), Toaster(東星などを含む), Kurorak(黒運などを含む), k//eternal(chaos//engineなどを含む), -chartaesthesia-, TaroNuke, 石樂, Exschwation, Black Tea, Arcaea Team, 緑, CERiNG, Kero, Darkest Dream, 不明, /(Arcahv), Arcaea Charting Team, The Monolith, Zero Sky, Paradox(Fracture Ray), 迷路(Grievous Lady), Tempest(Tempestissimo)```",color=0x6FFFBA)
   psstart_e = dc.Embed(title="2=P】設定項目を選択して下さい",description="**`r`** : 除外/追加 (恒常・期間限定)\n**`t`** : 対象設定 (タイプ)\n**`s`** : 対象設定 (スキル)\n**`fl`** : 上下限設定 (FRAG)\n**`sl`** : 上下限設定 (Step)",color=0xFFD200)
-  resident_e = dc.Embed(title="3=P-r】以下から選択して下さい",description="`all` : 全て含みます\n`normal` : 恒常パートナーのみ\n`event` : 期間限定パートナーのみ",color=0xFFD200)
+  resident_e = dc.Embed(title="3=P-r】以下から選択して下さい",description="`all` : 全て含みます\n`constant` : 恒常パートナーのみ\n`limited` : 期間限定パートナーのみ",color=0xFFD200)
   type_e = dc.Embed(title="3=P-t】以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="**`B`** (バランス)\n**`S`** (サポート)\n**`C`** (チャレンジ)\n**`?`** (???)",color=0xFFD200)
   skill_e = dc.Embed(title="3=P-s】以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="**`-`** (-)\n**`E`** (Easy)\n**`H`** (Hard)\n**`V`** (Visual)\n**`M`** (ミラー)\n**`O`** (オーバーフロー)\n**`C`** (チュウニズム)\n**`A`** (Audio)",color=0xFFD200)
   flaglimit_e = dc.Embed(title="3=P-fl】以下から選択して下さい",description="`initial` : Lv1 基準\n`highest` : Lv20 基準",color=0xFFD200)
@@ -547,13 +543,13 @@ async def setting(ctx):
                         
 @bot.event
 async def on_ready():
-  sn = dc.Embed(title="ArcaeaBOTが起動しました",color=0xBCF946)
+  sn = dc.Embed(title="ArcaeaSupportBotが起動しました",color=0xBCF946)
   sn.timestamp = dt.utcnow()
   sn.set_author(name="起動通知",icon_url=bot.user.avatar_url)
   sn.set_footer(text="Powered by Python (3.7)")
   ch = bot.get_channel(723600070284673036)
   await ch.send(embed=sn)
-  print("起動しました")
+  print("ArcaeaSupportBot起動しました")
   loop.start()
                       
 @bot.event
