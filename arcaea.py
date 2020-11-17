@@ -105,6 +105,7 @@ async def help(ctx):
   e = dc.Embed(title="prefixは `ac:` です",color=0x74596d)
   e.timestamp = dt.utcnow()
   e.add_field(name="help",value="ヘルプを表示します",inline=False)
+  e.add_field(name="latest",value="BOTの最新情報を表示します")
   e.add_field(name="sinfo <楽曲名>",value="楽曲情報を表示します",inline=False)
   e.add_field(name="pinfo <パートナー名>",value="パートナー情報を表示します",inline=False)
   e.add_field(name="schoice (回数)",value="ランダムに楽曲を選びます",inline=False)
@@ -115,6 +116,17 @@ async def help(ctx):
   e.set_footer(text=f"送信者 : {ctx.author.name}")
   await ctx.send(embed=e,delete_after=60)
   
+@bot.command(name="info")
+async def latest(ctx):
+  await ctx.message.delete()
+  e = dc.Embed(title="v1.00 様々なアップデート",color=0x74596d)
+  e.add_field(name="◆ 曲の追加",value="・Memory Archive\n・World Extend\n以上パックの新曲の情報を追加\n\n・Arcaea\n以上パックの楽曲のBeyond情報を追加",inline=False)
+  e.add_field(name="◆ パートナーの追加",value="恒常・期間限定パートナーの情報を追加",inline=False)
+  e.add_field(name="◆ 表記・名称の変更",value="・恒常パートナーは`normal`から`constant`へ、\n  期間限定パートナーは`event`から`limited`へ変更\n・コマンド`sselect`は`schoice`へ、\n  コマンド`pselect`は`pchoice`へ、\n  コマンド`set`は`setting`へ変更",inline=False)
+  e.set_author(name="BOTの最新情報",icon_url=bot.user.avatar_url)
+  e.set_footer(text=f"送信者 : {ctx.author.name}")
+  await ctx.send(embed=e,delete_after=30)
+
 @bot.command()
 async def sinfo(ctx, *, name=None):
   await ctx.message.delete()
