@@ -1,7 +1,7 @@
 from discord.ext import tasks, commands as cmd
 from datetime import datetime as dt
 from collections import namedtuple as nt
-import discord as dc, json, random, sys, asyncio as ao
+import discord as dc, os, json, random, sys, asyncio as ao
 
 bot = cmd.Bot(command_prefix="ac:")
 bot.remove_command("help")
