@@ -3,7 +3,7 @@ from datetime import datetime as dt
 from collections import namedtuple as nt
 import discord as dc, json, random, sys, asyncio as ao
 
-bot = cmd.Bot(command_prefix="act:")
+bot = cmd.Bot(command_prefix="ac:")
 bot.remove_command("help")
 
 # 設定
@@ -78,6 +78,8 @@ pkdata = list(map(lambda x: pack_nt(x[0], x[1], x[2], x[3], x[4], x[5]), data["p
 
 dataset = [None,None] # 臨時保存
 
+token = os.environ['TOKEN'] # トークン読み込み
+
 # 設定に対する内容辞典
 sfirst = {"ip":2,"is":3,"l":4,"s":9,"nl":10,"cl":15,"co":20,"il":21,"ch":22}
 pfirst = {"r":24,"t":25,"s":26,"fl":27,"sl":30}
@@ -95,23 +97,17 @@ skills = {"-":"-","E":"Easy","H":"Hard","V":"Visual","M":"ミラー","O":"オー
 @tasks.loop(minutes=1)
 async def loop():
   global pindex
-  if pindex == 0: v = f"act:helpでヘルプを表示します"
+  if pindex == 0: v = f"ac:helpでヘルプを表示します"
   elif pindex == 1: v = f"現在のpingは{round(bot.latency * 1000)}msです"
   elif pindex == 2: v = f"さあ、Arcaeaをプレイしましょう！"
-  elif pindex == 3: v = f"ArcaeaSupportBot ver.1.0を運用中"
+  elif pindex == 3: v = f"ArcaeaSupportBot ver.1.1を運用中"
   await bot.change_presence(activity=dc.Game(name=v))
   pindex += 1 if pindex != 3 else -3
 
 @bot.command()
-async def exit(ctx):
-  await ctx.message.delete()
-  await bot.logout()
-  await sys.exit()
-
-@bot.command()
 async def help(ctx):
   await ctx.message.edit(delete_after=2.0)
-  e = dc.Embed(title="prefixは `act:` です",color=0x74596d)
+  e = dc.Embed(title="prefixは `ac:` です",color=0x74596d)
   e.timestamp = dt.utcnow()
   e.add_field(name="help",value="ヘルプを表示します",inline=False)
   e.add_field(name="arcaea",value="Arcaeaの情報を表示します",inline=False)
@@ -293,7 +289,7 @@ async def schoice(ctx, count=1):
     else: e = dc.Embed(title=f"◆ 曲名 {song.name}",description=f"◇ パック {song.pack}",color=0x461399)
     e.timestamp = dt.utcnow()
     e.set_author(name="❖ 選曲 ❖",icon_url=bot.user.avatar_url)
-    e.set_footer(text=f"詳細は act:info で確認できます\n送信者 : {ctx.author.name}")
+    e.set_footer(text=f"詳細は ac:info で確認できます\n送信者 : {ctx.author.name}")
     e.set_thumbnail(url=song.artwork.normal)
     await ctx.send(embed=e)
     dataset[0] = song.name
@@ -316,7 +312,7 @@ async def pchoice(ctx, count=1):
     elif partner.type == "???": e = dc.Embed(title=f"◆ パートナー名 {partner.name}",description=f"◇ タイプ {partner.type}",color=0xFFFFFF)
     e.timestamp = dt.utcnow()
     e.set_author(name="❖ パートナー選択 ❖",icon_url=bot.user.avatar_url)
-    e.set_footer(text=f"詳細は act:pinfo で確認できます\n送信者 : {ctx.author.name}")
+    e.set_footer(text=f"詳細は ac:pinfo で確認できます\n送信者 : {ctx.author.name}")
     if partner.icon != "No Printing": e.set_thumbnail(url=partner.icon)
     await ctx.send(embed=e)
     dataset[1] = partner.name 
@@ -642,4 +638,4 @@ async def on_reaction_add(reaction, user):
     if reaction.emoji.id == 723169353423519834:
       await reaction.message.delete()
                                           
-bot.run("NzgyMjI1MzI5NDM0NjU2Nzc4.X8JGGw.FdL1ggGwQfUWjGCK8boKZ3tCT7Q")
+bot.run(token)
