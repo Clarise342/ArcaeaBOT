@@ -321,7 +321,7 @@ async def pchoice(ctx, count=1):
 async def setting(ctx):
   await ctx.message.edit(delete_after=2.0)
   start_e = dc.Embed(title="1】どうしますか？",description="**`end`** : 設定 終了\n**`check`** : 設定 確認\n**`song`** : 条件設定 (楽曲自動選択)\n**`partner`** : 条件設定 (パートナー自動選択)",color=0x005AD6)
-  ssstart_e = dc.Embed(title="2=S】設定項目を選択して下さい",description="**`ip`** : 除外/追加 (パック)\n**`is`** : 除外/追加 (楽曲)\n**`l`** : 対象設定 (レベル)\n**`s`** : 対象設定 (サイド)\n**`nl`** : 上下限設定 (ノーツ数)\n**`cl`** : 上下限設定 (譜面定数)\n**`co`** : 対象設定 (作曲者)\n**`il`** : 対象設定 (イラストレーター)\n**`ch`** : 対象設定 (譜面製作者)",color=0x6FFFBA)
+  ssstart_e = dc.Embed(title="2=S】設定項目を選択して下さい",description="**`ip`** : 除外/追加 (パック)\n**`is`** : 除外/追加 (楽曲)\n**`l`** : 対象設定 (レベル)\n**`s`** : 対象設定 (サイド)\n**`nl`** : 上下限設定 (ノーツ数)\n**`cl`** : 上下限設定 (譜面定数)\n**`co`** : 対象設定 (作曲者)\n**`il`** : 対象設定 (イラストレーター)\n**`ch`** : 対象設定 (譜面製作者)\n**`clear`** : 設定を全解除",color=0x6FFFBA)
   ignorepack_e = dc.Embed(title="3=S-ip】以下から選択して下さい\n(以下短縮名称を使用してください)",description="`Ae`(Archive)  `Aa`(Arcaea)\n`WE`(World Extend) `BF`(Black Fate)\n`AP`(Adverse Prelude)\n`LS`(Luminous Sky) `VL`(Vicious Labyrinth)\n`EC`(Eternal Core) `SR`(Sunset Radiance)\n`AR`(Absolute Reason) `BE`(Binary Enfold)\n`Am`(Ambivalent Vision)\n`CS`(Crimson Solace) `CH`(CHUNITHM)\n`GC`(Groove Coaster) `TS`(Tone Sphere)\n`La`(Lanota) `Dx`(Dynamix)",color=0x6FFFBA)
   ignoresong_e = dc.Embed(title="3=S-is】楽曲名を入力して下さい\n※曲名は完全一致である必要はありません\n(類似する楽曲がある場合を除く)",color=0x6FFFBA)
   level_e = dc.Embed(title="3=S-l】以下から選択して下さい",description="`pst` : PAST基準\n`prs` : PRESENT基準\n`ftr` : FUTURE基準\n`byd` : BEYOND基準",color=0x6FFFBA)
@@ -343,7 +343,7 @@ async def setting(ctx):
   composer_e = dc.Embed(title="3=S-co】作曲者名を入力して下さい\n※作曲者名は完全一致でなくとも問題ありません\n(類似する場合を除く)",description="- 作曲者名一覧\n(1部名義は集約してあります)\n```ak+q, T2Kazuya, U-ske, Cosmograph, Tiny Minim, chitose, HyuN, 旅人E, Sound Souler, Combatplayer, REDSHiFT, Aire, DIA, lueur, しーけー(CK), WHITEFISTS, Blacklolita, cYsmix, Kobaryo, Mameyudoufu, 7mai, Farhan, Kolaa, Yamajet, Arch, n3pu, YUKIYANAGI, ARForest, Nhato(Edelritter), Iris, Puru, Sta, sky_delta(Endorfin.), REDALiCE(HARDCORE TANO\*C), Saiph, Virtual Self, お月さま交響曲, Ryazan, Rabbit House, Akira Complex, MYTK, Soleily, void, 溝口ゆうま, 大瀬良あい, Laur(HARDCORE TANO\*C), Frums, uma, 橘花音, Mili, a-zu-ra, アリスシャッハと魔法の楽団, 南ゆに(アリスシャッハと魔法の楽団), THB, Sennzai, MYUKKE., Masanori, 藍月なくる(Endorfin.), Endorfin., Jun Kuroda, Noah, ginkiha, Sampling Masters MEGA, PSYQUI, Missive New Krew(HARDCORE TANO\*C), Syepias, 黒皇帝, Tanchiky, 翡乃イスカ, Street, Maozon, Taishi(Edelritter), Silentroom, Mysteka, EBIMAYO, Rasmus Faber, DJ Noriken(HARDCORE TANO*C), SHIKI, Zekk, Polysha, t+pazolite(HARDCORE TANO\*C), TQ☆, モリモリあつし, Yunosuke, Hommarju, ikaruga_nex, Feryquitous, Ras, Junk, Yooh, Mitomoro, owl\*tree, WHITEFIST, Nitro, かゆき, Missionary, gmtn., A.SAKA, Apo11o program, Sakuzyo, siromaru(INNOCENT NOISE), TANO\*C Sound Team, USAO(HARDCORE TANO\*C), DJ Myosuke(HARDCORE TANO\*C), DJ Genki(HARDCORE TANO\*C), P\*Light(HARDCORE TANO*C), wa., 3R2, uno, ちょこ, xi, nora2r, Gram, E.G.G., LeaF, Powerless, ETIA., HATE, BACO, Daisuke Kurosawa, ぺのれり, BlackY,  からとpαnchii少年, はるの, WAiKURO, M2U, s-don, Aoi, siqlo, HiTECH NINJA, MASAKI, Team Grimoire, Juggernaut., Tatsh, Cranky, cybermiso, jioyi, 光吉猛修, かめりあ(EDP), Edelritter, Arcaea Sound Team```",color=0x6FFFBA)
   illustrator_e = dc.Embed(title="3-S-il】名前を入力して下さい\n※名前は完全一致である必要はありません\n(類似する場合を除く)",description="- イラストレーター名一覧\n```シエラ, T2Kazuya, かぐやのもちづき, NTFS, 不明, Khronetic, Tagtraume, NanoKun, ましろみ のあ, Doomfest, 黒刃愛, grosspanda, 雨風雪夏, Koyama Mai, Ancy, 橙乃遥, yoshimo, terry, nakanome, 釜飯轟々丸, Eric Dagley, DJ Poyoshi, Refla, Saga, キッカイキ, Shionty, きらばがに, Sou, RiceGnat, rtil, mins, VMWT, クルエルGZ, deronoitz, Megu, お月さま交響曲, 織 日ちひろ, YEONIE, SERXPHIS, 未早, CinEraLiA, softmode, kobuta, Mechari, Hanamori Hiro, Frums, そゐち, アリスシャッハと魔法の楽団, SiNoe, にんにくまし まし, 岩十, LAM, Hie, KEI, Tamio Iwaya, mirimo, Photonskyto, 巻羊, deel, SoU, unKn, mokeo, SKT, あるみっく, 和音ハカ, wacca, GreeN, HenryTz, アサヤ, HakureiNeko, 出前, 魔界の住人, 八葉, TOKIYA SAKBA, ふぇいフリック, EB十, 久賀フーナ, hideo,  白鳥怜, レアル, リウイチ, トロ3, Sta, 百舌谷, BerryVerrine, iimo, すずなし, fixro2n, yusi., 駿, スズカミ, NAGU, nonokuro, 吠L, クリス, horte, 姐川, 望月けい, koji, Rolua```",color=0x6FFFBA)
   chart_creator_e = dc.Embed(title="3-S-ch】譜面製作者名を入力して下さい\n※製作者名は完全一致でなくとも問題ありません\n(類似する場合を除く)",description="- 譜面製作者名一覧\n(1部名義は集約してあります)\n```lowiro(Tutorial), Nitro(夜浪など), Toaster(東星など), k//eternal(chaos//engineなど), Kurorak(Haruba,闇運,Shirorakなど), 石樂(Vexaria), TaroNuke, -chartaesthesia-, 不明, Kero, CERiNG(XERiNG), Exschwasion, /(Arcahv), Arcaea Team, 緑(BLRINK), Black Tea, Darkest Dream, Zero Sky(Ether Strike), Arcaea Charting Team, Tempest(Tempestissimo), The Monolith(Axium Crisis), Paradox(Fracture Ray), 迷路(Grievous Lady)```",color=0x6FFFBA)
-  psstart_e = dc.Embed(title="2=P】設定項目を選択して下さい",description="**`r`** : 除外/追加 (恒常・期間限定)\n**`t`** : 対象設定 (タイプ)\n**`s`** : 対象設定 (スキル)\n**`fl`** : 上下限設定 (FRAG)\n**`sl`** : 上下限設定 (Step)",color=0xFFD200)
+  psstart_e = dc.Embed(title="2=P】設定項目を選択して下さい",description="**`r`** : 除外/追加 (恒常・期間限定)\n**`t`** : 対象設定 (タイプ)\n**`s`** : 対象設定 (スキル)\n**`fl`** : 上下限設定 (FRAG)\n**`sl`** : 上下限設定 (Step)\n**`clear`** : 設定を全解除",color=0xFFD200)
   resident_e = dc.Embed(title="3=P-r】以下から選択して下さい",description="`all` : 全て含みます\n`constant` : 恒常パートナーのみ\n`limited` : 期間限定パートナーのみ",color=0xFFD200)
   type_e = dc.Embed(title="3=P-t】以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="**`B`** (バランス)\n**`S`** (サポート)\n**`C`** (チャレンジ)\n**`?`** (???)",color=0xFFD200)
   skill_e = dc.Embed(title="3=P-s】以下から選択して下さい\n(以下短縮名称を使用して下さい)",description="**`-`** (-)\n**`E`** (Easy)\n**`H`** (Hard)\n**`V`** (Visual)\n**`M`** (ミラー)\n**`O`** (オーバーフロー)\n**`C`** (チュウニズム)\n**`A`** (Audio)",color=0xFFD200)
@@ -496,6 +496,34 @@ async def setting(ctx):
         elif page == 1: # song_start
           if msg.content in sfirst:
             page = sfirst[msg.content]
+          elif msg.content == "clear":
+            sopt = {
+              "ignorepacks":[],
+              "ignoresongs":[],
+              "levels":[
+                [],
+                [],
+                [],
+                []
+              ],
+              "side":None,
+              "illustrators":[],
+              "composers":[],
+              "chart_creators":[],
+              "notes_limit":[
+                [0,1600],
+                [0,1600],
+                [0,1600],
+                [0,1600]
+              ],
+              "constant_limit":[
+                [1.0,12.0],
+                [1.0,12.0],
+                [1.0,12.0],
+                [1.0,12.0]
+              ]
+            ]
+            page = 0
           else:
             pass
         elif page == 2: # song_ignore_pack
@@ -558,6 +586,21 @@ async def setting(ctx):
         elif page == 23: # partner_start
           if msg.content in pfirst:
             page = pfirst[msg.content]
+          elif msg.content == "clear":
+            popt = {
+              "resident":"all",
+              "step_limit":[
+                [0,200],
+                [0,200]
+              ],
+              "frag_limit":[
+                [0,200],
+                [0,200]
+              ],
+              "types":[],
+              "skills":[]
+            }
+            page = 0
           else:
             pass                
         elif page == 24: # resident
