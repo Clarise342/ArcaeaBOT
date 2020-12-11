@@ -661,6 +661,8 @@ async def on_ready():
   sn.set_footer(text="Powered by Python (3.7)")
   ch = bot.get_channel(782234898274582568)
   await ch.send(embed=sn)
+  ch = bot.get_channel(723600070284673036)
+  await ch.send(embed=sn)
   print("ArcaeaSupportBot起動しました")
   loop.start()
 
