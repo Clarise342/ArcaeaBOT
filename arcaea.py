@@ -522,7 +522,7 @@ async def setting(ctx):
                 [1.0,12.0],
                 [1.0,12.0]
               ]
-            ]
+            }
             page = 0
           else:
             pass
