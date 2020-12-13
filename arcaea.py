@@ -103,7 +103,21 @@ async def loop():
   elif pindex == 3: v = f"ArcaeaSupportBot ver.1.1を運用中"
   await bot.change_presence(activity=dc.Game(name=v))
   pindex += 1 if pindex != 3 else -3
+ 
+@bot.command()
+async def gl(ctx, a, b):
+  with open("guild.json", "r", encoding="utf-8") as f:
+    guild = json.load(f)
+  guild.setdefault(a, b)
+  with open("guild.json", "w", encoding="utf-8") as f:
+    json.dump(guild, f, indent=2)
 
+@bot.command()
+async def go(ctx, a:int):
+  with open("guild.json", "r", encoding="utf-8") as f:
+    guild = json.load(f)
+    await ctx.send(guild[a])
+    
 @bot.command()
 async def help(ctx):
   await ctx.message.edit(delete_after=2.0)
