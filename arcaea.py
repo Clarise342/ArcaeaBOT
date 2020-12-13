@@ -148,7 +148,7 @@ async def latest(ctx):
   e.add_field(name="◆ その他",value="その他、多少の修正を行いました")
   e.set_author(name="❖ BOTの最新情報 ❖",icon_url=bot.user.avatar_url)
   e.set_footer(text=f"送信者 : {ctx.author.name}")
-  await ctx.send(embed=e,delete_after=30)
+  await ctx.send(embed=e)
 
 @bot.command()
 async def sinfo(ctx, *, name=None):
