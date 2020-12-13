@@ -137,7 +137,7 @@ async def arcaea(ctx):
   e.set_thumbnail(url="https://cdn.discordapp.com/attachments/755466678418145293/785043046408126494/5599.png")
   await ctx.send(embed=e,delete_after=30)
  
-@bot.command(name="info")
+@bot.command()
 async def latest(ctx):
   await ctx.message.edit(delete_after=2.0)
   e = dc.Embed(title="v1.11 v3.3.1に対応しました",color=0x74596d)
