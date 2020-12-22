@@ -1,7 +1,7 @@
 # ArcaeaBOT (Discord)
  Arcaeaのプレイヤーの皆さんをサポートするDiscordのBOTです
 
-## 使用方法 / Usage (prefix='a-')
+## 使用方法 / Usage (prefix='a:')
 ### 情報 / Info
 help - ヘルプを表示
 ### 楽曲 / Songs
