@@ -105,6 +105,20 @@ async def loop():
   pindex += 1 if pindex != 3 else -3
 
 @bot.command()
+async def dict(ctx, a, b):
+  with open("guild.json", "r", encoding="utf-8") as f:
+    dict = json.load(f)
+  dict.setdefault(a, b)
+  with open("guild.json", "w", encoding="utf-8") as f:
+    json.dump(dict, f)
+    
+@bot.command()
+async def say(ctx, a):
+  with open("guild.json", "r", encoding="utf-8") as f:
+    dict = json.load(f)
+  await ctx.send(dict[a])
+  
+@bot.command()
 async def help(ctx):
   await ctx.message.edit(delete_after=2.0)
   e = dc.Embed(title="prefixは `ac:` です",color=0x74596d)
