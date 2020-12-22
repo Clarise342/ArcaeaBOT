@@ -5,7 +5,7 @@ from datetime import datetime as dt
 from collections import namedtuple as nt
 import discord as dc, os, json, random, sys, asyncio as ao
 
-bot = cmd.Bot(command_prefix="act:")
+bot = cmd.Bot(command_prefix="ac:")
 bot.remove_command("help")
 
 # 設定
@@ -102,7 +102,7 @@ async def loop():
   if pindex == 0: v = f"ac:helpでヘルプを表示します"
   elif pindex == 1: v = f"現在のpingは{round(bot.latency * 1000)}msです"
   elif pindex == 2: v = f"さあ、Arcaeaをプレイしましょう！"
-  elif pindex == 3: v = f"ArcaeaSupportBot ver.1.1を運用中"
+  elif pindex == 3: v = f"ArcaeaSupportBot ver.1.2を運用中"
   await bot.change_presence(activity=dc.Game(name=v))
   pindex += 1 if pindex != 3 else -3
 
